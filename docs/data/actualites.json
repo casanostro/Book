@@ -1,0 +1,23 @@
+[
+  {
+    "date": "2026-08-07",
+    "titre": "Le portfolio devient un book multi-pages",
+    "tags": ["site", "architecture"],
+    "contenu": "Le site passe de la single page au format book : un hub projets, des fiches détaillées avec **schémas d'architecture animés** dans le style lineage, et cette page d'actualités.\n\nChaque schéma rend explicites les garde-fous — validation SQL lecture seule, périmètre de schémas contrôlé — parce qu'en production, c'est là que se joue la confiance.",
+    "lien": "../projets/"
+  },
+  {
+    "date": "2026-07-28",
+    "titre": "Nouvelle démo live : prévision de demande Holt-Winters",
+    "tags": ["forecasting", "demo", "js"],
+    "contenu": "Un lissage exponentiel triple (additif) implémenté en **JavaScript vanilla**, sur 3 ans de ventes hebdomadaires synthétiques en retail alimentaire. Sliders α, β, γ, split train/test, MAPE recalculé en direct, et un bouton auto-tune qui grid-search les paramètres.\n\nLe parti pris : un modèle à 3 paramètres *explicables* plutôt qu'une boîte noire — celui qu'on peut défendre en réunion S&OP.",
+    "lien": "../projets/prevision-demande/"
+  },
+  {
+    "date": "2026-06-30",
+    "titre": "POC MCP : le référentiel de doc devient le contexte du LLM",
+    "tags": ["mcp", "llm", "snowflake"],
+    "contenu": "Le connecteur MCP entre Claude et le datawarehouse Snowflake franchit une étape : le **référentiel technique** construit lors de la documentation du DWH (24 schémas, ~65 vues au lineage reconstitué) est maintenant injecté comme contexte structuré du serveur.\n\nRésultat : le modèle cite ses sources, reste dans le périmètre documenté, et le rôle en lecture seule garantit qu'aucun prompt ne peut écrire dans l'entrepôt.",
+    "lien": "../projets/poc-mcp/"
+  }
+]

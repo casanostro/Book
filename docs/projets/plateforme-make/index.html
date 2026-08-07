@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Plateforme d'automatisation Make : architecture du diagnostic post-migration — 159 scénarios, dead letter queue, classification des échecs, chiffrage du risque et priorisation des reprises.">
+<title>Plateforme Make — du parc à la DLQ | Adrien Tripon</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eef1f5'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2331708f'/%3E%3Cpath d='M12 16h8' stroke='%2331708f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%23161d24'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css">
+<script src="../../assets/site.js" defer></script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="../../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
+      <div class="nav-links">
+        <a href="../../">Accueil</a>
+        <a href="../" aria-current="page">Projets</a>
+        <a href="../../actualites/">Actualités</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">projets</a><span class="sep">/</span>plateforme-make</div>
+  <div class="page-head reveal">
+    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJET [02]</div>
+    <h1>Plateforme Make — <em>rendre visibles</em> les échecs silencieux</h1>
+    <p class="lead">159 scénarios d'automatisation en production, 6 domaines métier — et une migration d'API qui a fait échouer des milliers d'exécutions sans déclencher d'alerte. Le travail : transformer une dead letter queue opaque en risque chiffré et en plan de reprise priorisé.</p>
+  </div>
+</div>
+
+<!-- ═══════════ SCHÉMA D'ARCHITECTURE ═══════════ -->
+<section style="padding-top:40px; padding-bottom:48px">
+  <div class="wrap">
+    <div class="node-head reveal" style="margin-bottom:24px">
+      <div class="node-label"><span class="dot"></span> ARCHITECTURE : SCÉNARIOS → DLQ → DIAGNOSTIC → PRIORISATION</div>
+      <h2>Le chemin de l'échec, du webhook au plan d'action</h2>
+    </div>
+    <div class="arch reveal">
+      <svg viewBox="0 0 760 400" role="img" aria-label="Schéma du diagnostic de la plateforme Make : parc de scénarios, exécutions, dead letter queue, diagnostic, chiffrage du risque, priorisation des reprises">
+        <defs>
+          <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L8 4 L0 8 z" fill="#5c6b7a"/>
+          </marker>
+          <marker id="arr-amber" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L8 4 L0 8 z" fill="#c98a2d"/>
+          </marker>
+        </defs>
+
+        <!-- ── Rangée 1 : le parc en fonctionnement ── -->
+        <text class="ntag" x="20" y="16">IN</text>
+        <rect class="nbox-in" x="20" y="24" width="190" height="56" rx="2"/>
+        <text class="ntitle" x="34" y="48">Parc Make</text>
+        <text class="nsub" x="34" y="64">159 scénarios · 6 domaines</text>
+
+        <rect class="nbox" x="285" y="24" width="180" height="56" rx="2"/>
+        <text class="ntitle" x="299" y="48">Exécutions</text>
+        <text class="nsub" x="299" y="64">webhooks · connecteurs API</text>
+
+        <rect class="nbox" x="560" y="24" width="180" height="56" rx="2"/>
+        <text class="ntitle" x="574" y="48">Flux nominal</text>
+        <text class="nsub" x="574" y="64">gestes commerciaux · alertes</text>
+
+        <path class="edge" d="M210 52 H285" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M210 52 H279"/>
+        <path class="edge" d="M465 52 H560" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M465 52 H554"/>
+        <text class="edge-label" x="472" y="44">succès</text>
+
+        <!-- cause racine : migration API -->
+        <rect class="nbox-store" x="560" y="150" width="180" height="52" rx="2"/>
+        <text class="ntitle" x="574" y="172">Migration d'API</text>
+        <text class="nsub" x="574" y="188">rupture de compatibilité</text>
+        <path class="edge" d="M560 176 H400 V80" marker-end="url(#arr)" style="stroke-dasharray:3 4; stroke:var(--ambre); stroke-opacity:.55"/>
+        <text class="edge-label" x="420" y="120" style="fill:var(--ambre)">cause racine</text>
+
+        <!-- ── Descente : échecs → DLQ ── -->
+        <path class="edge" d="M340 80 V150" marker-end="url(#arr-amber)" style="stroke:var(--ambre); stroke-opacity:.55"/>
+        <path class="edge-flow amber" d="M340 80 V144"/>
+        <text class="edge-label" x="216" y="118" style="fill:var(--ambre)">échecs silencieux</text>
+
+        <text class="ntag-guard" x="285" y="142">POINT AVEUGLE</text>
+        <rect class="nbox-guard" x="285" y="150" width="180" height="56" rx="2"/>
+        <text class="ntitle" x="299" y="174">Dead letter queue</text>
+        <text class="nsub" x="299" y="190">5 376 exécutions en échec</text>
+
+        <!-- ── Rangée 2 : diagnostic ← DLQ ── -->
+        <rect class="nbox" x="20" y="150" width="190" height="56" rx="2"/>
+        <text class="ntitle" x="34" y="174">Diagnostic</text>
+        <text class="nsub" x="34" y="190">extraction API · classification</text>
+        <path class="edge" d="M285 178 H210" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M285 178 H216"/>
+
+        <!-- ── Rangée 3 : chiffrage → priorisation ── -->
+        <rect class="nbox" x="20" y="280" width="190" height="56" rx="2"/>
+        <text class="ntitle" x="34" y="304">Chiffrage du risque</text>
+        <text class="nsub" x="34" y="320">27 625 € tracés ligne à ligne</text>
+        <path class="edge" d="M115 206 V280" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M115 206 V274"/>
+        <text class="edge-label" x="123" y="246">par domaine métier</text>
+
+        <text class="ntag" x="285" y="272">OUT</text>
+        <rect class="nbox-out" x="285" y="280" width="180" height="56" rx="2"/>
+        <text class="ntitle-inv" x="299" y="304">Plan de reprise</text>
+        <text class="nsub-inv" x="299" y="320">priorisé par impact financier</text>
+        <path class="edge" d="M210 308 H285" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M210 308 H279"/>
+
+        <!-- retour vers le parc : reprises rejouées -->
+        <path class="edge" d="M465 308 H660 V202" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
+        <path class="edge-flow slow" d="M465 308 H660 V208"/>
+        <text class="edge-label" x="475" y="300">reprises rejouées</text>
+      </svg>
+      <div class="legend">
+        <span><span class="sw in"></span>parc en production</span>
+        <span><span class="sw proc"></span>traitement</span>
+        <span><span class="sw guard"></span>zone de risque rendue visible</span>
+        <span><span class="sw out"></span>livrable</span>
+        <span>— flux ambre : le chemin de l'échec</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ DÉTAIL ═══════════ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="node-head reveal">
+      <div class="node-label"><span class="dot"></span> NODE : LA MÉTHODE</div>
+      <h2>D'une file d'échecs opaque à un plan d'action défendable</h2>
+    </div>
+    <div class="values">
+      <div class="value reveal">
+        <div class="v-num">étape_01</div>
+        <h3>Extraire, pas échantillonner</h3>
+        <p>Extraction systématique de l'historique d'exécutions via l'API Make, sur l'ensemble du parc : les 5 376 échecs sont recensés un par un, pas estimés. Un diagnostic partiel aurait produit une priorisation partielle.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">étape_02</div>
+        <h3>Classer par domaine métier</h3>
+        <p>Chaque échec est rattaché à son domaine — gestes commerciaux, alertes qualité, base des manquants… — parce qu'un échec ne vaut pas un autre : un geste commercial perdu a un coût direct, une alerte manquée un coût de risque.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">étape_03</div>
+        <h3>Chiffrer le risque en euros</h3>
+        <p>Les exécutions en échec porteuses d'un enjeu financier sont valorisées ligne à ligne : 27 625 € de risque tracé. C'est ce chiffre — pas le nombre d'échecs — qui permet d'arbitrer les reprises avec le métier.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">étape_04</div>
+        <h3>Prioriser, rejouer, refermer</h3>
+        <p>Les reprises sont ordonnées par impact décroissant et rejouées dans le parc corrigé. La boucle est fermée : le même mécanisme d'extraction sert ensuite de surveillance pour que la DLQ ne redevienne jamais un angle mort.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0; padding-bottom:60px">
+  <div class="wrap">
+    <div class="node-head reveal">
+      <div class="node-label"><span class="dot"></span> NODE : EN CHIFFRES</div>
+      <h2>Le diagnostic en sortie</h2>
+    </div>
+    <div class="reveal" style="max-width:560px">
+      <div class="mini-tiles">
+        <div class="mt"><div class="v"><span class="count" data-target="159">159</span></div><div class="l">scénarios administrés en production</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="6">6</span></div><div class="l">domaines métier couverts</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="5376" data-group="1">5 376</span></div><div class="l">exécutions en échec identifiées</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="27625" data-group="1">27 625</span> <small>€</small></div><div class="l">de risque financier tracé et priorisé</div></div>
+      </div>
+      <a class="project-more" href="../newsletter-kpi/">Projet suivant : Newsletter KPI automatisée →</a>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-row reveal">
+      <div>
+        <div class="node-label"><span class="dot"></span> CONTACT</div>
+        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
+      </div>
+      <div class="foot-links">
+        <a href="../../">Accueil</a>
+        <a href="../">Projets</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+    <div class="foot-note">// site statique · aucun tracking · chiffres agrégés et anonymisés · 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

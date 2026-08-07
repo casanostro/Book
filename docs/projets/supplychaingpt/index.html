@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="SupplyChainGPT : architecture complète d'un assistant text-to-SQL — question métier en français, contexte de schéma, LLM, validation SQL lecture seule, exécution SQLite, visualisation.">
+<title>SupplyChainGPT — architecture text-to-SQL | Adrien Tripon</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eef1f5'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2331708f'/%3E%3Cpath d='M12 16h8' stroke='%2331708f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%23161d24'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css">
+<script src="../../assets/site.js" defer></script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="../../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
+      <div class="nav-links">
+        <a href="../../">Accueil</a>
+        <a href="../" aria-current="page">Projets</a>
+        <a href="../../actualites/">Actualités</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">projets</a><span class="sep">/</span>supplychaingpt</div>
+  <div class="page-head reveal">
+    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJET [01]</div>
+    <h1>SupplyChainGPT — <em>du français au SQL</em>, avec garde-fous</h1>
+    <p class="lead">Un assistant text-to-SQL qui transforme une question métier en requête validée, l'exécute sur une base réaliste et restitue le résultat, le SQL généré et une visualisation automatique. Chaque étape sensible est un nœud explicite du pipeline.</p>
+  </div>
+</div>
+
+<!-- ═══════════ SCHÉMA D'ARCHITECTURE ═══════════ -->
+<section style="padding-top:40px; padding-bottom:48px">
+  <div class="wrap">
+    <div class="node-head reveal" style="margin-bottom:24px">
+      <div class="node-label"><span class="dot"></span> ARCHITECTURE : PIPELINE RAG / TEXT-TO-SQL</div>
+      <h2>Le flux, de la question à la visualisation</h2>
+    </div>
+    <div class="arch reveal">
+      <svg viewBox="0 0 760 372" role="img" aria-label="Schéma d'architecture SupplyChainGPT : question utilisateur, contexte de schéma, LLM, validation SQL lecture seule, exécution SQLite, visualisation">
+        <defs>
+          <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L8 4 L0 8 z" fill="#5c6b7a"/>
+          </marker>
+          <marker id="arr-amber" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L8 4 L0 8 z" fill="#c98a2d"/>
+          </marker>
+        </defs>
+
+        <!-- ── Rangée 1 : question → contexte → LLM ── -->
+        <text class="ntag" x="20" y="16">IN</text>
+        <rect class="nbox-in" x="20" y="24" width="170" height="56" rx="2"/>
+        <text class="ntitle" x="34" y="48">Question métier</text>
+        <text class="nsub" x="34" y="64">français · UI Streamlit</text>
+
+        <rect class="nbox" x="255" y="24" width="190" height="56" rx="2"/>
+        <text class="ntitle" x="269" y="48">Contexte schéma</text>
+        <text class="nsub" x="269" y="64">6 tables · exemples de requêtes</text>
+
+        <rect class="nbox" x="510" y="24" width="170" height="56" rx="2"/>
+        <text class="ntitle" x="524" y="48">LLM · Claude API</text>
+        <text class="nsub" x="524" y="64">génération du SQL</text>
+
+        <path class="edge" d="M190 52 H255" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M190 52 H249"/>
+        <text class="edge-label" x="196" y="44">embedding</text>
+        <path class="edge" d="M445 52 H510" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M445 52 H504"/>
+        <text class="edge-label" x="451" y="44">prompt</text>
+
+        <!-- ── Descente : LLM → validation ── -->
+        <path class="edge" d="M620 80 V160" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M620 80 V154"/>
+        <text class="edge-label" x="628" y="122">SQL candidat</text>
+
+        <!-- boucle de rejet : validation → LLM (ambre, lente) -->
+        <path class="edge" d="M540 160 V80" marker-end="url(#arr-amber)" style="stroke:var(--ambre); stroke-opacity:.45"/>
+        <path class="edge-flow amber slow" d="M540 160 V86"/>
+        <text class="edge-label" x="448" y="122" style="fill:var(--ambre)">rejet → régénération</text>
+
+        <!-- ── Rangée 2 : validation → exécution → sortie ── -->
+        <text class="ntag-guard" x="510" y="152">GARDE-FOU</text>
+        <rect class="nbox-guard" x="510" y="160" width="170" height="56" rx="2"/>
+        <text class="ntitle" x="524" y="184">Validation SQL</text>
+        <text class="nsub" x="524" y="200">lecture seule · SELECT only</text>
+
+        <text class="ntag-guard" x="255" y="152">GARDE-FOU</text>
+        <rect class="nbox-guard" x="255" y="160" width="190" height="56" rx="2"/>
+        <text class="ntitle" x="269" y="184">Exécution SQLite</text>
+        <text class="nsub" x="269" y="200">connexion read-only · timeout</text>
+
+        <text class="ntag" x="20" y="152">OUT</text>
+        <rect class="nbox-out" x="20" y="160" width="170" height="56" rx="2"/>
+        <text class="ntitle-inv" x="34" y="184">Réponse complète</text>
+        <text class="nsub-inv" x="34" y="200">résultat · SQL · Plotly</text>
+
+        <path class="edge" d="M510 188 H445" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M510 188 H451"/>
+        <text class="edge-label" x="452" y="180">SQL validé</text>
+        <path class="edge" d="M255 188 H190" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M255 188 H196"/>
+        <text class="edge-label" x="197" y="180">résultat</text>
+
+        <!-- ── Rangée 3 : stores et tests ── -->
+        <rect class="nbox-store" x="255" y="290" width="190" height="52" rx="2"/>
+        <text class="ntitle" x="269" y="312">Base de démo</text>
+        <text class="nsub" x="269" y="328">SQLite · 6 tables · 90 jours</text>
+        <path class="edge" d="M350 290 V216" marker-end="url(#arr)"/>
+        <path class="edge-flow slow" d="M350 290 V222"/>
+
+        <rect class="nbox-store" x="510" y="290" width="170" height="52" rx="2"/>
+        <text class="ntitle" x="524" y="312">Tests de régression</text>
+        <text class="nsub" x="524" y="328">10 questions métier</text>
+        <path class="edge" d="M595 290 V216" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
+        <text class="edge-label" x="603" y="256">vérifie le pipeline</text>
+      </svg>
+      <div class="legend">
+        <span><span class="sw in"></span>entrée utilisateur</span>
+        <span><span class="sw proc"></span>traitement</span>
+        <span><span class="sw guard"></span>garde-fou explicite</span>
+        <span><span class="sw out"></span>sortie</span>
+        <span>— les flux animés suivent le chemin de la donnée</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ DÉTAIL ═══════════ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="node-head reveal">
+      <div class="node-label"><span class="dot"></span> NODE : LES GARDE-FOUS</div>
+      <h2>Pourquoi la validation est un nœud, pas une note de bas de page</h2>
+    </div>
+    <div class="values">
+      <div class="value reveal">
+        <div class="v-num">garde-fou_01</div>
+        <h3>Validation SQL avant exécution</h3>
+        <p>Le SQL généré par le LLM n'est jamais exécuté directement : il passe par un validateur qui n'accepte que des requêtes SELECT — pas d'écriture, pas de DDL, pas d'appels multiples. Une requête rejetée repart en régénération avec le motif du refus.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">garde-fou_02</div>
+        <h3>Connexion en lecture seule</h3>
+        <p>Défense en profondeur : même si une requête d'écriture passait la validation, la connexion SQLite est ouverte en mode read-only. Le pire scénario possible est une requête qui échoue, jamais une donnée modifiée.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">garde-fou_03</div>
+        <h3>Le SQL est toujours affiché</h3>
+        <p>Chaque réponse montre la requête générée à côté du résultat : l'utilisateur métier peut faire vérifier le SQL, et l'analyste peut auditer ce que le modèle a réellement demandé à la base. Pas de boîte noire entre la question et le chiffre.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">garde-fou_04</div>
+        <h3>Tests de régression métier</h3>
+        <p>Une suite de 10 questions métier de référence (ruptures, taux de service, stocks) est rejouée à chaque évolution du prompt ou du schéma : si une réponse change de sens, le pipeline ne part pas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0; padding-bottom:60px">
+  <div class="wrap">
+    <div class="node-head reveal">
+      <div class="node-label"><span class="dot"></span> NODE : EN CHIFFRES</div>
+      <h2>La base de démonstration</h2>
+      <p class="sub">Un jeu de données réaliste pour un vrai test : assez de volume pour que les requêtes aient du sens, assez de structure pour que les jointures soient non triviales.</p>
+    </div>
+    <div class="reveal" style="max-width:560px">
+      <div class="mini-tiles" style="grid-template-columns:repeat(3,1fr)">
+        <div class="mt"><div class="v"><span class="count" data-target="500">500</span></div><div class="l">produits</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="90">90</span></div><div class="l">jours d'historique</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="25">25</span></div><div class="l">fournisseurs</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="6">6</span></div><div class="l">entrepôts</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="6">6</span></div><div class="l">tables jointes</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="10">10</span></div><div class="l">tests métier</div></div>
+      </div>
+      <p style="margin-top:20px; font-size:.9rem; color:var(--graphite)">
+        Code source complet :
+        <a href="https://github.com/casanostro/supply-chain-gpt" target="_blank" rel="noopener noreferrer">github.com/casanostro/supply-chain-gpt</a>
+      </p>
+      <a class="project-more" href="../poc-mcp/">Projet suivant : POC MCP — LLM ↔ Snowflake →</a>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-row reveal">
+      <div>
+        <div class="node-label"><span class="dot"></span> CONTACT</div>
+        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
+      </div>
+      <div class="foot-links">
+        <a href="../../">Accueil</a>
+        <a href="../">Projets</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+    <div class="foot-note">// site statique · aucun tracking · chiffres agrégés et anonymisés · 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

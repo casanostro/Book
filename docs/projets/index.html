@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Projets data & supply chain d'Adrien Tripon : text-to-SQL, connecteur MCP Snowflake, automatisation Make, documentation datawarehouse, prévision de demande.">
+<title>Projets — Adrien Tripon</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eef1f5'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2331708f'/%3E%3Cpath d='M12 16h8' stroke='%2331708f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%23161d24'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js" defer></script>
+<style>
+/* Styles propres au hub projets */
+.hub-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; padding-bottom: 88px; }
+@media(max-width:820px) { .hub-grid { grid-template-columns: 1fr; } }
+.pcard {
+  background: var(--bg-card); border: 1px solid var(--line-soft);
+  display: flex; flex-direction: column;
+  color: inherit; text-decoration: none;
+  transition: border-color .3s, box-shadow .3s;
+}
+.pcard:hover { border-color: var(--flux); box-shadow: 0 4px 24px rgba(49,112,143,.08); text-decoration: none; }
+.pcard .project-ports { font-size: .62rem; }
+.pcard-body { padding: 20px 24px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.pcard-title { display: flex; align-items: baseline; gap: 12px; }
+.pcard-title .num { font-family: var(--mono); color: var(--graphite); font-size: .78rem; }
+.pcard-title h2 { font-size: 1.02rem; font-weight: 600; line-height: 1.35; }
+.pcard p { font-size: .88rem; color: var(--graphite); flex: 1; }
+.pcard .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.pcard .go {
+  font-family: var(--mono); font-size: .68rem; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--flux); margin-top: 4px;
+}
+.pcard:hover .go { text-decoration: underline; }
+.pcard.demo { border-left: 3px solid var(--ambre); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
+      <div class="nav-links">
+        <a href="../">Accueil</a>
+        <a href="./" aria-current="page">Projets</a>
+        <a href="../actualites/">Actualités</a>
+        <a href="../#contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../">accueil</a><span class="sep">/</span>projets</div>
+  <div class="page-head reveal">
+    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJETS</div>
+    <h1>Le graphe des projets, <em>nœud par nœud</em></h1>
+    <p class="lead">Chaque fiche détaille un système réel : ce qui entre, ce qui se transforme, ce qui sort — avec le schéma d'architecture complet et les garde-fous rendus explicites.</p>
+  </div>
+</div>
+
+<section style="padding-top:40px">
+  <div class="wrap">
+    <div class="hub-grid">
+
+      <a class="pcard reveal" href="supplychaingpt/">
+        <div class="project-ports"><span class="in">IN: Question métier FR</span><span class="out">OUT: SQL + visualisation</span></div>
+        <div class="pcard-body">
+          <div class="pcard-title"><span class="num">[01]</span><h2>SupplyChainGPT — assistant text-to-SQL</h2></div>
+          <p>De la question en français au résultat visualisé : pipeline RAG / text-to-SQL avec validation lecture seule avant toute exécution. Open source.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Claude API</span><span class="tag">SQLite</span><span class="tag">Plotly</span></div>
+          <span class="go">Fiche + schéma d'architecture →</span>
+        </div>
+      </a>
+
+      <a class="pcard reveal" href="poc-mcp/">
+        <div class="project-ports"><span class="in">IN: Question NL</span><span class="out">OUT: Réponse sourcée DWH</span></div>
+        <div class="pcard-body">
+          <div class="pcard-title"><span class="num">[06]</span><h2>POC MCP — LLM ↔ Snowflake</h2></div>
+          <p>Un serveur MCP en lecture seule entre Claude et le datawarehouse, avec le référentiel de documentation injecté comme contexte structuré.</p>
+          <div class="tags"><span class="tag">MCP</span><span class="tag">Claude API</span><span class="tag">Snowflake</span></div>
+          <span class="go">Fiche + schéma d'architecture →</span>
+        </div>
+      </a>
+
+      <a class="pcard reveal" href="plateforme-make/">
+        <div class="project-ports"><span class="in">IN: 159 scénarios</span><span class="out">OUT: 27 625 € de risque priorisé</span></div>
+        <div class="pcard-body">
+          <div class="pcard-title"><span class="num">[02]</span><h2>Plateforme d'automatisation métier</h2></div>
+          <p>Administration d'un parc Make de 159 scénarios et diagnostic post-migration : dead letter queue, chiffrage du risque, priorisation des reprises.</p>
+          <div class="tags"><span class="tag">Make</span><span class="tag">API</span><span class="tag">Production</span></div>
+          <span class="go">Fiche + schéma d'architecture →</span>
+        </div>
+      </a>
+
+      <a class="pcard demo reveal" href="prevision-demande/">
+        <div class="project-ports"><span class="in">IN: 3 ans de ventes hebdo</span><span class="out">OUT: Prévision live + MAPE</span></div>
+        <div class="pcard-body">
+          <div class="pcard-title"><span class="num">[07]</span><h2>Prévision de demande — démo interactive</h2></div>
+          <p>Holt-Winters additif en JS vanilla, dans votre navigateur : réglez α, β, γ, l'horizon et le split train/test, et regardez la prévision se recalculer.</p>
+          <div class="tags"><span class="tag">JS vanilla</span><span class="tag">Holt-Winters</span><span class="tag">Plotly</span><span class="tag">Live</span></div>
+          <span class="go">Lancer la démo →</span>
+        </div>
+      </a>
+
+      <a class="pcard reveal" href="doc-datawarehouse/">
+        <div class="project-ports"><span class="in">IN: 3 bases non cartographiées</span><span class="out">OUT: Source de vérité</span></div>
+        <div class="pcard-body">
+          <div class="pcard-title"><span class="num">[04]</span><h2>Datawarehouse documenté de zéro</h2></div>
+          <p>Reverse-engineering d'un entrepôt Snowflake : 24 schémas révélés, lineage de ~65 vues reconstitué, référentiel devenu source de vérité.</p>
+          <div class="tags"><span class="tag">Snowflake</span><span class="tag">SQL</span><span class="tag">Lineage</span></div>
+          <span class="go">Fiche + schéma d'architecture →</span>
+        </div>
+      </a>
+
+      <a class="pcard reveal" href="newsletter-kpi/">
+        <div class="project-ports"><span class="in">IN: 9 sources BI</span><span class="out">OUT: 50+ destinataires · 15 min</span></div>
+        <div class="pcard-body">
+          <div class="pcard-title"><span class="num">[03]</span><h2>Newsletter KPI automatisée</h2></div>
+          <p>4 h de production manuelle transformées en 15 minutes automatisées : agrégation de 9 sources BI, mise en forme et diffusion hebdomadaire.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">MicroStrategy</span></div>
+          <span class="go">Fiche + schéma d'architecture →</span>
+        </div>
+      </a>
+
+      <a class="pcard reveal" href="investigation-bug/">
+        <div class="project-ports"><span class="in">IN: Indicateur faussé</span><span class="out">OUT: Cause racine documentée</span></div>
+        <div class="pcard-body">
+          <div class="pcard-title"><span class="num">[05]</span><h2>Investigation d'un bug de calcul critique</h2></div>
+          <p>Remontée d'une anomalie silencieuse jusqu'à sa cause racine : une table de secours gelée depuis 2022 qui absorbait 83–85 % des lignes simulées.</p>
+          <div class="tags"><span class="tag">SQL</span><span class="tag">Root cause</span><span class="tag">Data quality</span></div>
+          <span class="go">Fiche + schéma d'architecture →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-row reveal">
+      <div>
+        <div class="node-label"><span class="dot"></span> CONTACT</div>
+        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
+      </div>
+      <div class="foot-links">
+        <a href="../">Accueil</a>
+        <a href="../actualites/">Actualités</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+    <div class="foot-note">// site statique · aucun tracking · chiffres agrégés et anonymisés · 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

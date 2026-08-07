@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Documentation d'un datawarehouse Snowflake de zéro : exploration systématique de 3 bases, reconstruction du lineage de 65 vues, référentiel technique devenu source de vérité.">
+<title>Datawarehouse documenté de zéro | Adrien Tripon</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eef1f5'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2331708f'/%3E%3Cpath d='M12 16h8' stroke='%2331708f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%23161d24'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css">
+<script src="../../assets/site.js" defer></script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="../../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
+      <div class="nav-links">
+        <a href="../../">Accueil</a>
+        <a href="../" aria-current="page">Projets</a>
+        <a href="../../actualites/">Actualités</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">projets</a><span class="sep">/</span>doc-datawarehouse</div>
+  <div class="page-head reveal">
+    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJET [04]</div>
+    <h1>Le datawarehouse <em>documenté de zéro</em> — du reverse-engineering à la source de vérité</h1>
+    <p class="lead">La documentation existante mentionnait 4 schémas. L'exploration en a révélé 24, répartis sur 3 bases. Ce projet a reconstruit le lineage réel d'environ 65 vues et produit le référentiel technique qui sert aujourd'hui de contexte au <a href="../poc-mcp/">POC MCP</a>.</p>
+  </div>
+</div>
+
+<!-- ═══════════ SCHÉMA D'ARCHITECTURE ═══════════ -->
+<section style="padding-top:40px; padding-bottom:48px">
+  <div class="wrap">
+    <div class="node-head reveal" style="margin-bottom:24px">
+      <div class="node-label"><span class="dot"></span> ARCHITECTURE : EXPLORATION → LINEAGE → RÉFÉRENTIEL</div>
+      <h2>Cartographier ce qui existe, pas ce qui est déclaré</h2>
+    </div>
+    <div class="arch reveal">
+      <svg viewBox="0 0 760 330" role="img" aria-label="Schéma du projet de documentation : 3 bases Snowflake explorées, parsing du lineage de 65 vues, référentiel technique consommé par les équipes data et le POC MCP">
+        <defs>
+          <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L8 4 L0 8 z" fill="#5c6b7a"/>
+          </marker>
+        </defs>
+
+        <!-- pile des 3 bases -->
+        <rect class="nbox" x="36" y="40" width="170" height="56" rx="2" style="stroke:var(--line-soft)"/>
+        <rect class="nbox" x="28" y="32" width="170" height="56" rx="2" style="stroke:var(--line-soft)"/>
+        <text class="ntag" x="20" y="16">IN</text>
+        <rect class="nbox-store" x="20" y="24" width="170" height="56" rx="2"/>
+        <text class="ntitle" x="34" y="48">3 bases Snowflake</text>
+        <text class="nsub" x="34" y="64">24 schémas réels · 4 documentés</text>
+
+        <rect class="nbox" x="290" y="24" width="190" height="56" rx="2"/>
+        <text class="ntitle" x="304" y="48">Exploration</text>
+        <text class="nsub" x="304" y="64">information_schema · GET_DDL</text>
+
+        <rect class="nbox" x="560" y="24" width="180" height="56" rx="2"/>
+        <text class="ntitle" x="574" y="48">Parsing lineage</text>
+        <text class="nsub" x="574" y="64">~65 vues · dépendances réelles</text>
+
+        <path class="edge" d="M206 52 H290" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M206 52 H284"/>
+        <text class="edge-label" x="214" y="44">requêtes système</text>
+        <path class="edge" d="M480 52 H560" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M480 52 H554"/>
+        <text class="edge-label" x="488" y="44">DDL des vues</text>
+
+        <!-- référentiel en sortie -->
+        <text class="ntag" x="560" y="172">OUT</text>
+        <rect class="nbox-out" x="560" y="180" width="180" height="56" rx="2"/>
+        <text class="ntitle-inv" x="574" y="204">Référentiel technique</text>
+        <text class="nsub-inv" x="574" y="220">314 lignes · source de vérité</text>
+        <path class="edge" d="M650 80 V180" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M650 80 V174"/>
+
+        <!-- consommateurs -->
+        <rect class="nbox" x="290" y="180" width="190" height="56" rx="2"/>
+        <text class="ntitle" x="304" y="204">Équipes data</text>
+        <text class="nsub" x="304" y="220">onboarding · debug · évolutions</text>
+        <path class="edge" d="M560 208 H480" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
+        <path class="edge-flow slow" d="M560 208 H486"/>
+
+        <rect class="nbox-guard" x="20" y="180" width="190" height="56" rx="2"/>
+        <text class="ntitle" x="34" y="204">POC MCP</text>
+        <text class="nsub" x="34" y="220">contexte injecté au LLM</text>
+        <path class="edge" d="M290 224 H210" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
+        <path class="edge-flow slow" d="M290 224 H216"/>
+
+        <text class="edge-label" x="20" y="290">un référentiel écrit une fois, consommé par les humains comme par les modèles</text>
+      </svg>
+      <div class="legend">
+        <span><span class="sw proc"></span>traitement</span>
+        <span><span class="sw out"></span>livrable</span>
+        <span><span class="sw guard"></span>réutilisation IA (projet 06)</span>
+        <span>— pointillés : consommation du référentiel</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0; padding-bottom:60px">
+  <div class="wrap">
+    <div class="node-head reveal">
+      <div class="node-label"><span class="dot"></span> NODE : POURQUOI ÇA COMPTE</div>
+      <h2>La cartographie comme actif, pas comme corvée</h2>
+    </div>
+    <div class="values" style="margin-bottom:36px">
+      <div class="value reveal">
+        <div class="v-num">constat_01</div>
+        <h3>Le déclaré n'était pas le réel</h3>
+        <p>Quatre schémas documentés, vingt-quatre en production : l'écart n'était pas un détail, c'était le quotidien des équipes — chaque question sur une vue inconnue remontait à la même personne. Le référentiel a cassé cette dépendance aux savoirs individuels.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">constat_02</div>
+        <h3>Un référentiel qui sert deux fois</h3>
+        <p>Écrit d'abord pour les humains, le référentiel est devenu le contexte structuré du POC MCP : les 24 schémas et le lineage des vues sont exactement ce dont un LLM a besoin pour interroger l'entrepôt sans halluciner de tables.</p>
+      </div>
+    </div>
+    <div class="reveal" style="max-width:560px">
+      <div class="mini-tiles">
+        <div class="mt"><div class="v"><span class="count" data-target="24">24</span></div><div class="l">schémas cartographiés (4 documentés avant)</div></div>
+        <div class="mt"><div class="v">~<span class="count" data-target="65">65</span></div><div class="l">vues au lineage reconstitué</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="314">314</span></div><div class="l">lignes de référentiel technique</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="3">3</span></div><div class="l">fichiers de référence livrés</div></div>
+      </div>
+      <a class="project-more" href="../poc-mcp/">La suite logique : POC MCP — LLM ↔ Snowflake →</a>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-row reveal">
+      <div>
+        <div class="node-label"><span class="dot"></span> CONTACT</div>
+        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
+      </div>
+      <div class="foot-links">
+        <a href="../../">Accueil</a>
+        <a href="../">Projets</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+    <div class="foot-note">// site statique · aucun tracking · chiffres agrégés et anonymisés · 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

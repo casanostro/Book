@@ -3,455 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Adrien Tripon — Senior Business Analyst Supply Chain & Data. Systèmes data, automatisation et IA appliquée.">
+<meta name="description" content="Adrien Tripon — Senior Business Analyst Supply Chain & Data. Systèmes data, automatisation et IA appliquée : text-to-SQL, MCP, prévision de demande.">
 <title>Adrien Tripon — Business Analyst Supply Chain & Data</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eef1f5'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2331708f'/%3E%3Cpath d='M12 16h8' stroke='%2331708f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%23161d24'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg: #eef1f5;
-  --bg-card: #ffffff;
-  --encre: #161d24;
-  --encre-2: #2e3a46;
-  --graphite: #5c6b7a;
-  --flux: #31708f;
-  --flux-light: rgba(49,112,143,.08);
-  --flux-mid: rgba(49,112,143,.15);
-  --ambre: #c98a2d;
-  --line: #d0d5dc;
-  --line-soft: #e2e6eb;
-  --sans: 'IBM Plex Sans', system-ui, sans-serif;
-  --mono: 'IBM Plex Mono', ui-monospace, monospace;
-  --wrap: 1080px;
-}
-
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; overflow-x: hidden; }
-body {
-  background: var(--bg);
-  color: var(--encre);
-  font-family: var(--sans);
-  font-size: 16px;
-  line-height: 1.65;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
-}
-
-::selection { background: var(--flux); color: #fff; }
-a { color: var(--flux); text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 24px; }
-
-/* ── NAV ─────────────────────────────────── */
-header {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(238,241,245,.88);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line-soft);
-}
-nav { display: flex; align-items: center; justify-content: space-between; height: 56px; }
-.logo {
-  font-family: var(--mono); font-weight: 700; font-size: .82rem;
-  letter-spacing: .06em; color: var(--encre);
-  display: flex; align-items: center; gap: 8px;
-}
-.logo .dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--flux);
-}
-.nav-links { display: flex; gap: 24px; }
-.nav-links a {
-  font-family: var(--mono); font-size: .72rem; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--graphite); text-decoration: none;
-}
-.nav-links a:hover { color: var(--encre); }
-@media(max-width:700px) { .nav-links { display: none; } }
-
-/* ── HERO ────────────────────────────────── */
-.hero {
-  padding: 100px 0 80px;
-  position: relative;
-}
-.hero-kicker {
-  font-family: var(--mono); font-size: .72rem; letter-spacing: .18em;
-  text-transform: uppercase; color: var(--graphite);
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 24px;
-}
-.hero-kicker .dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--flux); display: inline-block;
-  animation: pulse 2.4s ease-in-out infinite;
-}
-@keyframes pulse { 50% { opacity: .35; } }
-.hero h1 {
-  font-size: clamp(2rem, 4.5vw, 3.2rem);
-  font-weight: 700; line-height: 1.15;
-  color: var(--encre);
-  max-width: 800px;
-  margin-bottom: 24px;
-}
-.hero h1 em { font-style: normal; color: var(--flux); }
-.hero .lead {
-  font-size: 1.1rem; color: var(--graphite);
-  max-width: 660px; line-height: 1.7;
-}
-
-/* KPI row */
-.kpi-row {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
-  background: var(--line); border: 1px solid var(--line);
-  margin-top: 56px;
-}
-@media(max-width:820px) { .kpi-row { grid-template-columns: repeat(2, 1fr); } }
-.kpi {
-  background: var(--bg-card); padding: 24px 20px;
-  transition: background .2s;
-}
-.kpi:hover { background: var(--flux-light); }
-.kpi .val {
-  font-family: var(--mono); font-weight: 700;
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
-  color: var(--encre);
-}
-.kpi .val small { font-size: .55em; color: var(--graphite); font-weight: 500; }
-.kpi .lbl { font-size: .78rem; color: var(--graphite); margin-top: 4px; }
-
-/* ── STAT BAND ───────────────────────────── */
-.statband {
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  background: var(--bg-card);
-  padding: 32px 0;
-}
-.statband .row {
-  display: grid; grid-template-columns: repeat(6, 1fr);
-  gap: 20px; text-align: center;
-}
-@media(max-width:900px) { .statband .row { grid-template-columns: repeat(3, 1fr); row-gap: 28px; } }
-@media(max-width:560px) { .statband .row { grid-template-columns: repeat(2, 1fr); } }
-.stat .val {
-  font-family: var(--mono); font-weight: 700; font-size: 1.3rem;
-  color: var(--encre);
-}
-.stat .val small { font-size: .6em; color: var(--graphite); }
-.stat .lbl {
-  font-family: var(--mono); font-size: .6rem; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--graphite); margin-top: 4px;
-}
-
-/* ── SECTION HEADERS (node-head) ─────────── */
-section { padding: 88px 0; }
-.node-head { margin-bottom: 48px; }
-.node-label {
-  font-family: var(--mono); font-size: .68rem; letter-spacing: .16em;
-  text-transform: uppercase; color: var(--flux);
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 14px;
-}
-.node-label .dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--flux); display: inline-block;
-}
-.node-head h2 {
-  font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 700;
-  color: var(--encre); max-width: 700px;
-}
-.node-head .sub {
-  color: var(--graphite); max-width: 620px; margin-top: 10px;
-}
-
-/* ── À PROPOS ────────────────────────────── */
-.about-lead {
-  font-size: 1.1rem; color: var(--encre-2);
-  max-width: 720px; line-height: 1.75;
-  margin-bottom: 48px;
-}
-.about-lead strong { color: var(--encre); }
-.values {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
-}
-@media(max-width:700px) { .values { grid-template-columns: 1fr; } }
-.value {
-  background: var(--bg-card); border: 1px solid var(--line-soft);
-  padding: 28px; transition: border-color .3s;
-}
-.value:hover { border-color: var(--flux); }
-.v-num {
-  font-family: var(--mono); font-size: .68rem; color: var(--flux);
-  letter-spacing: .08em; margin-bottom: 10px;
-}
-.value h3 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
-.value p { font-size: .9rem; color: var(--graphite); line-height: 1.6; }
-
-/* ── PARCOURS (timeline) ─────────────────── */
-.timeline { position: relative; padding-left: 32px; }
-.timeline::before {
-  content: ''; position: absolute; left: 7px; top: 0; bottom: 0;
-  width: 2px; background: var(--line);
-}
-.xp {
-  position: relative; margin-bottom: 48px;
-  padding-bottom: 48px; border-bottom: 1px solid var(--line-soft);
-}
-.xp:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
-.xp::before {
-  content: ''; position: absolute; left: -32px; top: 6px;
-  width: 16px; height: 16px; border-radius: 50%;
-  background: var(--bg); border: 2px solid var(--flux);
-}
-.xp-date {
-  font-family: var(--mono); font-size: .72rem; color: var(--graphite);
-  letter-spacing: .06em; margin-bottom: 6px;
-}
-.xp h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 4px; }
-.xp-org { font-size: .85rem; color: var(--flux); margin-bottom: 10px; }
-.xp-desc { font-size: .9rem; color: var(--graphite); max-width: 640px; }
-.xp-deltas {
-  display: flex; flex-wrap: wrap; gap: 16px; margin-top: 14px;
-}
-.delta {
-  font-family: var(--mono); font-size: .78rem;
-  background: var(--flux-light); padding: 6px 12px;
-  border-left: 2px solid var(--flux);
-}
-.delta b { color: var(--encre); margin-right: 4px; }
-
-/* ── PROJECTS ────────────────────────────── */
-.project {
-  background: var(--bg-card); border: 1px solid var(--line-soft);
-  margin-bottom: 36px;
-  transition: border-color .3s, box-shadow .3s;
-}
-.project:hover { border-color: var(--flux); box-shadow: 0 4px 24px rgba(49,112,143,.08); }
-
-.project-ports {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 10px 24px;
-  background: var(--flux-light);
-  font-family: var(--mono); font-size: .68rem; color: var(--flux);
-  letter-spacing: .04em;
-}
-.project-ports .in { opacity: .7; }
-.project-ports .out { font-weight: 600; }
-
-.project-head {
-  display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
-  padding: 20px 24px; border-bottom: 1px solid var(--line-soft);
-}
-.project-head .num {
-  font-family: var(--mono); color: var(--graphite); font-size: .8rem;
-}
-.project-head h3 { font-size: 1.05rem; font-weight: 600; }
-.project-head .tags {
-  margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap;
-}
-.tag {
-  font-family: var(--mono); font-size: .6rem; letter-spacing: .06em;
-  text-transform: uppercase; color: var(--graphite);
-  border: 1px solid var(--line); padding: 2px 8px;
-}
-.project-body {
-  display: grid; grid-template-columns: 1.1fr .9fr; gap: 0;
-}
-@media(max-width:860px) { .project-body { grid-template-columns: 1fr; } }
-.project-text {
-  padding: 24px; border-right: 1px solid var(--line-soft);
-}
-@media(max-width:860px) { .project-text { border-right: none; border-bottom: 1px solid var(--line-soft); } }
-.project-text p { color: var(--graphite); font-size: .92rem; }
-.project-text p + p { margin-top: 10px; }
-.project-text .impact {
-  margin-top: 16px; padding: 12px 14px;
-  border-left: 3px solid var(--ambre);
-  background: rgba(201,138,45,.06);
-  font-size: .88rem; color: var(--encre-2);
-}
-.project-text .impact strong {
-  font-family: var(--mono); color: var(--encre);
-}
-.project-text .impact a { color: var(--flux); }
-.project-viz {
-  padding: 24px; display: flex; flex-direction: column;
-  gap: 16px; justify-content: center;
-}
-
-/* ── Mini-DAG (IN→PROC→OUT) ──────────────── */
-.minidag {
-  display: flex; align-items: center; gap: 0;
-  font-family: var(--mono); font-size: .65rem;
-  overflow-x: auto;
-}
-.minidag .dag-in, .minidag .dag-proc, .minidag .dag-out {
-  padding: 8px 12px; white-space: nowrap;
-}
-.minidag .dag-in {
-  background: var(--flux-light); color: var(--flux);
-  border: 1px solid var(--flux-mid);
-}
-.minidag .dag-proc {
-  background: var(--bg); color: var(--graphite);
-  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-}
-.minidag .dag-out {
-  background: var(--encre); color: var(--bg);
-  font-weight: 600;
-}
-.minidag .arrow {
-  padding: 0 4px; color: var(--graphite); flex-shrink: 0;
-}
-
-/* ── SVG Visualizations ──────────────────── */
-.viz-title {
-  font-family: var(--mono); font-size: .65rem; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--graphite);
-}
-.svg-chart { width: 100%; }
-.svg-chart text {
-  font-family: 'IBM Plex Mono', monospace; font-size: 11px;
-  fill: var(--encre-2);
-}
-.svg-chart .bar-label { font-size: 10px; fill: var(--graphite); }
-.svg-chart .bar-value { font-weight: 700; font-size: 11px; fill: var(--encre); }
-.svg-chart .bar-fill { fill: var(--encre); }
-.svg-chart .bar-fill-light { fill: var(--flux); }
-.svg-chart .bar-fill-muted { fill: var(--graphite); }
-
-/* Mini tiles */
-.mini-tiles {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
-  background: var(--line); border: 1px solid var(--line);
-}
-.mini-tiles .mt { background: var(--bg-card); padding: 14px; }
-.mt .v {
-  font-family: var(--mono); font-weight: 700; font-size: 1.15rem;
-  color: var(--encre);
-}
-.mt .v small { font-size: .6em; color: var(--graphite); }
-.mt .l { font-size: .7rem; color: var(--graphite); margin-top: 2px; }
-
-/* Ratio bar */
-.ratio-bar { border: 1px solid var(--line); background: var(--bg-card); padding: 14px; }
-.ratio-bar .rb-head {
-  display: flex; justify-content: space-between;
-  font-family: var(--mono); font-size: .68rem; color: var(--graphite);
-  margin-bottom: 6px;
-}
-.ratio-bar .track {
-  height: 12px; background: var(--line-soft); position: relative; overflow: hidden;
-}
-.ratio-bar .fill {
-  position: absolute; inset: 0; width: 0%;
-  background: linear-gradient(90deg, var(--flux), var(--encre));
-  transition: width 1.4s cubic-bezier(.2,.8,.2,1);
-}
-.ratio-bar .rb-foot {
-  font-family: var(--mono); font-size: .6rem; color: var(--graphite); margin-top: 6px;
-}
-
-/* ── MISSIONS ────────────────────────────── */
-.missions-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
-}
-@media(max-width:700px) { .missions-grid { grid-template-columns: 1fr; } }
-.mission {
-  background: var(--bg-card); border: 1px solid var(--line-soft);
-  padding: 24px; transition: border-color .3s;
-}
-.mission:hover { border-color: var(--flux); }
-.m-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 10px; }
-.m-head h3 { font-size: .95rem; font-weight: 600; }
-.m-ctx {
-  font-family: var(--mono); font-size: .6rem; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--flux); white-space: nowrap;
-}
-.mission > p { font-size: .85rem; color: var(--graphite); }
-.m-stats {
-  display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px;
-}
-.m-stats > div {
-  font-family: var(--mono); font-size: .75rem;
-  background: var(--flux-light); padding: 5px 10px;
-}
-.m-stats b { color: var(--encre); margin-right: 4px; }
-.m-stats span { color: var(--graphite); }
-
-/* ── STACK ────────────────────────────────── */
-.stack-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
-}
-@media(max-width:820px) { .stack-grid { grid-template-columns: 1fr; } }
-.stack-panel {
-  background: var(--bg-card); border: 1px solid var(--line-soft); padding: 24px;
-}
-.stack-panel h3 {
-  font-size: .8rem; letter-spacing: .12em; text-transform: uppercase;
-  color: var(--graphite); margin-bottom: 18px;
-}
-.skill { margin-bottom: 14px; }
-.skill:last-child { margin-bottom: 0; }
-.s-head {
-  display: flex; justify-content: space-between;
-  font-family: var(--mono); font-size: .75rem; margin-bottom: 5px;
-}
-.s-head .ctx {
-  color: var(--graphite); font-size: .62rem; text-transform: uppercase;
-  letter-spacing: .06em;
-}
-.s-track { height: 5px; background: var(--line-soft); }
-.s-fill {
-  height: 100%; width: 0;
-  background: linear-gradient(90deg, var(--flux), var(--encre));
-  transition: width 1.2s cubic-bezier(.2,.8,.2,1);
-}
-
-/* ── FOOTER ──────────────────────────────── */
-footer {
-  border-top: 1px solid var(--line);
-  padding: 44px 0 56px; margin-top: 20px;
-}
-.foot-row {
-  display: flex; justify-content: space-between; align-items: center;
-  flex-wrap: wrap; gap: 18px;
-}
-.foot-links {
-  display: flex; gap: 20px;
-  font-family: var(--mono); font-size: .74rem; letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.foot-links a { color: var(--graphite); text-decoration: none; }
-.foot-links a:hover { color: var(--flux); }
-.foot-note {
-  font-family: var(--mono); font-size: .62rem; color: var(--graphite);
-  margin-top: 24px;
-}
-
-/* ── ANIMATIONS ──────────────────────────── */
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity .6s ease, transform .6s ease; }
-.reveal.in { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
-  .hero-kicker .dot { animation: none; }
-  html { scroll-behavior: auto; }
-}
-</style>
+<link rel="stylesheet" href="assets/site.css">
+<script src="assets/site.js" defer></script>
 </head>
 <body>
 
-<!-- ═══════════ NAV ═══════════ -->
+<!-- ═══════════ NAV (snippet canonique — voir data/README.md) ═══════════ -->
 <header>
   <div class="wrap">
     <nav>
-      <div class="logo"><span class="dot"></span> LINEAGE://SUPPLY-DATA</div>
+      <a class="logo" href="./"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
       <div class="nav-links">
-        <a href="#apropos">À propos</a>
-        <a href="#parcours">Parcours</a>
-        <a href="#projets">Projets</a>
-        <a href="#missions">Missions</a>
-        <a href="#stack">Stack</a>
+        <a class="nav-sec" href="#apropos">À propos</a>
+        <a class="nav-sec" href="#parcours">Parcours</a>
+        <a href="projets/">Projets</a>
+        <a href="actualites/">Actualités</a>
+        <a class="nav-sec" href="#stack">Stack</a>
         <a href="#contact">Contact</a>
       </div>
     </nav>
@@ -588,8 +161,8 @@ footer {
   <div class="wrap">
     <div class="node-head reveal">
       <div class="node-label"><span class="dot"></span> NODE : PROJETS</div>
-      <h2>Six systèmes, un fil rouge : rendre la donnée actionnable</h2>
-      <p class="sub">Chaque projet est lu comme un nœud de lineage : ce qui entre, ce qui se transforme, ce qui sort — avec l'impact mesuré en sortie.</p>
+      <h2>Sept systèmes, un fil rouge : rendre la donnée actionnable</h2>
+      <p class="sub">Chaque projet est lu comme un nœud de lineage : ce qui entre, ce qui se transforme, ce qui sort. Chaque carte ouvre une fiche détaillée avec le schéma d'architecture complet.</p>
     </div>
 
     <!-- PROJET 1 -->
@@ -600,7 +173,7 @@ footer {
       </div>
       <div class="project-head">
         <span class="num">[01]</span>
-        <h3>SupplyChainGPT — assistant text-to-SQL</h3>
+        <h3><a href="projets/supplychaingpt/">SupplyChainGPT — assistant text-to-SQL</a></h3>
         <div class="tags"><span class="tag">Python</span><span class="tag">Claude API</span><span class="tag">SQLite</span><span class="tag">Streamlit</span><span class="tag">Plotly</span></div>
       </div>
       <div class="project-body">
@@ -608,6 +181,7 @@ footer {
           <p>Application qui transforme une question métier en français — « quels fournisseurs ont le plus de ruptures ce mois ? » — en requête SQL, l'exécute et affiche le résultat, le SQL généré et une visualisation automatique.</p>
           <p>Base de démonstration réaliste (6 tables, 90 jours de commandes et de positions de stock), suite de tests de régression sur 10 questions métier, et validation SQL en lecture seule avant toute exécution.</p>
           <div class="impact"><strong>Impact — </strong>Profil hybride rare : IA générative + SQL + expertise du domaine supply chain. Open source : <a href="https://github.com/casanostro/supply-chain-gpt" target="_blank" rel="noopener noreferrer">github.com/casanostro/supply-chain-gpt</a></div>
+          <a class="project-more" href="projets/supplychaingpt/">Fiche + schéma d'architecture →</a>
         </div>
         <div class="project-viz">
           <div class="minidag">
@@ -638,7 +212,7 @@ footer {
       </div>
       <div class="project-head">
         <span class="num">[02]</span>
-        <h3>Plateforme d'automatisation métier</h3>
+        <h3><a href="projets/plateforme-make/">Plateforme d'automatisation métier</a></h3>
         <div class="tags"><span class="tag">Make</span><span class="tag">API</span><span class="tag">Fiabilisation</span><span class="tag">Production</span></div>
       </div>
       <div class="project-body">
@@ -646,6 +220,7 @@ footer {
           <p>Administration d'un parc de 159 scénarios d'automatisation couvrant 6 domaines métier : gestes commerciaux, alertes qualité, base des manquants, et autres flux critiques du quotidien des équipes.</p>
           <p>Diagnostic complet du parc après une migration d'API : identification systématique des exécutions en échec (dead letter queue), traçage du risque financier associé et priorisation des reprises.</p>
           <div class="impact"><strong>Impact — </strong>5 376 exécutions en échec identifiées et 27 625 € de risque financier tracé et priorisé.</div>
+          <a class="project-more" href="projets/plateforme-make/">Fiche + schéma d'architecture →</a>
         </div>
         <div class="project-viz">
           <div class="minidag">
@@ -674,7 +249,7 @@ footer {
       </div>
       <div class="project-head">
         <span class="num">[03]</span>
-        <h3>Newsletter KPI automatisée</h3>
+        <h3><a href="projets/newsletter-kpi/">Newsletter KPI automatisée</a></h3>
         <div class="tags"><span class="tag">Python</span><span class="tag">MicroStrategy</span><span class="tag">Automatisation</span></div>
       </div>
       <div class="project-body">
@@ -682,6 +257,7 @@ footer {
           <p>Industrialisation d'une newsletter de pilotage hebdomadaire : agrégation automatique de 9 sources BI / MicroStrategy, mise en forme et diffusion à plus de 50 destinataires, avec un script complémentaire d'injection de commentaires éditoriaux.</p>
           <p>Le cas d'école de l'automatisation à ROI immédiat : une tâche récurrente, chronophage et sans valeur ajoutée manuelle, transformée en processus fiable de 15 minutes.</p>
           <div class="impact"><strong>Impact — </strong>4 h → 15 min par édition, soit ~94 % de temps de production gagné, chaque semaine.</div>
+          <a class="project-more" href="projets/newsletter-kpi/">Fiche + schéma d'architecture →</a>
         </div>
         <div class="project-viz">
           <div class="minidag">
@@ -713,7 +289,7 @@ footer {
       </div>
       <div class="project-head">
         <span class="num">[04]</span>
-        <h3>Architecture datawarehouse documentée de zéro</h3>
+        <h3><a href="projets/doc-datawarehouse/">Architecture datawarehouse documentée de zéro</a></h3>
         <div class="tags"><span class="tag">Snowflake</span><span class="tag">SQL</span><span class="tag">Lineage</span><span class="tag">Documentation</span></div>
       </div>
       <div class="project-body">
@@ -721,6 +297,7 @@ footer {
           <p>Reverse-engineering et documentation complète d'un entrepôt de données supply chain jusque-là non cartographié : exploration systématique des bases, reconstruction du lineage réel des vues, et rédaction d'un référentiel technique devenu la source de vérité de la chaîne data.</p>
           <p>La documentation existante ne mentionnait que 4 schémas — l'exploration en a révélé 24, répartis sur 3 bases, avec le lineage d'environ 65 vues reconstitué.</p>
           <div class="impact"><strong>Impact — </strong>Référentiel de 314 lignes + 3 fichiers de référence. Réduction durable du risque de dépendance aux savoirs individuels.</div>
+          <a class="project-more" href="projets/doc-datawarehouse/">Fiche + schéma d'architecture →</a>
         </div>
         <div class="project-viz">
           <div class="minidag">
@@ -752,7 +329,7 @@ footer {
       </div>
       <div class="project-head">
         <span class="num">[05]</span>
-        <h3>Investigation d'un bug de calcul critique</h3>
+        <h3><a href="projets/investigation-bug/">Investigation d'un bug de calcul critique</a></h3>
         <div class="tags"><span class="tag">SQL</span><span class="tag">Root cause</span><span class="tag">Data quality</span></div>
       </div>
       <div class="project-body">
@@ -760,6 +337,7 @@ footer {
           <p>Diagnostic de bout en bout d'une anomalie silencieuse dans un moteur de simulation de commandes, qui faussait un indicateur de service publié en reporting sans qu'aucune alerte ne se déclenche.</p>
           <p>Cause racine confirmée : une table de secours gelée depuis juillet 2022 (~3,6 M de lignes historiques figées). 83 à 85 % des lignes simulées basculaient silencieusement sur ce fallback obsolète.</p>
           <div class="impact"><strong>Impact — </strong>0,53 % du volume attendu réellement généré (54 colis vs ~10 244). Impact quantifié, correctif proposé et documenté.</div>
+          <a class="project-more" href="projets/investigation-bug/">Fiche + schéma d'architecture →</a>
         </div>
         <div class="project-viz">
           <div class="minidag">
@@ -796,7 +374,7 @@ footer {
       </div>
       <div class="project-head">
         <span class="num">[06]</span>
-        <h3>POC MCP — interroger le datawarehouse en langage naturel</h3>
+        <h3><a href="projets/poc-mcp/">POC MCP — interroger le datawarehouse en langage naturel</a></h3>
         <div class="tags"><span class="tag">MCP</span><span class="tag">Claude API</span><span class="tag">Snowflake</span><span class="tag">LLM agents</span></div>
       </div>
       <div class="project-body">
@@ -804,6 +382,7 @@ footer {
           <p>Preuve de concept d'un connecteur MCP (Model Context Protocol) entre un LLM et l'entrepôt de données Snowflake : les équipes posent leurs questions en langage naturel, le modèle explore le schéma, génère la requête et répond avec ses sources.</p>
           <p>Prolongement direct de la documentation du datawarehouse (projet 04) : le référentiel technique construit à la main devient le contexte structuré qui rend le LLM fiable sur un entrepôt réel — accès en lecture seule, périmètre de schémas contrôlé.</p>
           <div class="impact"><strong>Impact — </strong>Du reverse-engineering au self-service : la cartographie d'hier sert de garde-fou à l'IA d'aujourd'hui.</div>
+          <a class="project-more" href="projets/poc-mcp/">Fiche + schéma d'architecture →</a>
         </div>
         <div class="project-viz">
           <div class="minidag">
@@ -817,6 +396,43 @@ footer {
           <div class="mini-tiles">
             <div class="mt"><div class="v"><span class="count" data-target="24">24</span></div><div class="l">schémas cartographiés en contexte</div></div>
             <div class="mt"><div class="v">~<span class="count" data-target="65">65</span></div><div class="l">vues au lineage documenté</div></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJET 7 — démo interactive -->
+    <article class="project reveal">
+      <div class="project-ports">
+        <span class="in">IN: 3 ans de ventes hebdo (données synthétiques)</span>
+        <span class="out">OUT: Prévision + MAPE recalculés en direct</span>
+      </div>
+      <div class="project-head">
+        <span class="num">[07]</span>
+        <h3><a href="projets/prevision-demande/">Prévision de demande — démo interactive Holt-Winters</a></h3>
+        <div class="tags"><span class="tag">JS vanilla</span><span class="tag">Holt-Winters</span><span class="tag">Plotly</span><span class="tag">Live demo</span></div>
+      </div>
+      <div class="project-body">
+        <div class="project-text">
+          <p>Un modèle de prévision de demande qui tourne entièrement dans votre navigateur : lissage exponentiel triple (Holt-Winters additif) implémenté en JavaScript vanilla, sur un historique retail alimentaire synthétique de 3 ans.</p>
+          <p>Réglez α, β, γ et l'horizon en direct, observez le fit, la prévision et les métriques d'erreur se recalculer — ou laissez le grid-search trouver les paramètres optimaux.</p>
+          <div class="impact"><strong>Impact — </strong>Un modèle explicable de bout en bout : chaque paramètre a un sens métier, chaque prévision peut être justifiée.</div>
+          <a class="project-more" href="projets/prevision-demande/">Lancer la démo →</a>
+        </div>
+        <div class="project-viz">
+          <div class="minidag">
+            <div class="dag-in">Ventes hebdo · 156 sem.</div>
+            <div class="arrow">→</div>
+            <div class="dag-proc">Holt-Winters additif (α β γ)</div>
+            <div class="arrow">→</div>
+            <div class="dag-out">Prévision + intervalle + MAPE</div>
+          </div>
+          <div class="viz-title">composantes du modèle</div>
+          <div class="mini-tiles">
+            <div class="mt"><div class="v">α</div><div class="l">niveau — réactivité à la demande récente</div></div>
+            <div class="mt"><div class="v">β</div><div class="l">tendance — croissance de fond</div></div>
+            <div class="mt"><div class="v">γ</div><div class="l">saisonnalité — cycle annuel (52 sem.)</div></div>
+            <div class="mt"><div class="v">±σ</div><div class="l">intervalle — incertitude affichée</div></div>
           </div>
         </div>
       </div>
@@ -919,6 +535,8 @@ footer {
         <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
       </div>
       <div class="foot-links">
+        <a href="projets/">Projets</a>
+        <a href="actualites/">Actualités</a>
         <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
@@ -927,42 +545,5 @@ footer {
   </div>
 </footer>
 
-<script>
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-const fmtFR = (v, dec, group) => group
-  ? Math.round(v).toLocaleString('fr-FR')
-  : v.toFixed(dec).replace('.', ',');
-
-function animateCounter(el) {
-  if (el.dataset.done) return;
-  el.dataset.done = '1';
-  const target = parseFloat(el.dataset.target);
-  const dec = parseInt(el.dataset.decimals || '0', 10);
-  const group = el.dataset.group === '1';
-  if (reduceMotion) { el.textContent = fmtFR(target, dec, group); return; }
-  const dur = 1400, t0 = performance.now();
-  (function tick(now) {
-    const p = Math.min((now - t0) / dur, 1);
-    const eased = 1 - Math.pow(1 - p, 3);
-    el.textContent = fmtFR(target * eased, dec, group);
-    if (p < 1) requestAnimationFrame(tick);
-  })(t0);
-}
-
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (!e.isIntersecting) return;
-    e.target.classList.add('in');
-    e.target.querySelectorAll('.count').forEach(animateCounter);
-    e.target.querySelectorAll('.s-fill, .fill').forEach(el => {
-      el.style.width = el.dataset.width + '%';
-    });
-    io.unobserve(e.target);
-  });
-}, { threshold: 0.15 });
-
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-</script>
 </body>
 </html>

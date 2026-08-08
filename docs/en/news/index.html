@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Actualités d'Adrien Tripon : avancées des projets data & supply chain, démos, publications — text-to-SQL, MCP, prévision de demande.">
-<title>Actualités — Adrien Tripon</title>
+<meta name="description" content="Adrien Tripon's news: progress on data & supply chain projects, demos, publications — text-to-SQL, MCP, forecasting.">
+<title>News — Adrien Tripon</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eef1f5'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2331708f'/%3E%3Cpath d='M12 16h8' stroke='%2331708f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%23161d24'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,10 +12,9 @@
 <link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/actualites/">
 <link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/news/">
 <link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/actualites/">
-<link rel="stylesheet" href="../assets/site.css">
-<script src="../assets/site.js" defer></script>
+<link rel="stylesheet" href="../../assets/site.css">
+<script src="../../assets/site.js" defer></script>
 <style>
-/* Styles propres à la page actualités */
 .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
 .feed { max-width: 780px; }
 .actu {
@@ -57,22 +56,22 @@
     <nav>
       <a class="logo" href="../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
       <div class="nav-links">
-        <a href="../">Accueil</a>
-        <a href="../projets/">Projets</a>
-        <a href="./" aria-current="page">Actualités</a>
+        <a href="../">Home</a>
+        <a href="../projects/">Projects</a>
+        <a href="./" aria-current="page">News</a>
         <a href="../#contact">Contact</a>
       </div>
-      <a class="lang-toggle" data-lang="en" href="../en/news/" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
+      <a class="lang-toggle" data-lang="fr" href="../../actualites/" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
     </nav>
   </div>
 </header>
 
 <div class="wrap">
-  <div class="crumb reveal"><a href="../">accueil</a><span class="sep">/</span>actualites</div>
+  <div class="crumb reveal"><a href="../">home</a><span class="sep">/</span>news</div>
   <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : ACTUALITÉS</div>
-    <h1>Le journal du graphe, <em>commit par commit</em></h1>
-    <p class="lead">Avancées des projets, démos publiées, notes de terrain. Chaque entrée vit dans un fichier JSON versionné dans le dépôt — publier, ici, c'est committer.</p>
+    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : NEWS</div>
+    <h1>The graph's journal, <em>commit by commit</em></h1>
+    <p class="lead">Project progress, published demos, field notes. Every entry lives in a versioned JSON file in the repository — publishing, here, is committing.</p>
   </div>
 </div>
 
@@ -80,7 +79,7 @@
   <div class="wrap">
     <div class="filters reveal" id="filters" hidden></div>
     <div class="feed" id="feed">
-      <div class="feed-state">chargement de data/actualites.json…</div>
+      <div class="feed-state">loading data/actualites.en.json…</div>
     </div>
   </div>
 </section>
@@ -90,26 +89,23 @@
     <div class="foot-row reveal">
       <div>
         <div class="node-label"><span class="dot"></span> CONTACT</div>
-        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
+        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Supply Chain &amp; Data Business Analyst</div>
       </div>
       <div class="foot-links">
-        <a href="../">Accueil</a>
-        <a href="../projets/">Projets</a>
+        <a href="../">Home</a>
+        <a href="../projects/">Projects</a>
         <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
-    <div class="foot-note">// site statique · aucun tracking · chiffres agrégés et anonymisés · 2026</div>
+    <div class="foot-note">// static site · no tracking · figures aggregated and anonymised · 2026</div>
   </div>
 </footer>
 
 <script>
-/* ═══════════════════════════════════════════════════════════
-   Actualités : fetch de ../data/actualites.json, tri par date
-   décroissante, filtrage par tag, mini-rendu markdown sûr.
-   Les cas fichier vide / JSON invalide / fetch en échec
-   affichent un état lisible au lieu d'une page cassée.
-   ═══════════════════════════════════════════════════════════ */
+/* News feed: fetches ../../data/actualites.en.json, sorts by date
+   descending, filters by tag, safe mini-markdown rendering.
+   Empty file / invalid JSON / failed fetch all show a readable state. */
 (function () {
   'use strict';
 
@@ -118,14 +114,12 @@
   var entries = [];
   var activeTag = null;
 
-  // échappe le HTML avant tout rendu (le JSON est versionné, mais restons stricts)
   function esc(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
 
-  // mini-markdown : **gras**, *italique*, [texte](url), paragraphes
   function renderMarkdown(src) {
     var html = esc(src)
       .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
@@ -140,7 +134,7 @@
   function fmtDate(iso) {
     var d = new Date(iso + 'T00:00:00');
     if (isNaN(d)) return esc(iso);
-    return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
   }
 
   function state(msg) { feed.innerHTML = '<div class="feed-state">' + msg + '</div>'; }
@@ -156,7 +150,7 @@
     filters.innerHTML = '';
     var all = document.createElement('button');
     all.className = 'chip' + (activeTag === null ? ' on' : '');
-    all.textContent = 'tous';
+    all.textContent = 'all';
     all.addEventListener('click', function () { activeTag = null; renderFilters(); renderFeed(); });
     filters.appendChild(all);
     tags.forEach(function (t) {
@@ -176,7 +170,7 @@
       ? entries.filter(function (e) { return (e.tags || []).indexOf(activeTag) !== -1; })
       : entries;
     if (visible.length === 0) {
-      state(activeTag ? 'aucune entrée pour le tag « ' + esc(activeTag) + ' »' : 'aucune actualité pour le moment — la première arrive bientôt.');
+      state(activeTag ? 'no entries for tag "' + esc(activeTag) + '"' : 'no news yet — the first entry is coming soon.');
       return;
     }
     feed.innerHTML = '';
@@ -191,31 +185,30 @@
         '<span class="actu-tags">' + tagsHtml + '</span></div>' +
         '<h2>' + esc(e.titre) + '</h2>' +
         '<div class="actu-body">' + renderMarkdown(e.contenu || '') + '</div>' +
-        (e.lien ? '<a class="actu-link" href="' + esc(e.lien) + '" rel="noopener noreferrer">consulter →</a>' : '');
+        (e.lien ? '<a class="actu-link" href="' + esc(e.lien) + '" rel="noopener noreferrer">open →</a>' : '');
       feed.appendChild(art);
     });
   }
 
-  fetch('../data/actualites.json', { cache: 'no-cache' })
+  fetch('../../data/actualites.en.json', { cache: 'no-cache' })
     .then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.text();
     })
     .then(function (txt) {
-      if (!txt.trim()) { state('aucune actualité pour le moment — la première arrive bientôt.'); return; }
-      var data = JSON.parse(txt); // un JSON invalide part dans le catch
+      if (!txt.trim()) { state('no news yet — the first entry is coming soon.'); return; }
+      var data = JSON.parse(txt);
       if (!Array.isArray(data) || data.length === 0) {
-        state('aucune actualité pour le moment — la première arrive bientôt.');
+        state('no news yet — the first entry is coming soon.');
         return;
       }
-      // garde les entrées minimales valides, tri par date décroissante
       entries = data.filter(function (e) { return e && e.date && e.titre; })
         .sort(function (a, b) { return a.date < b.date ? 1 : -1; });
       renderFilters();
       renderFeed();
     })
     .catch(function (err) {
-      state('impossible de charger les actualités (' + esc(err.message) + ') — réessayez plus tard.');
+      state('could not load the news feed (' + esc(err.message) + ') — please try again later.');
     });
 })();
 </script>

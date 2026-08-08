@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="MCP POC: architecture of a Model Context Protocol connector between an LLM and Snowflake — typed tools, documentation reference injected as context, read-only access.">
+<title>MCP POC — LLM ↔ Snowflake | Adrien Tripon</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eef1f5'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2331708f'/%3E%3Cpath d='M12 16h8' stroke='%2331708f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%23161d24'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/projets/poc-mcp/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/projects/mcp-poc/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/projets/poc-mcp/">
+<link rel="stylesheet" href="../../../assets/site.css">
+<script src="../../../assets/site.js" defer></script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="../../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
+      <div class="nav-links">
+        <a href="../../">Home</a>
+        <a href="../" aria-current="page">Projects</a>
+        <a href="../../news/">News</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <a class="lang-toggle" data-lang="fr" href="../../../projets/poc-mcp/" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">projects</a><span class="sep">/</span>mcp-poc</div>
+  <div class="page-head reveal">
+    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJECT [06]</div>
+    <h1>MCP POC — <em>querying the data warehouse</em> in natural language</h1>
+    <p class="lead">An MCP (Model Context Protocol) server puts the LLM in front of Snowflake with typed tools and a controlled scope. The warehouse documentation reference — built by hand — becomes the context that makes the model reliable on a real warehouse.</p>
+  </div>
+</div>
+
+<!-- ═══════════ ARCHITECTURE ═══════════ -->
+<section style="padding-top:40px; padding-bottom:48px">
+  <div class="wrap">
+    <div class="node-head reveal" style="margin-bottom:24px">
+      <div class="node-label"><span class="dot"></span> ARCHITECTURE : LLM ↔ MCP ↔ SNOWFLAKE</div>
+      <h2>Three layers, two controlled boundaries</h2>
+    </div>
+    <div class="arch reveal">
+      <svg viewBox="0 0 820 330" role="img" aria-label="MCP POC architecture diagram: user, Claude, MCP server, Snowflake, with injected documentation reference and read-only access">
+        <defs>
+          <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L8 4 L0 8 z" fill="#5c6b7a"/>
+          </marker>
+        </defs>
+
+        <!-- ── Row 1: the call chain ── -->
+        <text class="ntag" x="20" y="26">IN</text>
+        <rect class="nbox-in" x="20" y="34" width="160" height="56" rx="2"/>
+        <text class="ntitle" x="34" y="58">Business question</text>
+        <text class="nsub" x="34" y="74">natural language</text>
+
+        <rect class="nbox" x="250" y="34" width="160" height="56" rx="2"/>
+        <text class="ntitle" x="264" y="58">Claude · LLM</text>
+        <text class="nsub" x="264" y="74">orchestrates the tools</text>
+
+        <rect class="nbox" x="480" y="34" width="160" height="56" rx="2"/>
+        <text class="ntitle" x="494" y="58">MCP server</text>
+        <text class="nsub" x="494" y="74">typed tools · Python</text>
+
+        <rect class="nbox-store" x="700" y="34" width="100" height="56" rx="2"/>
+        <text class="ntitle" x="712" y="58">Snowflake</text>
+        <text class="nsub" x="712" y="74">24 schemas</text>
+
+        <path class="edge" d="M180 62 H250" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M180 62 H244"/>
+
+        <!-- Claude ↔ MCP round-trip -->
+        <path class="edge" d="M410 48 H480" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M410 48 H474"/>
+        <text class="edge-label" x="414" y="40">tool calls</text>
+        <path class="edge" d="M480 76 H410" marker-end="url(#arr)"/>
+        <path class="edge-flow slow" d="M480 76 H416"/>
+        <text class="edge-label" x="414" y="92">results + schema</text>
+
+        <!-- MCP ↔ Snowflake round-trip -->
+        <path class="edge" d="M640 48 H700" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M640 48 H694"/>
+        <text class="edge-label" x="644" y="40">SQL</text>
+        <path class="edge" d="M700 76 H640" marker-end="url(#arr)"/>
+        <path class="edge-flow slow" d="M700 76 H646"/>
+        <text class="edge-label" x="644" y="92">rows</text>
+
+        <!-- exposed tools -->
+        <text class="edge-label" x="480" y="116" style="letter-spacing:.04em">list_schemas() · describe_view() · run_query(SELECT…)</text>
+
+        <!-- ── Row 2: answer, injected context, guardrails ── -->
+        <text class="ntag" x="20" y="188">OUT</text>
+        <rect class="nbox-out" x="20" y="196" width="160" height="56" rx="2"/>
+        <text class="ntitle-inv" x="34" y="220">Sourced answer</text>
+        <text class="nsub-inv" x="34" y="236">SQL attached · views cited</text>
+        <path class="edge" d="M330 90 V224 H180" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M330 90 V224 H186"/>
+
+        <rect class="nbox-store" x="250" y="196" width="190" height="56" rx="2"/>
+        <text class="ntitle" x="264" y="220">Documentation ref.</text>
+        <text class="nsub" x="264" y="236">lineage of 65 views · 314 lines</text>
+        <path class="edge" d="M440 210 H530 V145" marker-end="url(#arr)"/>
+        <path class="edge-flow slow" d="M440 210 H530 V151"/>
+        <text class="edge-label" x="448" y="202">injected context</text>
+        <path class="edge" d="M530 145 V90" style="stroke-dasharray:3 4"/>
+
+        <text class="ntag-guard" x="600" y="188">GUARDRAILS</text>
+        <rect class="nbox-guard" x="600" y="196" width="200" height="56" rx="2"/>
+        <text class="ntitle" x="614" y="216">Read-only role</text>
+        <text class="nsub" x="614" y="232">SELECT only · controlled</text>
+        <text class="nsub" x="614" y="244">schema scope · quotas</text>
+        <path class="edge" d="M690 196 V104" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
+        <text class="edge-label" x="698" y="152">frames every call</text>
+      </svg>
+      <div class="legend">
+        <span><span class="sw in"></span>user input</span>
+        <span><span class="sw proc"></span>processing</span>
+        <span><span class="sw guard"></span>explicit guardrail</span>
+        <span><span class="sw out"></span>output</span>
+        <span>— dashed: references and constraints</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ DETAIL ═══════════ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="node-head reveal">
+      <div class="node-label"><span class="dot"></span> NODE : WHAT MAKES THE POC RELIABLE</div>
+      <h2>Yesterday's documentation is today's guardrail</h2>
+    </div>
+    <div class="values">
+      <div class="value reveal">
+        <div class="v-num">principle_01</div>
+        <h3>The reference as context</h3>
+        <p>The LLM doesn't guess the schema: it receives the technical reference built during the <a href="../datawarehouse-docs/">data warehouse documentation</a> — 24 mapped schemas, the lineage of ~65 views, the known pitfalls. That structured context is the difference between a demo and a tool.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">principle_02</div>
+        <h3>Typed tools, not raw access</h3>
+        <p>The MCP server doesn't expose a SQL connection: it exposes three narrow tools — list schemas, describe a view, run a SELECT query. The model explores the warehouse in observable steps, never blindly.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">principle_03</div>
+        <h3>Read-only, closed scope</h3>
+        <p>The Snowflake role used by the server is read-only and limited to the documented schemas. Even an adversarial prompt can neither write nor leave the scope: the constraint lives in the infrastructure, not in the prompt.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">principle_04</div>
+        <h3>Sourced answers</h3>
+        <p>Every answer cites the views it queried and attaches the executed SQL. A business team can check the source, a data engineer can replay the query: trust is built on auditability, not on the model's authority.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0; padding-bottom:60px">
+  <div class="wrap">
+    <div class="node-head reveal">
+      <div class="node-label"><span class="dot"></span> NODE : IN NUMBERS</div>
+      <h2>What the MCP server exposes to the model</h2>
+    </div>
+    <div class="reveal" style="max-width:560px">
+      <div class="mini-tiles" style="grid-template-columns:repeat(3,1fr)">
+        <div class="mt"><div class="v"><span class="count" data-target="24">24</span></div><div class="l">schemas as context</div></div>
+        <div class="mt"><div class="v">~<span class="count" data-target="65">65</span></div><div class="l">views with documented lineage</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="3">3</span></div><div class="l">MCP tools exposed</div></div>
+      </div>
+      <a class="project-more" href="../supplychaingpt/">See also: SupplyChainGPT — text-to-SQL →</a>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-row reveal">
+      <div>
+        <div class="node-label"><span class="dot"></span> CONTACT</div>
+        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Supply Chain &amp; Data Business Analyst</div>
+      </div>
+      <div class="foot-links">
+        <a href="../../">Home</a>
+        <a href="../">Projects</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+    <div class="foot-note">// static site · no tracking · figures aggregated and anonymised · 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

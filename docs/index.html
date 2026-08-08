@@ -9,10 +9,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/">
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js" defer></script>
 </head>
-<body>
+<body data-lang-root>
 
 <!-- ═══════════ NAV (snippet canonique — voir data/README.md) ═══════════ -->
 <header>
@@ -27,6 +30,7 @@
         <a class="nav-sec" href="#stack">Stack</a>
         <a href="#contact">Contact</a>
       </div>
+      <a class="lang-toggle" data-lang="en" href="en/" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
     </nav>
   </div>
 </header>
@@ -161,7 +165,7 @@
   <div class="wrap">
     <div class="node-head reveal">
       <div class="node-label"><span class="dot"></span> NODE : PROJETS</div>
-      <h2>Sept systèmes, un fil rouge : rendre la donnée actionnable</h2>
+      <h2>Huit systèmes, un fil rouge : rendre la donnée actionnable</h2>
       <p class="sub">Chaque projet est lu comme un nœud de lineage : ce qui entre, ce qui se transforme, ce qui sort. Chaque carte ouvre une fiche détaillée avec le schéma d'architecture complet.</p>
     </div>
 
@@ -401,38 +405,73 @@
       </div>
     </article>
 
-    <!-- PROJET 7 — démo interactive -->
+    <!-- PROJET 7 — dashboards -->
     <article class="project reveal">
       <div class="project-ports">
-        <span class="in">IN: 3 ans de ventes hebdo (données synthétiques)</span>
-        <span class="out">OUT: Prévision + MAPE recalculés en direct</span>
+        <span class="in">IN: 1 jeu de données supply (6 entrepôts · 25 fournisseurs · 12 mois)</span>
+        <span class="out">OUT: 2 dashboards, 2 audiences</span>
       </div>
       <div class="project-head">
         <span class="num">[07]</span>
-        <h3><a href="projets/prevision-demande/">Prévision de demande — démo interactive Holt-Winters</a></h3>
-        <div class="tags"><span class="tag">JS vanilla</span><span class="tag">Holt-Winters</span><span class="tag">Plotly</span><span class="tag">Live demo</span></div>
+        <h3><a href="projets/dataviz/">Dataviz — deux lectures d'une même donnée</a></h3>
+        <div class="tags"><span class="tag">Dataviz</span><span class="tag">Plotly</span><span class="tag">JS vanilla</span><span class="tag">Live demo</span></div>
       </div>
       <div class="project-body">
         <div class="project-text">
-          <p>Un modèle de prévision de demande qui tourne entièrement dans votre navigateur : lissage exponentiel triple (Holt-Winters additif) implémenté en JavaScript vanilla, sur un historique retail alimentaire synthétique de 3 ans.</p>
-          <p>Réglez α, β, γ et l'horizon en direct, observez le fit, la prévision et les métriques d'erreur se recalculer — ou laissez le grid-search trouver les paramètres optimaux.</p>
-          <div class="impact"><strong>Impact — </strong>Un modèle explicable de bout en bout : chaque paramètre a un sens métier, chaque prévision peut être justifiée.</div>
-          <a class="project-more" href="projets/prevision-demande/">Lancer la démo →</a>
+          <p>Deux dashboards interactifs construits sur la même donnée supply chain : une vue C-level — 5 secondes pour comprendre, 5 KPI, zéro filtre — et une vue opérations — dense, filtrable, avec alertes du jour et tableau de ruptures triable.</p>
+          <p>Un switch bascule de l'une à l'autre pour rendre le contraste évident : le dashboard unique « pour tout le monde » est l'erreur classique du reporting.</p>
+          <div class="impact"><strong>Impact — </strong>Le design d'un dashboard est une décision d'audience avant d'être une décision de graphiques.</div>
+          <a class="project-more" href="projets/dataviz/">Explorer les deux vues →</a>
         </div>
         <div class="project-viz">
           <div class="minidag">
-            <div class="dag-in">Ventes hebdo · 156 sem.</div>
+            <div class="dag-in">1 donnée supply · 12 mois</div>
             <div class="arrow">→</div>
-            <div class="dag-proc">Holt-Winters additif (α β γ)</div>
+            <div class="dag-proc">2 designs · 2 audiences</div>
             <div class="arrow">→</div>
-            <div class="dag-out">Prévision + intervalle + MAPE</div>
+            <div class="dag-out">C-level ↔ opérations</div>
           </div>
-          <div class="viz-title">composantes du modèle</div>
+          <div class="viz-title">deux philosophies</div>
           <div class="mini-tiles">
-            <div class="mt"><div class="v">α</div><div class="l">niveau — réactivité à la demande récente</div></div>
-            <div class="mt"><div class="v">β</div><div class="l">tendance — croissance de fond</div></div>
-            <div class="mt"><div class="v">γ</div><div class="l">saisonnalité — cycle annuel (52 sem.)</div></div>
-            <div class="mt"><div class="v">±σ</div><div class="l">intervalle — incertitude affichée</div></div>
+            <div class="mt"><div class="v">A</div><div class="l">C-level — 5 KPI, 1 tendance, 0 filtre</div></div>
+            <div class="mt"><div class="v">B</div><div class="l">opérations — filtres croisés, alertes, tri</div></div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- PROJET 8 — outil de prévision -->
+    <article class="project reveal">
+      <div class="project-ports">
+        <span class="in">IN: Un scénario ou votre CSV (local)</span>
+        <span class="out">OUT: Prévision + intervalle + export</span>
+      </div>
+      <div class="project-head">
+        <span class="num">[08]</span>
+        <h3><a href="projets/prevision-ventes/">Prévision des ventes — un clic, une prévision</a></h3>
+        <div class="tags"><span class="tag">JS vanilla</span><span class="tag">Holt-Winters</span><span class="tag">Auto-tuning</span><span class="tag">Outil live</span></div>
+      </div>
+      <div class="project-body">
+        <div class="project-text">
+          <p>L'expérience d'un outil interne fini : choisissez un profil de produit — saisonnier, stable, en croissance — ou chargez votre propre CSV, cliquez « Prévoir », obtenez la prévision, son intervalle et l'export.</p>
+          <p>Aucun paramètre exposé : le lissage exponentiel triple s'auto-calibre par grid search sur le MAPE, en silence. Le fichier est parsé localement, rien ne quitte le navigateur.</p>
+          <div class="impact"><strong>Impact — </strong>La différence entre une démo et un outil : le modèle disparaît derrière l'usage.</div>
+          <a class="project-more" href="projets/prevision-ventes/">Lancer l'outil →</a>
+        </div>
+        <div class="project-viz">
+          <div class="minidag">
+            <div class="dag-in">Historique de ventes</div>
+            <div class="arrow">→</div>
+            <div class="dag-proc">Auto-tuning silencieux (grid search)</div>
+            <div class="arrow">→</div>
+            <div class="dag-out">Prévision + intervalle + CSV</div>
+          </div>
+          <div class="viz-title">l'outil en bref</div>
+          <div class="mini-tiles">
+            <div class="mt"><div class="v">1</div><div class="l">bouton — aucun paramètre exposé</div></div>
+            <div class="mt"><div class="v">3</div><div class="l">chiffres clés : total, MAPE, tendance</div></div>
+            <div class="mt"><div class="v">🔒</div><div class="l">CSV parsé localement, rien n'est envoyé</div></div>
+            <div class="mt"><div class="v">±σ</div><div class="l">intervalle de confiance affiché</div></div>
           </div>
         </div>
       </div>

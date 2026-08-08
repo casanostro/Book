@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Outil de prévision des ventes dans le navigateur : choisissez un scénario ou chargez votre CSV, un clic, une prévision avec intervalle et export — auto-tuning silencieux, aucune donnée envoyée.">
-<title>Prévision des ventes — outil en un clic | Adrien Tripon</title>
+<meta name="description" content="In-browser sales forecasting tool: pick a preset scenario or upload your CSV, one click, one forecast with interval and export — silent auto-tuning, no data uploaded.">
+<title>Sales forecasting — one-click tool | Adrien Tripon</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eef1f5'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2331708f'/%3E%3Cpath d='M12 16h8' stroke='%2331708f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%23161d24'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,11 +12,10 @@
 <link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/projets/prevision-ventes/">
 <link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/projects/sales-forecast/">
 <link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/projets/prevision-ventes/">
-<link rel="stylesheet" href="../../assets/site.css">
-<script src="../../assets/site.js" defer></script>
+<link rel="stylesheet" href="../../../assets/site.css">
+<script src="../../../assets/site.js" defer></script>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 <style>
-/* Styles propres à l'outil de prévision */
 .tool { background: var(--bg-card); border: 1px solid var(--line-soft); padding: 26px; }
 .src-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
 .scenario {
@@ -78,60 +77,60 @@ details.how .body p + p { margin-top: 8px; }
     <nav>
       <a class="logo" href="../../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
       <div class="nav-links">
-        <a href="../../">Accueil</a>
-        <a href="../" aria-current="page">Projets</a>
-        <a href="../../actualites/">Actualités</a>
+        <a href="../../">Home</a>
+        <a href="../" aria-current="page">Projects</a>
+        <a href="../../news/">News</a>
         <a href="../../#contact">Contact</a>
       </div>
-      <a class="lang-toggle" data-lang="en" href="../../en/projects/sales-forecast/" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
+      <a class="lang-toggle" data-lang="fr" href="../../../projets/prevision-ventes/" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
     </nav>
   </div>
 </header>
 
 <div class="wrap">
-  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">projets</a><span class="sep">/</span>prevision-ventes</div>
+  <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">projects</a><span class="sep">/</span>sales-forecast</div>
   <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJET [08] · OUTIL LIVE</div>
-    <h1>Prévision des ventes — <em>un clic, une prévision</em></h1>
-    <p class="lead">L'expérience d'un outil interne fini : choisissez un profil de produit — ou chargez votre propre historique — et obtenez une prévision avec intervalle de confiance, prête à exporter. Pas de paramètres à régler : le modèle s'auto-calibre en silence.</p>
+    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJECT [08] · LIVE TOOL</div>
+    <h1>Sales forecasting — <em>one click, one forecast</em></h1>
+    <p class="lead">The experience of a finished internal tool: pick a product profile — or upload your own history — and get a forecast with a confidence interval, ready to export. No parameters to tune: the model calibrates itself, silently.</p>
   </div>
 </div>
 
 <section style="padding-top:24px; padding-bottom:60px">
   <div class="wrap">
     <div class="tool reveal">
-      <div class="node-label" style="margin-bottom:16px"><span class="dot"></span> 1 · SOURCE DES DONNÉES</div>
+      <div class="node-label" style="margin-bottom:16px"><span class="dot"></span> 1 · DATA SOURCE</div>
       <div class="src-row">
-        <button class="scenario on" data-sc="seasonal">Produit saisonnier fort</button>
-        <button class="scenario" data-sc="stable">Produit stable</button>
-        <button class="scenario" data-sc="growth">Produit en croissance</button>
-        <span class="or">— ou —</span>
-        <label class="upload-lbl" id="uplLbl" for="csvFile">Charger un CSV (date, ventes)</label>
+        <button class="scenario on" data-sc="seasonal">Highly seasonal product</button>
+        <button class="scenario" data-sc="stable">Stable product</button>
+        <button class="scenario" data-sc="growth">Growing product</button>
+        <span class="or">— or —</span>
+        <label class="upload-lbl" id="uplLbl" for="csvFile">Upload a CSV (date, sales)</label>
         <input type="file" id="csvFile" accept=".csv,text/csv" style="display:none">
       </div>
-      <div class="privacy"><span class="lock">🔒</span> votre fichier est lu localement dans le navigateur — aucune donnée n'est envoyée nulle part.</div>
+      <div class="privacy"><span class="lock">🔒</span> your file is read locally in the browser — no data is sent anywhere.</div>
 
       <div class="run-row">
-        <button class="btn big" id="btnRun">Prévoir</button>
+        <button class="btn big" id="btnRun">Forecast</button>
         <span style="font-family:var(--mono); font-size:.68rem; color:var(--graphite)" id="srcInfo"></span>
       </div>
       <div class="tool-error" id="toolError" hidden></div>
 
       <div class="results" id="results" hidden>
         <div class="keyfigs">
-          <div class="kf"><div class="v" id="kfTotal">—</div><div class="l" id="kfTotalLbl">prévision totale sur l'horizon</div></div>
-          <div class="kf"><div class="v" id="kfMape">—</div><div class="l">MAPE de validation (données jamais vues)</div></div>
-          <div class="kf"><div class="v" id="kfTrend">—</div><div class="l" id="kfTrendLbl">tendance estimée</div></div>
+          <div class="kf"><div class="v" id="kfTotal">—</div><div class="l" id="kfTotalLbl">total forecast over the horizon</div></div>
+          <div class="kf"><div class="v" id="kfMape">—</div><div class="l">validation MAPE (on unseen data)</div></div>
+          <div class="kf"><div class="v" id="kfTrend">—</div><div class="l" id="kfTrendLbl">estimated trend</div></div>
         </div>
-        <div id="chart"><div class="fallback-msg">chargement du graphique…</div></div>
+        <div id="chart"><div class="fallback-msg">loading chart…</div></div>
         <div class="after-row">
-          <button class="btn ghost" id="btnExport">Exporter la prévision (CSV)</button>
+          <button class="btn ghost" id="btnExport">Export forecast (CSV)</button>
           <details class="how">
-            <summary>comment ça marche</summary>
+            <summary>how it works</summary>
             <div class="body">
-              <p>Le moteur est un <strong>lissage exponentiel triple (Holt-Winters additif)</strong> : il décompose votre historique en un niveau, une tendance et un profil saisonnier, mis à jour à chaque période observée.</p>
-              <p>Ses trois paramètres de lissage sont choisis automatiquement par <strong>grid search</strong> : l'outil réserve la fin de votre historique, teste des centaines de combinaisons et garde celle qui aurait le mieux prévu ces données jamais vues (MAPE minimal) — puis se ré-entraîne sur tout l'historique pour produire la prévision finale. L'intervalle affiché est de ±1,96 écart-type des erreurs de calibration.</p>
-              <p>La saisonnalité (hebdomadaire, mensuelle ou quotidienne) est détectée depuis l'espacement de vos dates. Il faut au moins deux cycles complets — deux ans pour des données hebdomadaires ou mensuelles — pour qu'un profil saisonnier soit estimable.</p>
+              <p>The engine is <strong>triple exponential smoothing (additive Holt-Winters)</strong>: it decomposes your history into a level, a trend and a seasonal profile, updated at every observed period.</p>
+              <p>Its three smoothing parameters are chosen automatically by <strong>grid search</strong>: the tool holds out the end of your history, tests hundreds of combinations and keeps the one that would have best predicted that unseen data (lowest MAPE) — then retrains on the full history to produce the final forecast. The displayed interval is ±1.96 standard deviations of the calibration errors.</p>
+              <p>Seasonality (weekly, monthly or daily) is detected from the spacing of your dates. At least two full cycles — two years for weekly or monthly data — are needed for a seasonal profile to be estimable.</p>
             </div>
           </details>
         </div>
@@ -145,32 +144,25 @@ details.how .body p + p { margin-top: 8px; }
     <div class="foot-row reveal">
       <div>
         <div class="node-label"><span class="dot"></span> CONTACT</div>
-        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
+        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Supply Chain &amp; Data Business Analyst</div>
       </div>
       <div class="foot-links">
-        <a href="../../">Accueil</a>
-        <a href="../">Projets</a>
+        <a href="../../">Home</a>
+        <a href="../">Projects</a>
         <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
-    <div class="foot-note">// site statique · aucun tracking · vos fichiers restent dans votre navigateur · 2026</div>
+    <div class="foot-note">// static site · no tracking · your files stay in your browser · 2026</div>
   </div>
 </footer>
 
 <script>
-/* ═══════════════════════════════════════════════════════════
-   Outil de prévision « produit » :
-   1. source : 3 scénarios seedés OU CSV utilisateur (local)
-   2. détection de la période (jour / semaine / mois)
-   3. Holt-Winters additif + auto-tuning grid search (MAPE)
-   4. sortie : graphique, 3 chiffres clés, export CSV
-   Aucune donnée ne quitte le navigateur.
-   ═══════════════════════════════════════════════════════════ */
+/* Product-style forecasting tool — same engine as the FR page,
+   English labels and en-US number formats. Nothing leaves the browser. */
 (function () {
   'use strict';
 
-  /* ── Génération des scénarios ────────────────────────── */
   function mulberry32(seed) {
     return function () {
       seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
@@ -185,23 +177,23 @@ details.how .body p + p { margin-top: 8px; }
   }
   function circ(w, target, m) { var d = Math.abs((w % m) - target); return Math.min(d, m - d); }
 
-  // 3 ans de ventes hebdomadaires, profils distincts
+  // 3 years of weekly sales — same seeds as the FR page, identical series
   function makeScenario(kind) {
     var rng = mulberry32(kind === 'seasonal' ? 11 : kind === 'stable' ? 22 : 33);
     var n = 156, m = 52, dates = [], values = [];
-    var start = new Date(2023, 7, 7); // lundi
+    var start = new Date(2023, 7, 7);
     for (var t = 0; t < n; t++) {
       var base, season, noise;
-      if (kind === 'seasonal') {        // glace / boisson d'été : forte saison estivale + pic fêtes
+      if (kind === 'seasonal') {
         base = 900 + 0.4 * t;
         season = 420 * Math.exp(-0.5 * Math.pow(circ(t, 27, m) / 5, 2)) +
                  160 * Math.exp(-0.5 * Math.pow(circ(t, 50, m) / 2, 2)) - 120;
         noise = 70 * gaussian(rng);
-      } else if (kind === 'stable') {   // produit de fond de rayon : plat, faible bruit
+      } else if (kind === 'stable') {
         base = 1400 + 0.1 * t;
         season = 45 * Math.sin(2 * Math.PI * t / m);
         noise = 40 * gaussian(rng);
-      } else {                          // référence en croissance : tendance forte, saison modérée
+      } else {
         base = 600 + 6.5 * t;
         season = 90 * Math.sin(2 * Math.PI * (t - 8) / m) +
                  110 * Math.exp(-0.5 * Math.pow(circ(t, 50, m) / 2.2, 2));
@@ -213,10 +205,9 @@ details.how .body p + p { margin-top: 8px; }
     return { dates: dates, values: values };
   }
 
-  /* ── Parsing CSV (local, strict mais tolérant) ───────── */
   function parseCSV(text) {
     var lines = text.split(/\r?\n/).filter(function (l) { return l.trim() !== ''; });
-    if (lines.length < 3) throw new Error('CSV vide ou presque : il faut deux colonnes (date, ventes) et un historique.');
+    if (lines.length < 3) throw new Error('CSV is (almost) empty: two columns are expected (date, sales) plus some history.');
     var delim = (lines[0].split(';').length > lines[0].split(',').length) ? ';' : ',';
     var rows = [], badDates = 0, badValues = 0;
     lines.forEach(function (line, i) {
@@ -224,13 +215,13 @@ details.how .body p + p { margin-top: 8px; }
       if (cells.length < 2) return;
       var d = parseDate(cells[0]);
       var v = parseFloat(cells[1].replace(/\s/g, '').replace(',', '.'));
-      if (!d) { if (i > 0) badDates++; return; } // la ligne 0 peut être un en-tête
+      if (!d) { if (i > 0) badDates++; return; }
       if (!isFinite(v)) { badValues++; return; }
       rows.push({ date: d, value: v });
     });
-    if (rows.length === 0) throw new Error('Aucune ligne exploitable : attendu « date' + delim + 'ventes » (dates AAAA-MM-JJ ou JJ/MM/AAAA).');
-    if (badDates > 2) throw new Error(badDates + ' lignes ont une date illisible — formats acceptés : AAAA-MM-JJ ou JJ/MM/AAAA.');
-    if (badValues > 0) throw new Error(badValues + ' ligne(s) ont une valeur de ventes manquante ou non numérique. Complétez-les avant de prévoir.');
+    if (rows.length === 0) throw new Error('No usable rows: expected "date' + delim + 'sales" (dates as YYYY-MM-DD or DD/MM/YYYY).');
+    if (badDates > 2) throw new Error(badDates + ' rows have an unreadable date — accepted formats: YYYY-MM-DD or DD/MM/YYYY.');
+    if (badValues > 0) throw new Error(badValues + ' row(s) have a missing or non-numeric sales value. Fill them in before forecasting.');
     rows.sort(function (a, b) { return a.date - b.date; });
     return { dates: rows.map(function (r) { return r.date; }), values: rows.map(function (r) { return r.value; }) };
   }
@@ -242,19 +233,17 @@ details.how .body p + p { margin-top: 8px; }
     return null;
   }
 
-  /* ── Détection de la période saisonnière ─────────────── */
   function detectFrequency(dates) {
     var gaps = [];
     for (var i = 1; i < dates.length; i++) gaps.push((dates[i] - dates[i - 1]) / 86400000);
     gaps.sort(function (a, b) { return a - b; });
     var med = gaps[Math.floor(gaps.length / 2)];
-    if (med <= 2) return { m: 7, step: 1, unit: 'jour', horizon: 28 };
-    if (med >= 6 && med <= 8) return { m: 52, step: 7, unit: 'semaine', horizon: 13 };
-    if (med >= 27 && med <= 32) return { m: 12, step: 30, unit: 'mois', horizon: 6 };
+    if (med <= 2) return { m: 7, step: 1, unit: 'day', unitPlural: 'days', horizon: 28 };
+    if (med >= 6 && med <= 8) return { m: 52, step: 7, unit: 'week', unitPlural: 'weeks', horizon: 13 };
+    if (med >= 27 && med <= 32) return { m: 12, step: 30, unit: 'month', unitPlural: 'months', horizon: 6 };
     return null;
   }
 
-  /* ── Holt-Winters additif + auto-tuning ──────────────── */
   function holtWinters(y, m, alpha, beta, gamma, horizon) {
     if (y.length < 2 * m) return null;
     var mean1 = 0, mean2 = 0;
@@ -284,7 +273,6 @@ details.how .body p + p { margin-top: 8px; }
     }
     return n ? 100 * s / n : NaN;
   }
-  // grid search : holdout = fin de série, passe grossière puis raffinement
   function autoFit(y, m, horizon) {
     var hold = Math.min(Math.max(6, Math.round(m / 4)), Math.floor(y.length / 5));
     var train = y.slice(0, y.length - hold), test = y.slice(y.length - hold);
@@ -306,16 +294,15 @@ details.how .body p + p { margin-top: 8px; }
     var c = grid([0.05, 0.95], [0.01, 0.49], [0.05, 0.95], 0.1);
     var f = grid([clamp(c.a - 0.1), clamp(c.a + 0.1)], [clamp(c.b - 0.1), clamp(c.b + 0.1)],
                  [clamp(c.g - 0.1), clamp(c.g + 0.1)], 0.025);
-    // ré-entraînement final sur tout l'historique avec les meilleurs paramètres
     var model = holtWinters(y, m, f.a, f.b, f.g, horizon);
     model.valMape = f.mape;
     return model;
   }
 
-  /* ── UI ──────────────────────────────────────────────── */
+  /* ── UI ── */
   var currentSource = { kind: 'scenario', sc: 'seasonal' };
   var lastExport = null;
-  var fmt = function (v, d) { return v.toLocaleString('fr-FR', { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }); };
+  var fmt = function (v, d) { return v.toLocaleString('en-US', { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }); };
   var err = document.getElementById('toolError');
   var srcInfo = document.getElementById('srcInfo');
 
@@ -343,11 +330,11 @@ details.how .body p + p { margin-top: 8px; }
         currentSource = { kind: 'csv', data: parsed, name: file.name };
         document.querySelectorAll('.scenario').forEach(function (x) { x.classList.remove('on'); });
         document.getElementById('uplLbl').classList.add('on');
-        srcInfo.textContent = file.name + ' · ' + parsed.values.length + ' lignes lues localement';
+        srcInfo.textContent = file.name + ' · ' + parsed.values.length + ' rows read locally';
         clearError();
       } catch (e) { showError(e.message); }
     };
-    reader.onerror = function () { showError('Lecture du fichier impossible.'); };
+    reader.onerror = function () { showError('Could not read the file.'); };
     reader.readAsText(file);
   });
 
@@ -355,31 +342,30 @@ details.how .body p + p { margin-top: 8px; }
     clearError();
     var data = currentSource.kind === 'csv' ? currentSource.data : makeScenario(currentSource.sc);
     var freq = detectFrequency(data.dates);
-    if (!freq) { showError('Espacement des dates non reconnu : l\'outil attend des données quotidiennes, hebdomadaires ou mensuelles régulières.'); return; }
+    if (!freq) { showError('Unrecognised date spacing: the tool expects regular daily, weekly or monthly data.'); return; }
     if (data.values.length < 2 * freq.m) {
-      showError('Série trop courte : ' + data.values.length + ' points pour une saisonnalité de ' + freq.m +
-        ' — il faut au moins deux cycles complets (≥ ' + 2 * freq.m + ' points, soit 2 ans en ' + freq.unit + 's).');
+      showError('Series too short: ' + data.values.length + ' points for a seasonality of ' + freq.m +
+        ' — at least two full cycles are needed (≥ ' + 2 * freq.m + ' points, i.e. 2 years of ' + freq.unitPlural + ').');
       return;
     }
     var btn = document.getElementById('btnRun');
-    btn.disabled = true; btn.textContent = 'Calcul…';
-    setTimeout(function () { // laisse le navigateur peindre l'état avant le grid search
+    btn.disabled = true; btn.textContent = 'Computing…';
+    setTimeout(function () {
       try { render(data, freq, autoFit(data.values, freq.m, freq.horizon)); }
-      finally { btn.disabled = false; btn.textContent = 'Prévoir'; }
+      finally { btn.disabled = false; btn.textContent = 'Forecast'; }
     }, 30);
   }
 
   function render(data, freq, model) {
     document.getElementById('results').hidden = false;
     var total = model.forecast.reduce(function (a, b) { return a + Math.max(0, b); }, 0);
-    document.getElementById('kfTotal').innerHTML = fmt(Math.round(total)) + ' <small>unités</small>';
-    document.getElementById('kfTotalLbl').textContent = 'prévision totale — ' + freq.horizon + ' ' + freq.unit + (freq.horizon > 1 ? 's' : '');
-    document.getElementById('kfMape').innerHTML = model.valMape.toFixed(1).replace('.', ',') + ' <small>%</small>';
+    document.getElementById('kfTotal').innerHTML = fmt(Math.round(total)) + ' <small>units</small>';
+    document.getElementById('kfTotalLbl').textContent = 'total forecast — ' + freq.horizon + ' ' + (freq.horizon > 1 ? freq.unitPlural : freq.unit);
+    document.getElementById('kfMape').innerHTML = model.valMape.toFixed(1) + ' <small>%</small>';
     var tr = model.trend;
     document.getElementById('kfTrend').innerHTML = (tr >= 0 ? '+' : '−') + fmt(Math.abs(tr), 1) + ' <small>u/' + freq.unit + '</small>';
-    document.getElementById('kfTrendLbl').textContent = tr >= 0 ? 'tendance — en croissance' : 'tendance — en repli';
+    document.getElementById('kfTrendLbl').textContent = tr >= 0 ? 'trend — growing' : 'trend — declining';
 
-    // dates de prévision
     var last = data.dates[data.dates.length - 1];
     var fcDates = [];
     for (var h = 1; h <= freq.horizon; h++) {
@@ -397,17 +383,17 @@ details.how .body p + p { margin-top: 8px; }
     Plotly.react('chart', [
       { x: fcDates.map(iso), y: upper, mode: 'lines', line: { width: 0 }, hoverinfo: 'skip', showlegend: false },
       { x: fcDates.map(iso), y: lower, mode: 'lines', line: { width: 0 }, fill: 'tonexty',
-        fillcolor: 'rgba(49,112,143,.13)', name: 'intervalle 95 %', hoverinfo: 'skip' },
-      { x: data.dates.map(iso), y: data.values, mode: 'lines', name: 'historique',
+        fillcolor: 'rgba(49,112,143,.13)', name: '95% interval', hoverinfo: 'skip' },
+      { x: data.dates.map(iso), y: data.values, mode: 'lines', name: 'history',
         line: { color: '#5c6b7a', width: 1.4 } },
-      { x: fcDates.map(iso), y: model.forecast, mode: 'lines', name: 'prévision',
+      { x: fcDates.map(iso), y: model.forecast, mode: 'lines', name: 'forecast',
         line: { color: '#31708f', width: 2.6 } }
     ], {
       margin: { l: 52, r: 16, t: 12, b: 44 },
       paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
       font: { family: 'IBM Plex Mono, monospace', size: 11, color: '#5c6b7a' },
       xaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc' },
-      yaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc', title: { text: 'unités / ' + freq.unit } },
+      yaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc', title: { text: 'units / ' + freq.unit } },
       legend: { orientation: 'h', y: -0.18, font: { size: 10 } }
     }, { responsive: true, displayModeBar: false });
   }
@@ -415,14 +401,14 @@ details.how .body p + p { margin-top: 8px; }
   document.getElementById('btnRun').addEventListener('click', run);
   document.getElementById('btnExport').addEventListener('click', function () {
     if (!lastExport) return;
-    var lines = ['date,prevision,borne_basse,borne_haute'];
+    var lines = ['date,forecast,lower_bound,upper_bound'];
     lastExport.dates.forEach(function (d, i) {
       lines.push(d + ',' + Math.round(lastExport.forecast[i]) + ',' + Math.round(lastExport.lower[i]) + ',' + Math.round(lastExport.upper[i]));
     });
     var blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8' });
     var a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'prevision.csv';
+    a.download = 'forecast.csv';
     a.click();
     URL.revokeObjectURL(a.href);
   });

@@ -10,10 +10,12 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // les compteurs suivent la langue de la page (fr-FR ou en-US)
+  var isEN = (document.documentElement.lang || 'fr').slice(0, 2) === 'en';
   function fmtFR(v, dec, group) {
-    return group
-      ? Math.round(v).toLocaleString('fr-FR')
-      : v.toFixed(dec).replace('.', ',');
+    if (group) return Math.round(v).toLocaleString(isEN ? 'en-US' : 'fr-FR');
+    var s = v.toFixed(dec);
+    return isEN ? s : s.replace('.', ',');
   }
 
   function animateCounter(el) {
@@ -45,4 +47,29 @@
   }, { threshold: 0.15 });
 
   document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+  /* ── Langue FR / EN ───────────────────────────────────────
+     - le toggle du header pointe vers la page miroir (href en dur,
+       cohérent avec les balises hreflang) ; un clic mémorise le choix
+     - au premier passage sur une des deux homepages (et uniquement là,
+       pour ne jamais détourner un lien profond partagé), la langue du
+       navigateur est détectée et on redirige si besoin
+     - le choix mémorisé (localStorage) prime ensuite sur la détection */
+  var toggle = document.querySelector('.lang-toggle');
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      try { localStorage.setItem('lang', toggle.dataset.lang); } catch (e) { /* navigation privée */ }
+    });
+  }
+  try {
+    var pageLang = (document.documentElement.lang || 'fr').slice(0, 2);
+    var stored = localStorage.getItem('lang');
+    if (!stored) {
+      stored = (navigator.language || 'fr').slice(0, 2) === 'en' ? 'en' : 'fr';
+      localStorage.setItem('lang', stored);
+    }
+    if (document.body.hasAttribute('data-lang-root') && stored !== pageLang && toggle) {
+      location.replace(toggle.getAttribute('href'));
+    }
+  } catch (e) { /* localStorage indisponible : pas de redirection */ }
 })();

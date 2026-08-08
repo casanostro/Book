@@ -1,0 +1,23 @@
+[
+  {
+    "date": "2026-08-08",
+    "titre": "Two new demos: dashboards and a forecasting tool",
+    "tags": ["dataviz", "forecasting", "demo"],
+    "contenu": "The Holt-Winters teaching demo makes way for two product-minded pages.\n\n**Dataviz: two readings of the same data** — the same supply chain dataset rendered as two dashboards: a C-level view (5 KPIs, zero filters) and an operations view (cross filters, today's alerts, sortable stockout table). A switch makes the contrast obvious.\n\n**Sales forecasting** — the experience of a finished internal tool: a preset scenario or your own CSV (parsed locally), one \"Forecast\" button, silent grid-search auto-tuning, CSV export.",
+    "lien": "../projects/dataviz/"
+  },
+  {
+    "date": "2026-08-07",
+    "titre": "The portfolio becomes a multi-page book",
+    "tags": ["site", "architecture"],
+    "contenu": "The site moves from a single page to a book format: a projects hub, detailed pages with **animated architecture diagrams** in the site's lineage style, and this news page.\n\nEvery diagram makes the guardrails explicit — read-only SQL validation, controlled schema scope — because in production, that's where trust is earned.",
+    "lien": "../projects/"
+  },
+  {
+    "date": "2026-06-30",
+    "titre": "MCP POC: the documentation reference becomes the LLM's context",
+    "tags": ["mcp", "llm", "snowflake"],
+    "contenu": "The MCP connector between Claude and the Snowflake data warehouse reaches a milestone: the **technical reference** built during the DWH documentation work (24 schemas, ~65 views with reconstructed lineage) is now injected as the server's structured context.\n\nThe result: the model cites its sources, stays within the documented scope, and the read-only role guarantees no prompt can ever write to the warehouse.",
+    "lien": "../projects/mcp-poc/"
+  }
+]

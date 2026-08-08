@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Root-cause investigation of a critical calculation bug: walking a distorted service-level KPI back to its root cause — a fallback table frozen since 2022 absorbing 83–85% of simulated lines.">
+<title>Root-cause investigation of a critical bug | Adrien Tripon</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eef1f5'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2331708f'/%3E%3Cpath d='M12 16h8' stroke='%2331708f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%23161d24'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/projets/investigation-bug/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/projects/bug-investigation/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/projets/investigation-bug/">
+<link rel="stylesheet" href="../../../assets/site.css">
+<script src="../../../assets/site.js" defer></script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="../../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
+      <div class="nav-links">
+        <a href="../../">Home</a>
+        <a href="../" aria-current="page">Projects</a>
+        <a href="../../news/">News</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <a class="lang-toggle" data-lang="fr" href="../../../projets/investigation-bug/" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">projects</a><span class="sep">/</span>bug-investigation</div>
+  <div class="page-head reveal">
+    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJECT [05]</div>
+    <h1>Walking the lineage <em>upstream</em> — anatomy of an investigation</h1>
+    <p class="lead">A service-level KPI published every week, wrong for months, with no alert ever firing. The investigation walked the calculation chain back to a fallback table frozen since July 2022 — onto which 83–85% of simulated lines were silently falling back.</p>
+  </div>
+</div>
+
+<!-- ═══════════ ARCHITECTURE ═══════════ -->
+<section style="padding-top:40px; padding-bottom:48px">
+  <div class="wrap">
+    <div class="node-head reveal" style="margin-bottom:24px">
+      <div class="node-label"><span class="dot"></span> ARCHITECTURE : FROM SYMPTOM TO ROOT CAUSE</div>
+      <h2>The calculation chain, walked down node by node</h2>
+    </div>
+    <div class="arch reveal">
+      <svg viewBox="0 0 760 440" role="img" aria-label="Investigation diagram: KPI symptom, reporting view, simulation engine, silent fallback to a table frozen since 2022, documented fix">
+        <defs>
+          <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L8 4 L0 8 z" fill="#5c6b7a"/>
+          </marker>
+          <marker id="arr-amber" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L8 4 L0 8 z" fill="#c98a2d"/>
+          </marker>
+        </defs>
+
+        <!-- central column: the calculation chain -->
+        <text class="ntag" x="290" y="16">SYMPTOM</text>
+        <rect class="nbox-in" x="290" y="24" width="220" height="56" rx="2"/>
+        <text class="ntitle" x="304" y="48">Service-level KPI</text>
+        <text class="nsub" x="304" y="64">abnormal value · no alert</text>
+
+        <path class="edge" d="M400 80 V136" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M400 80 V130"/>
+        <text class="edge-label" x="410" y="112">walking the calculation back</text>
+
+        <rect class="nbox" x="290" y="136" width="220" height="56" rx="2"/>
+        <text class="ntitle" x="304" y="160">Reporting view</text>
+        <text class="nsub" x="304" y="176">weekly aggregation</text>
+
+        <path class="edge" d="M400 192 V248" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M400 192 V242"/>
+        <text class="edge-label" x="410" y="224">control queries</text>
+
+        <rect class="nbox" x="290" y="248" width="220" height="56" rx="2"/>
+        <text class="ntitle" x="304" y="272">Simulation engine</text>
+        <text class="nsub" x="304" y="288">54 parcels generated vs ~10,244</text>
+
+        <path class="edge" d="M400 304 V360" marker-end="url(#arr-amber)" style="stroke:var(--ambre); stroke-opacity:.55"/>
+        <path class="edge-flow amber" d="M400 304 V354"/>
+        <text class="edge-label" x="410" y="336" style="fill:var(--ambre)">83–85% of lines</text>
+
+        <text class="ntag-guard" x="290" y="352">ROOT CAUSE</text>
+        <rect class="nbox-guard" x="290" y="360" width="220" height="56" rx="2"/>
+        <text class="ntitle" x="304" y="384">Silent fallback</text>
+        <text class="nsub" x="304" y="400">no alert, no log</text>
+
+        <!-- frozen table, right of the root cause -->
+        <rect class="nbox-store" x="560" y="360" width="180" height="56" rx="2"/>
+        <text class="ntitle" x="574" y="384">Fallback table</text>
+        <text class="nsub" x="574" y="400">frozen 07/2022 · ~3.6M rows</text>
+        <path class="edge" d="M560 388 H510" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
+        <path class="edge-flow amber slow" d="M560 388 H516"/>
+
+        <!-- deliverable, left -->
+        <text class="ntag" x="20" y="352">OUT</text>
+        <rect class="nbox-out" x="20" y="360" width="200" height="56" rx="2"/>
+        <text class="ntitle-inv" x="34" y="384">Documented fix</text>
+        <text class="nsub-inv" x="34" y="400">impact quantified · replayable</text>
+        <path class="edge" d="M290 388 H220" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M290 388 H226"/>
+      </svg>
+      <div class="legend">
+        <span><span class="sw in"></span>observed symptom</span>
+        <span><span class="sw proc"></span>step in the calculation chain</span>
+        <span><span class="sw guard"></span>root cause</span>
+        <span><span class="sw out"></span>deliverable</span>
+        <span>— amber flow: the anomaly's path</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0; padding-bottom:60px">
+  <div class="wrap">
+    <div class="node-head reveal">
+      <div class="node-label"><span class="dot"></span> NODE : THE METHOD</div>
+      <h2>An investigation, not an intuition</h2>
+    </div>
+    <div class="values" style="margin-bottom:36px">
+      <div class="value reveal">
+        <div class="v-num">method_01</div>
+        <h3>Quantify before accusing</h3>
+        <p>Every hypothesis is tested with a replayable query: expected volume (~10,244 parcels) against generated volume (54), then the exact share of lines hitting the fallback (83–85%). The diagnosis holds because every number can be re-run.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">method_02</div>
+        <h3>The silence was the real bug</h3>
+        <p>The frozen table is a mistake; the fallback with no alert and no log is the design flaw. The proposed fix addresses both: reactivate the source, and make any future fallback loud — a silent fallback is debt paid back in trust.</p>
+      </div>
+    </div>
+    <div class="reveal" style="max-width:560px">
+      <div class="mini-tiles">
+        <div class="mt"><div class="v"><span class="count" data-target="0.53" data-decimals="2">0.53</span> <small>%</small></div><div class="l">of expected volume actually generated</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="84">84</span> <small>%</small></div><div class="l">of lines hitting the fallback (83–85%)</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="3.6" data-decimals="1">3.6</span> <small>M</small></div><div class="l">rows frozen since July 2022</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="1">1</span></div><div class="l">fix proposed, documented, quantified</div></div>
+      </div>
+      <a class="project-more" href="../make-platform/">See also: Make platform — DLQ diagnosis →</a>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-row reveal">
+      <div>
+        <div class="node-label"><span class="dot"></span> CONTACT</div>
+        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Supply Chain &amp; Data Business Analyst</div>
+      </div>
+      <div class="foot-links">
+        <a href="../../">Home</a>
+        <a href="../">Projects</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+    <div class="foot-note">// static site · no tracking · figures aggregated and anonymised · 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

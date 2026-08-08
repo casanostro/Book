@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Make automation platform: architecture of the post-migration diagnosis — 159 scenarios, dead letter queue, failure classification, exposure quantification and replay prioritisation.">
+<title>Make platform — from estate to DLQ | Adrien Tripon</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eef1f5'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2331708f'/%3E%3Cpath d='M12 16h8' stroke='%2331708f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%23161d24'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/projets/plateforme-make/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/projects/make-platform/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/projets/plateforme-make/">
+<link rel="stylesheet" href="../../../assets/site.css">
+<script src="../../../assets/site.js" defer></script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="logo" href="../../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
+      <div class="nav-links">
+        <a href="../../">Home</a>
+        <a href="../" aria-current="page">Projects</a>
+        <a href="../../news/">News</a>
+        <a href="../../#contact">Contact</a>
+      </div>
+      <a class="lang-toggle" data-lang="fr" href="../../../projets/plateforme-make/" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">projects</a><span class="sep">/</span>make-platform</div>
+  <div class="page-head reveal">
+    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJECT [02]</div>
+    <h1>Make platform — <em>making silent failures visible</em></h1>
+    <p class="lead">159 automation scenarios in production, 6 business domains — and an API migration that made thousands of executions fail without triggering a single alert. The job: turn an opaque dead letter queue into quantified exposure and a prioritised replay plan.</p>
+  </div>
+</div>
+
+<!-- ═══════════ ARCHITECTURE ═══════════ -->
+<section style="padding-top:40px; padding-bottom:48px">
+  <div class="wrap">
+    <div class="node-head reveal" style="margin-bottom:24px">
+      <div class="node-label"><span class="dot"></span> ARCHITECTURE : SCENARIOS → DLQ → DIAGNOSIS → PRIORITISATION</div>
+      <h2>The failure path, from webhook to action plan</h2>
+    </div>
+    <div class="arch reveal">
+      <svg viewBox="0 0 760 400" role="img" aria-label="Make platform diagnosis diagram: scenario estate, executions, dead letter queue, diagnosis, exposure quantification, replay prioritisation">
+        <defs>
+          <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L8 4 L0 8 z" fill="#5c6b7a"/>
+          </marker>
+          <marker id="arr-amber" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L8 4 L0 8 z" fill="#c98a2d"/>
+          </marker>
+        </defs>
+
+        <!-- ── Row 1: the estate at work ── -->
+        <text class="ntag" x="20" y="16">IN</text>
+        <rect class="nbox-in" x="20" y="24" width="190" height="56" rx="2"/>
+        <text class="ntitle" x="34" y="48">Make estate</text>
+        <text class="nsub" x="34" y="64">159 scenarios · 6 domains</text>
+
+        <rect class="nbox" x="285" y="24" width="180" height="56" rx="2"/>
+        <text class="ntitle" x="299" y="48">Executions</text>
+        <text class="nsub" x="299" y="64">webhooks · API connectors</text>
+
+        <rect class="nbox" x="560" y="24" width="180" height="56" rx="2"/>
+        <text class="ntitle" x="574" y="48">Nominal flow</text>
+        <text class="nsub" x="574" y="64">commercial gestures · alerts</text>
+
+        <path class="edge" d="M210 52 H285" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M210 52 H279"/>
+        <path class="edge" d="M465 52 H560" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M465 52 H554"/>
+        <text class="edge-label" x="472" y="44">success</text>
+
+        <!-- root cause: API migration -->
+        <rect class="nbox-store" x="560" y="150" width="180" height="52" rx="2"/>
+        <text class="ntitle" x="574" y="172">API migration</text>
+        <text class="nsub" x="574" y="188">breaking change</text>
+        <path class="edge" d="M560 176 H400 V80" marker-end="url(#arr)" style="stroke-dasharray:3 4; stroke:var(--ambre); stroke-opacity:.55"/>
+        <text class="edge-label" x="420" y="120" style="fill:var(--ambre)">root cause</text>
+
+        <!-- ── Down: failures → DLQ ── -->
+        <path class="edge" d="M340 80 V150" marker-end="url(#arr-amber)" style="stroke:var(--ambre); stroke-opacity:.55"/>
+        <path class="edge-flow amber" d="M340 80 V144"/>
+        <text class="edge-label" x="222" y="118" style="fill:var(--ambre)">silent failures</text>
+
+        <text class="ntag-guard" x="285" y="142">BLIND SPOT</text>
+        <rect class="nbox-guard" x="285" y="150" width="180" height="56" rx="2"/>
+        <text class="ntitle" x="299" y="174">Dead letter queue</text>
+        <text class="nsub" x="299" y="190">5,376 failed executions</text>
+
+        <!-- ── Row 2: diagnosis ← DLQ ── -->
+        <rect class="nbox" x="20" y="150" width="190" height="56" rx="2"/>
+        <text class="ntitle" x="34" y="174">Diagnosis</text>
+        <text class="nsub" x="34" y="190">API extraction · classification</text>
+        <path class="edge" d="M285 178 H210" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M285 178 H216"/>
+
+        <!-- ── Row 3: quantification → prioritisation ── -->
+        <rect class="nbox" x="20" y="280" width="190" height="56" rx="2"/>
+        <text class="ntitle" x="34" y="304">Exposure quantified</text>
+        <text class="nsub" x="34" y="320">€27,625 traced line by line</text>
+        <path class="edge" d="M115 206 V280" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M115 206 V274"/>
+        <text class="edge-label" x="123" y="246">per business domain</text>
+
+        <text class="ntag" x="285" y="272">OUT</text>
+        <rect class="nbox-out" x="285" y="280" width="180" height="56" rx="2"/>
+        <text class="ntitle-inv" x="299" y="304">Replay plan</text>
+        <text class="nsub-inv" x="299" y="320">prioritised by financial impact</text>
+        <path class="edge" d="M210 308 H285" marker-end="url(#arr)"/>
+        <path class="edge-flow" d="M210 308 H279"/>
+
+        <!-- back to the estate: replays -->
+        <path class="edge" d="M465 308 H660 V202" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
+        <path class="edge-flow slow" d="M465 308 H660 V208"/>
+        <text class="edge-label" x="475" y="300">replays executed</text>
+      </svg>
+      <div class="legend">
+        <span><span class="sw in"></span>estate in production</span>
+        <span><span class="sw proc"></span>processing</span>
+        <span><span class="sw guard"></span>risk zone made visible</span>
+        <span><span class="sw out"></span>deliverable</span>
+        <span>— amber flow: the failure path</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ DETAIL ═══════════ -->
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="node-head reveal">
+      <div class="node-label"><span class="dot"></span> NODE : THE METHOD</div>
+      <h2>From an opaque failure queue to a defensible action plan</h2>
+    </div>
+    <div class="values">
+      <div class="value reveal">
+        <div class="v-num">step_01</div>
+        <h3>Extract, don't sample</h3>
+        <p>Systematic extraction of the execution history through the Make API, across the whole estate: all 5,376 failures are counted one by one, not estimated. A partial diagnosis would have produced a partial prioritisation.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">step_02</div>
+        <h3>Classify by business domain</h3>
+        <p>Every failure is mapped to its domain — commercial gestures, quality alerts, missing-items base… — because failures are not equal: a lost commercial gesture has a direct cost, a missed alert a risk cost.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">step_03</div>
+        <h3>Quantify the exposure in euros</h3>
+        <p>Failed executions carrying financial stakes are valued line by line: €27,625 of exposure traced. That figure — not the failure count — is what allows replay trade-offs to be made with the business.</p>
+      </div>
+      <div class="value reveal">
+        <div class="v-num">step_04</div>
+        <h3>Prioritise, replay, close the loop</h3>
+        <p>Replays are ordered by decreasing impact and re-run in the fixed estate. The loop is closed: the same extraction mechanism then serves as monitoring, so the DLQ never becomes a blind spot again.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0; padding-bottom:60px">
+  <div class="wrap">
+    <div class="node-head reveal">
+      <div class="node-label"><span class="dot"></span> NODE : IN NUMBERS</div>
+      <h2>The diagnosis, as delivered</h2>
+    </div>
+    <div class="reveal" style="max-width:560px">
+      <div class="mini-tiles">
+        <div class="mt"><div class="v"><span class="count" data-target="159">159</span></div><div class="l">scenarios administered in production</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="6">6</span></div><div class="l">business domains covered</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="5376" data-group="1">5,376</span></div><div class="l">failed executions identified</div></div>
+        <div class="mt"><div class="v"><span class="count" data-target="27625" data-group="1">27,625</span> <small>€</small></div><div class="l">of financial exposure traced and prioritised</div></div>
+      </div>
+      <a class="project-more" href="../kpi-newsletter/">Next project: Automated KPI newsletter →</a>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-row reveal">
+      <div>
+        <div class="node-label"><span class="dot"></span> CONTACT</div>
+        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Supply Chain &amp; Data Business Analyst</div>
+      </div>
+      <div class="foot-links">
+        <a href="../../">Home</a>
+        <a href="../">Projects</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </div>
+    </div>
+    <div class="foot-note">// static site · no tracking · figures aggregated and anonymised · 2026</div>
+  </div>
+</footer>
+
+</body>
+</html>

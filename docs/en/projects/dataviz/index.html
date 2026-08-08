@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Deux dashboards interactifs construits sur la même donnée supply chain : une vue C-level (5 secondes pour comprendre) et une vue opérations (dense, filtrable, actionnable). Démo live.">
-<title>Dataviz : deux lectures d'une même donnée | Adrien Tripon</title>
+<meta name="description" content="Two interactive dashboards built on the same supply chain data: a C-level view (5 seconds to understand) and an operations view (dense, filterable, actionable). Live demo.">
+<title>Dataviz: two readings of the same data | Adrien Tripon</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eef1f5'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2331708f'/%3E%3Cpath d='M12 16h8' stroke='%2331708f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%23161d24'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,12 +12,12 @@
 <link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/projets/dataviz/">
 <link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/projects/dataviz/">
 <link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/projets/dataviz/">
-<link rel="stylesheet" href="../../assets/site.css">
-<script src="../../assets/site.js" defer></script>
-<script src="../../assets/supply-data.js"></script>
+<link rel="stylesheet" href="../../../assets/site.css">
+<script src="../../../assets/site.js" defer></script>
+<script src="../../../assets/supply-data.js"></script>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
 <style>
-/* ── Styles propres à la page dataviz ── */
+/* ── Page-specific styles (mirror of the FR page) ── */
 .dash-switch {
   display: flex; gap: 0; margin: 28px 0 24px;
   border: 1px solid var(--line); width: fit-content;
@@ -32,7 +32,6 @@
 .dash-switch button.on { background: var(--encre); color: var(--bg); }
 .dash-switch button:not(.on):hover { color: var(--flux); }
 
-/* Dashboard A — C-level : aéré, typo large */
 .klux-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
 @media(max-width:960px) { .klux-grid { grid-template-columns: repeat(3, 1fr); } }
 @media(max-width:600px) { .klux-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -62,7 +61,6 @@
 }
 .reading b { font-family: var(--mono); }
 
-/* Dashboard B — opérations : dense */
 .ops-filters {
   display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
   background: var(--bg-card); border: 1px solid var(--line-soft);
@@ -115,30 +113,30 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     <nav>
       <a class="logo" href="../../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
       <div class="nav-links">
-        <a href="../../">Accueil</a>
-        <a href="../" aria-current="page">Projets</a>
-        <a href="../../actualites/">Actualités</a>
+        <a href="../../">Home</a>
+        <a href="../" aria-current="page">Projects</a>
+        <a href="../../news/">News</a>
         <a href="../../#contact">Contact</a>
       </div>
-      <a class="lang-toggle" data-lang="en" href="../../en/projects/dataviz/" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
+      <a class="lang-toggle" data-lang="fr" href="../../../projets/dataviz/" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
     </nav>
   </div>
 </header>
 
 <div class="wrap">
-  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">projets</a><span class="sep">/</span>dataviz</div>
+  <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">projects</a><span class="sep">/</span>dataviz</div>
   <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJET [07] · DÉMO LIVE</div>
-    <h1>Dataviz — <em>deux lectures</em> d'une même donnée</h1>
-    <p class="lead">Même jeu de données supply chain (taux de service, ruptures, stock — 6 entrepôts, 25 fournisseurs, 12 mois), deux audiences, deux designs. Le dashboard unique « pour tout le monde » est l'erreur classique du reporting : le COMEX n'a pas besoin de filtres, les opérations n'ont pas besoin de grandes typographies. Basculez entre les deux vues pour rendre le contraste évident.</p>
+    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJECT [07] · LIVE DEMO</div>
+    <h1>Dataviz — <em>two readings</em> of the same data</h1>
+    <p class="lead">Same supply chain dataset (service level, stockouts, inventory — 6 warehouses, 25 suppliers, 12 months), two audiences, two designs. The one-size-fits-all dashboard is the classic reporting mistake: the C-suite doesn't need filters, operations don't need large type. Flip between the two views to make the contrast obvious.</p>
   </div>
 </div>
 
 <section style="padding-top:0; padding-bottom:60px">
   <div class="wrap">
     <div class="dash-switch reveal" role="tablist">
-      <button id="tabA" class="on" role="tab" aria-selected="true">Vue C-level</button>
-      <button id="tabB" role="tab" aria-selected="false">Vue opérations</button>
+      <button id="tabA" class="on" role="tab" aria-selected="true">C-level view</button>
+      <button id="tabB" role="tab" aria-selected="false">Operations view</button>
     </div>
 
     <!-- ═══════ DASHBOARD A — C-LEVEL ═══════ -->
@@ -146,46 +144,46 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
       <div class="klux-grid reveal" id="kpiRow"></div>
       <div class="klux-charts reveal">
         <div class="chart-card">
-          <h3>Taux de service — 12 mois · cible 95 %</h3>
-          <div id="chA1" style="min-height:300px"><div class="fallback-msg">chargement…</div></div>
+          <h3>Service level — 12 months · 95% target</h3>
+          <div id="chA1" style="min-height:300px"><div class="fallback-msg">loading…</div></div>
         </div>
         <div class="chart-card">
-          <h3>Stock par famille · part SLOB en ambre</h3>
-          <div id="chA2" style="min-height:300px"><div class="fallback-msg">chargement…</div></div>
+          <h3>Inventory by family · SLOB share in amber</h3>
+          <div id="chA2" style="min-height:300px"><div class="fallback-msg">loading…</div></div>
         </div>
       </div>
       <div class="reading reveal" id="reading"></div>
     </div>
 
-    <!-- ═══════ DASHBOARD B — OPÉRATIONS ═══════ -->
+    <!-- ═══════ DASHBOARD B — OPERATIONS ═══════ -->
     <div id="dashB" hidden>
       <div class="ops-filters">
-        <label>entrepôt</label>
-        <select id="fWh"><option value="">tous</option></select>
-        <label>fournisseur</label>
-        <select id="fSup"><option value="">tous</option></select>
-        <label>famille</label>
-        <select id="fFam"><option value="">toutes</option></select>
-        <button class="btn ghost" id="fReset" style="padding:6px 12px">réinitialiser</button>
+        <label>warehouse</label>
+        <select id="fWh"><option value="">all</option></select>
+        <label>supplier</label>
+        <select id="fSup"><option value="">all</option></select>
+        <label>family</label>
+        <select id="fFam"><option value="">all</option></select>
+        <button class="btn ghost" id="fReset" style="padding:6px 12px">reset</button>
       </div>
 
       <div class="alerts">
-        <h3>⚠ À traiter aujourd'hui</h3>
+        <h3>⚠ To act on today</h3>
         <ul id="alertList"></ul>
       </div>
 
       <div class="ops-table-wrap">
-        <h3>Ruptures en cours — cliquer un en-tête pour trier</h3>
+        <h3>Open stockouts — click a header to sort</h3>
         <table class="ops" id="opsTable">
           <thead><tr>
-            <th data-k="product">produit</th>
-            <th data-k="family">famille</th>
-            <th data-k="warehouse">entrepôt</th>
-            <th data-k="supplier">fournisseur</th>
-            <th data-k="daysOut">jours</th>
-            <th data-k="missing">qté manquante</th>
-            <th data-k="weeklySales">ventes hebdo</th>
-            <th data-k="score">criticité</th>
+            <th data-k="product">product</th>
+            <th data-k="family">family</th>
+            <th data-k="warehouse">warehouse</th>
+            <th data-k="supplier">supplier</th>
+            <th data-k="daysOut">days</th>
+            <th data-k="missing">missing qty</th>
+            <th data-k="weeklySales">weekly sales</th>
+            <th data-k="score">criticality</th>
           </tr></thead>
           <tbody></tbody>
         </table>
@@ -193,34 +191,34 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
 
       <div class="ops-charts">
         <div class="chart-card">
-          <h3 id="chB1title">Service hebdo — 52 semaines</h3>
-          <div id="chB1" style="min-height:260px"><div class="fallback-msg">chargement…</div></div>
+          <h3 id="chB1title">Weekly service — 52 weeks</h3>
+          <div id="chB1" style="min-height:260px"><div class="fallback-msg">loading…</div></div>
         </div>
         <div class="chart-card">
-          <h3>Ruptures par entrepôt</h3>
-          <div id="chB2" style="min-height:260px"><div class="fallback-msg">chargement…</div></div>
+          <h3>Stockouts by warehouse</h3>
+          <div id="chB2" style="min-height:260px"><div class="fallback-msg">loading…</div></div>
         </div>
         <div class="chart-card">
-          <h3>Commandes en retard — top fournisseurs (4 sem.)</h3>
-          <div id="chB3" style="min-height:260px"><div class="fallback-msg">chargement…</div></div>
+          <h3>Late orders — top suppliers (4 wk)</h3>
+          <div id="chB3" style="min-height:260px"><div class="fallback-msg">loading…</div></div>
         </div>
       </div>
     </div>
 
     <div class="node-head reveal" style="margin-top:64px; margin-bottom:24px">
-      <div class="node-label"><span class="dot"></span> NODE : LA DÉMARCHE</div>
-      <h2>Pourquoi deux dashboards et pas un</h2>
+      <div class="node-label"><span class="dot"></span> NODE : THE APPROACH</div>
+      <h2>Why two dashboards and not one</h2>
     </div>
     <div class="values reveal" style="max-width:900px">
       <div class="value">
         <div class="v-num">audience_01 · c-level</div>
-        <h3>Une lecture, pas une exploration</h3>
-        <p>Cinq chiffres, une tendance, une répartition, une phrase. Aucun filtre : si le lecteur doit manipuler l'outil pour comprendre, le design a échoué. La variation vs mois précédent porte le message ; le détail se demande en réunion, pas dans le dashboard.</p>
+        <h3>A reading, not an exploration</h3>
+        <p>Five numbers, one trend, one breakdown, one sentence. No filters: if the reader has to operate the tool to understand, the design has failed. The month-over-month change carries the message; the detail is asked for in the meeting, not in the dashboard.</p>
       </div>
       <div class="value">
-        <div class="v-num">audience_02 · opérations</div>
-        <h3>Actionnable avant d'être joli</h3>
-        <p>Les équipes vivent dans cet écran : filtres croisés, tableau triable, alertes du jour en tête. La densité est un choix assumé — ce qui compte, c'est que la ligne à traiter en premier soit visible en premier. Même donnée, hiérarchie inversée.</p>
+        <div class="v-num">audience_02 · operations</div>
+        <h3>Actionable before beautiful</h3>
+        <p>The teams live in this screen: cross filters, sortable table, today's alerts on top. The density is a deliberate choice — what matters is that the line to handle first is visible first. Same data, inverted hierarchy.</p>
       </div>
     </div>
   </div>
@@ -231,28 +229,29 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     <div class="foot-row reveal">
       <div>
         <div class="node-label"><span class="dot"></span> CONTACT</div>
-        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
+        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Supply Chain &amp; Data Business Analyst</div>
       </div>
       <div class="foot-links">
-        <a href="../../">Accueil</a>
-        <a href="../">Projets</a>
+        <a href="../../">Home</a>
+        <a href="../">Projects</a>
         <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
-    <div class="foot-note">// site statique · aucun tracking · données synthétiques générées dans votre navigateur · 2026</div>
+    <div class="foot-note">// static site · no tracking · synthetic data generated in your browser · 2026</div>
   </div>
 </footer>
 
 <script>
-/* ═══════════════════════════════════════════════════════════
-   Deux dashboards, une donnée (window.SUPPLY).
-   A : lecture C-level — B : exploration opérations.
-   ═══════════════════════════════════════════════════════════ */
+/* Same data (window.SUPPLY, identical to the FR page), English labels.
+   Data keys stay in French (families, criticality) — display maps below. */
 (function () {
   'use strict';
   var S = window.SUPPLY;
-  var fmt = function (v, d) { return v.toFixed(d === undefined ? 1 : d).replace('.', ','); };
+  var FAM = { 'Frais': 'Fresh', 'Épicerie': 'Grocery', 'Surgelés': 'Frozen', 'Boissons': 'Beverages', 'DPH': 'Household & care' };
+  var CRIT = { 'critique': 'critical', 'élevée': 'high', 'moyenne': 'medium' };
+  var fmt = function (v, d) { return v.toFixed(d === undefined ? 1 : d); };
+  var nfmt = function (v) { return v.toLocaleString('en-US'); };
   var PLOT = { responsive: true, displayModeBar: false };
   var FONT = { family: 'IBM Plex Mono, monospace', size: 11, color: '#5c6b7a' };
   function baseLayout(extra) {
@@ -270,26 +269,25 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
   /* ═══════ DASHBOARD A ═══════ */
   var k = S.kpis();
   function card(label, val, unit, delta, deltaTxt, goodWhen) {
-    // goodWhen : 'up' si une hausse est une bonne nouvelle, 'down' sinon
     var good = goodWhen === 'up' ? delta >= 0 : delta <= 0;
     var cls = Math.abs(delta) < 1e-9 ? 'warn' : (good ? 'good' : (Math.abs(delta) > (goodWhen === 'count' ? 3 : 1) ? 'bad' : 'warn'));
     if (goodWhen === 'count') cls = delta <= 0 ? 'good' : (delta >= 4 ? 'bad' : 'warn');
     return '<div class="klux"><div class="k-lbl">' + label + '</div>' +
       '<div class="k-val">' + val + ' <small>' + unit + '</small></div>' +
-      '<div class="k-delta ' + cls + '"><span class="pill"></span>' + deltaTxt + ' <span style="color:var(--graphite)">vs mois préc.</span></div></div>';
+      '<div class="k-delta ' + cls + '"><span class="pill"></span>' + deltaTxt + ' <span style="color:var(--graphite)">vs prior month</span></div></div>';
   }
   document.getElementById('kpiRow').innerHTML =
-    card('Taux de service', fmt(k.service), '%', k.dService, (k.dService >= 0 ? '+' : '−') + fmt(Math.abs(k.dService)) + ' pt', 'up') +
-    card('Valeur de stock', fmt(k.stock / 1000), 'M€', -k.dStock, (k.dStock >= 0 ? '+' : '−') + fmt(Math.abs(k.dStock)) + ' %', 'down') +
-    card('SLOB', fmt(k.slobPct), '%', k.dSlobPct, (k.dSlobPct >= 0 ? '+' : '−') + fmt(Math.abs(k.dSlobPct)) + ' pt', 'down') +
-    card('Ruptures critiques', String(k.critical), '', k.dCritical, (k.dCritical >= 0 ? '+' : '−') + Math.abs(k.dCritical), 'count') +
-    card('Couverture', fmt(k.coverage, 0), 'j', k.dCoverage, (k.dCoverage >= 0 ? '+' : '−') + fmt(Math.abs(k.dCoverage), 1) + ' j', 'down');
+    card('Service level', fmt(k.service), '%', k.dService, (k.dService >= 0 ? '+' : '−') + fmt(Math.abs(k.dService)) + ' pp', 'up') +
+    card('Inventory value', fmt(k.stock / 1000), 'M€', -k.dStock, (k.dStock >= 0 ? '+' : '−') + fmt(Math.abs(k.dStock)) + '%', 'down') +
+    card('SLOB', fmt(k.slobPct), '%', k.dSlobPct, (k.dSlobPct >= 0 ? '+' : '−') + fmt(Math.abs(k.dSlobPct)) + ' pp', 'down') +
+    card('Critical stockouts', String(k.critical), '', k.dCritical, (k.dCritical >= 0 ? '+' : '−') + Math.abs(k.dCritical), 'count') +
+    card('Stock coverage', fmt(k.coverage, 0), 'd', k.dCoverage, (k.dCoverage >= 0 ? '+' : '−') + fmt(Math.abs(k.dCoverage), 1) + ' d', 'down');
 
   document.getElementById('reading').innerHTML =
-    'Lecture du mois — le service tient à <b>' + fmt(k.service) + ' %</b> (' +
-    (k.dService >= 0 ? '+' : '−') + fmt(Math.abs(k.dService)) + ' pt), mais <b>' + k.critical +
-    ' ruptures critiques</b> sont ouvertes, concentrées sur le frais à Marseille. Le SLOB à <b>' +
-    fmt(k.slobPct) + ' %</b> reste au-dessus de la cible de 7 %.';
+    'This month\'s reading — service holds at <b>' + fmt(k.service) + '%</b> (' +
+    (k.dService >= 0 ? '+' : '−') + fmt(Math.abs(k.dService)) + ' pp), but <b>' + k.critical +
+    ' critical stockouts</b> are open, concentrated on fresh goods in Marseille. SLOB at <b>' +
+    fmt(k.slobPct) + '%</b> remains above the 7% target.';
 
   function drawA() {
     if (!window.Plotly) return;
@@ -297,27 +295,27 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     Plotly.react('chA1', [
       { x: months.map(function (m) { return m.month; }), y: months.map(function (m) { return m.service; }),
         mode: 'lines+markers', line: { color: '#31708f', width: 2.6 }, marker: { size: 5 },
-        hovertemplate: '%{y:.1f} %<extra></extra>' },
+        hovertemplate: '%{y:.1f}%<extra></extra>' },
       { x: months.map(function (m) { return m.month; }), y: months.map(function () { return 95; }),
         mode: 'lines', line: { color: '#c98a2d', width: 1.2, dash: 'dash' }, hoverinfo: 'skip' }
-    ], baseLayout({ yaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc', range: [90, 98], ticksuffix: ' %' } }), PLOT);
+    ], baseLayout({ yaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc', range: [90, 98], ticksuffix: '%' } }), PLOT);
 
     var fams = S.stockByFamily();
     Plotly.react('chA2', [
-      { y: fams.map(function (f) { return f.family; }), x: fams.map(function (f) { return (f.stock - f.slob) / 1000; }),
-        type: 'bar', orientation: 'h', marker: { color: '#161d24' }, name: 'stock sain',
-        hovertemplate: '%{x:.1f} M€ sain<extra></extra>' },
-      { y: fams.map(function (f) { return f.family; }), x: fams.map(function (f) { return f.slob / 1000; }),
+      { y: fams.map(function (f) { return FAM[f.family]; }), x: fams.map(function (f) { return (f.stock - f.slob) / 1000; }),
+        type: 'bar', orientation: 'h', marker: { color: '#161d24' }, name: 'healthy stock',
+        hovertemplate: '%{x:.1f} M€ healthy<extra></extra>' },
+      { y: fams.map(function (f) { return FAM[f.family]; }), x: fams.map(function (f) { return f.slob / 1000; }),
         type: 'bar', orientation: 'h', marker: { color: '#c98a2d' }, name: 'SLOB',
         hovertemplate: '%{x:.2f} M€ SLOB<extra></extra>' }
-    ], baseLayout({ barmode: 'stack', margin: { l: 76, r: 12, t: 8, b: 36 }, xaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc', ticksuffix: ' M€' } }), PLOT);
+    ], baseLayout({ barmode: 'stack', margin: { l: 110, r: 12, t: 8, b: 36 }, xaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc', ticksuffix: ' M€' } }), PLOT);
   }
 
   /* ═══════ DASHBOARD B ═══════ */
   var fWh = document.getElementById('fWh'), fSup = document.getElementById('fSup'), fFam = document.getElementById('fFam');
   S.warehouses.forEach(function (w) { fWh.insertAdjacentHTML('beforeend', '<option>' + w + '</option>'); });
   S.suppliers.forEach(function (s) { fSup.insertAdjacentHTML('beforeend', '<option value="' + s.id + '">' + s.name + '</option>'); });
-  S.families.forEach(function (f) { fFam.insertAdjacentHTML('beforeend', '<option>' + f + '</option>'); });
+  S.families.forEach(function (f) { fFam.insertAdjacentHTML('beforeend', '<option value="' + f + '">' + FAM[f] + '</option>'); });
 
   var sortKey = 'score', sortDir = -1;
 
@@ -336,18 +334,18 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
   function renderAlerts(f) {
     var items = [];
     filteredStockouts(f).filter(function (o) { return o.criticality === 'critique'; }).forEach(function (o) {
-      items.push('Rupture J+' + o.daysOut + ' · ' + o.product + ' · ' + o.warehouse + ' · ' + o.supplier);
+      items.push('Stockout day ' + o.daysOut + ' · ' + o.product + ' · ' + o.warehouse + ' · ' + o.supplier);
     });
     S.failingSuppliers().forEach(function (s) {
       if (f.supplierId && s.supplierId !== f.supplierId) return;
       if (f.family && s.family !== f.family) return;
-      items.push('Service < 85 % · 3 sem. de suite · ' + s.supplier + ' (' + s.family.toLowerCase() + ') · moy. ' + fmt(s.avg) + ' %');
+      items.push('Service < 85% · 3 weeks running · ' + s.supplier + ' (' + FAM[s.family].toLowerCase() + ') · avg ' + fmt(s.avg) + '%');
     });
     var list = document.getElementById('alertList');
     list.innerHTML = items.length
       ? items.slice(0, 7).map(function (t) { return '<li><span class="adot">●</span>' + t + '</li>'; }).join('')
-      : '<li><span class="adot">●</span>aucune alerte sur ce périmètre — élargissez les filtres</li>';
-    document.querySelector('.alerts h3').textContent = '⚠ À traiter aujourd\'hui (' + Math.min(items.length, 7) + ')';
+      : '<li><span class="adot">●</span>no alerts on this scope — widen the filters</li>';
+    document.querySelector('.alerts h3').textContent = '⚠ To act on today (' + Math.min(items.length, 7) + ')';
   }
 
   function renderTable(f) {
@@ -358,11 +356,11 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     });
     var tbody = document.querySelector('#opsTable tbody');
     tbody.innerHTML = rows.map(function (o) {
-      return '<tr><td>' + o.product + '</td><td>' + o.family + '</td><td>' + o.warehouse + '</td><td>' + o.supplier +
-        '</td><td class="num">' + o.daysOut + '</td><td class="num">' + o.missing.toLocaleString('fr-FR') +
-        '</td><td class="num">' + o.weeklySales.toLocaleString('fr-FR') +
-        '</td><td><span class="badge ' + o.criticality + '">' + o.criticality + '</span></td></tr>';
-    }).join('') || '<tr><td colspan="8" style="text-align:center;color:var(--graphite)">aucune rupture sur ce périmètre</td></tr>';
+      return '<tr><td>' + o.product + '</td><td>' + FAM[o.family] + '</td><td>' + o.warehouse + '</td><td>' + o.supplier +
+        '</td><td class="num">' + o.daysOut + '</td><td class="num">' + nfmt(o.missing) +
+        '</td><td class="num">' + nfmt(o.weeklySales) +
+        '</td><td><span class="badge ' + o.criticality + '">' + CRIT[o.criticality] + '</span></td></tr>';
+    }).join('') || '<tr><td colspan="8" style="text-align:center;color:var(--graphite)">no stockouts on this scope</td></tr>';
     document.querySelectorAll('#opsTable th').forEach(function (th) {
       th.innerHTML = th.textContent.replace(/ [▲▼]$/, '');
       if (th.dataset.k === sortKey) th.innerHTML += ' <span class="dir">' + (sortDir === 1 ? '▲' : '▼') + '</span>';
@@ -371,27 +369,26 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
 
   function drawB(f) {
     if (!window.Plotly) return;
-    // service hebdo : série fournisseur si un fournisseur est choisi, sinon entrepôt×famille
     var svc, title;
     if (f.supplierId) {
       svc = S.supplierServiceByWeek(f.supplierId);
-      title = 'Service fournisseur — 52 semaines';
+      title = 'Supplier service — 52 weeks';
     } else {
       svc = S.serviceByWeek({ warehouse: f.warehouse, family: f.family });
-      title = 'Service hebdo — 52 semaines';
+      title = 'Weekly service — 52 weeks';
     }
     document.getElementById('chB1title').textContent = title;
     Plotly.react('chB1', [
-      { x: S.weekLabels, y: svc, mode: 'lines', line: { color: '#31708f', width: 1.8 }, hovertemplate: '%{y:.1f} %<extra></extra>' },
+      { x: S.weekLabels, y: svc, mode: 'lines', line: { color: '#31708f', width: 1.8 }, hovertemplate: '%{y:.1f}%<extra></extra>' },
       { x: S.weekLabels, y: S.weekLabels.map(function () { return 95; }), mode: 'lines',
         line: { color: '#c98a2d', width: 1, dash: 'dash' }, hoverinfo: 'skip' }
-    ], baseLayout({ yaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc', ticksuffix: ' %' } }), PLOT);
+    ], baseLayout({ yaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc', ticksuffix: '%' } }), PLOT);
 
     var byWh = S.stockoutsByWarehouse(f);
     Plotly.react('chB2', [{
       x: byWh.map(function (r) { return r.warehouse; }), y: byWh.map(function (r) { return r.count; }),
       type: 'bar', marker: { color: byWh.map(function (r) { return r.warehouse === f.warehouse ? '#31708f' : '#161d24'; }) },
-      hovertemplate: '%{y} ruptures<extra></extra>'
+      hovertemplate: '%{y} stockouts<extra></extra>'
     }], baseLayout(), PLOT);
 
     var late = S.lateBySupplier({ family: f.family }).slice(0, 5).reverse();
@@ -399,7 +396,7 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
       y: late.map(function (r) { return r.supplier; }), x: late.map(function (r) { return r.late; }),
       type: 'bar', orientation: 'h',
       marker: { color: late.map(function (r) { return r.supplierId === f.supplierId ? '#31708f' : '#c98a2d'; }) },
-      hovertemplate: '%{x} commandes en retard<extra></extra>'
+      hovertemplate: '%{x} late orders<extra></extra>'
     }], baseLayout({ margin: { l: 150, r: 12, t: 8, b: 36 } }), PLOT);
   }
 

@@ -1,8 +1,10 @@
 # data/ — actualités du site
 
 Les entrées de la page [/actualites/](../actualites/) vivent dans
-`actualites.json`. **Publier une actualité = ajouter une entrée dans ce
-fichier et committer.** Aucun backend, aucun CMS : le dépôt Git est la
+`actualites.json` ; celles de la version anglaise [/en/news/](../en/news/)
+vivent dans `actualites.en.json` (même schéma, contenu traduit — pensez à
+maintenir les deux). **Publier une actualité = ajouter une entrée dans ce(s)
+fichier(s) et committer.** Aucun backend, aucun CMS : le dépôt Git est la
 base de données, l'historique Git est l'historique de publication.
 
 ## Schéma d'une entrée
@@ -23,7 +25,7 @@ base de données, l'historique Git est l'historique de publication.
 | `titre`   | string            | oui         | titre de la carte |
 | `tags`    | array de strings  | non         | alimentent les filtres en haut de page |
 | `contenu` | string (markdown léger) | non   | gras / italique / liens / paragraphes uniquement |
-| `lien`    | string ou `null`  | non         | URL du bouton « consulter → ». Utiliser un chemin **relatif à `/actualites/`** pour les pages internes (ex. `../projets/poc-mcp/`), jamais un chemin absolu commençant par `/` (le site est servi sous `/PodcastPlatform/`) |
+| `lien`    | string ou `null`  | non         | URL du bouton « consulter → ». Utiliser un chemin **relatif à la page qui consomme le fichier** — `/actualites/` pour `actualites.json` (ex. `../projets/poc-mcp/`), `/en/news/` pour `actualites.en.json` (ex. `../projects/mcp-poc/`) — jamais un chemin absolu commençant par `/` (le site est servi sous `/PodcastPlatform/`) |
 
 ## Workflow de publication
 

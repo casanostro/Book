@@ -1,22 +1,22 @@
 /* ═══════════════════════════════════════════════════════════
-   site.css — styles partagés du portfolio LINEAGE://SUPPLY-DATA
+   site.css — styles partagés du portfolio d'Adrien Tripon
    Chargé par toutes les pages. Les styles spécifiques à une
    page restent dans un petit <style> local à cette page.
    ═══════════════════════════════════════════════════════════ */
 
 :root {
-  --bg: #f5f1ea;
-  --bg-card: #ffffff;
-  --encre: #23201b;
-  --encre-2: #3d3830;
-  --graphite: #6f675c;
-  --flux: #b3572c;
-  --flux-light: rgba(179,87,44,.08);
-  --flux-mid: rgba(179,87,44,.15);
-  --ambre: #c98a2d;
-  --ambre-light: rgba(201,138,45,.08);
-  --line: #ded5c6;
-  --line-soft: #eae3d6;
+  --bg: #f7f3df;
+  --bg-card: #fffcf2;
+  --encre: #2c2f22;
+  --encre-2: #3f4530;
+  --graphite: #6f6c52;
+  --flux: #9c7a1f;
+  --flux-light: rgba(156,122,31,.08);
+  --flux-mid: rgba(156,122,31,.15);
+  --ambre: #6f8f5b;
+  --ambre-light: rgba(111,143,91,.08);
+  --line: #ddd6b0;
+  --line-soft: #ece6cc;
   --sans: 'Hanken Grotesk', system-ui, sans-serif;
   --display: 'Space Grotesk', 'Hanken Grotesk', system-ui, sans-serif;
   --mono: 'Spline Sans Mono', ui-monospace, monospace;
@@ -26,11 +26,7 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
-  background:
-    radial-gradient(1100px 480px at 82% -160px, rgba(179,87,44,.07), transparent 65%),
-    radial-gradient(900px 420px at -10% -180px, rgba(201,138,45,.05), transparent 60%),
-    var(--bg);
-  background-attachment: fixed;
+  background: var(--bg);
   color: var(--encre);
   font-family: var(--sans);
   font-size: 16px;
@@ -48,21 +44,17 @@ a:hover { text-decoration: underline; }
 /* ── NAV ─────────────────────────────────── */
 header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(245,241,234,.9);
+  background: rgba(247,243,223,.9);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--line-soft);
 }
 nav { display: flex; align-items: center; justify-content: space-between; height: 56px; }
 .logo {
-  font-family: var(--mono); font-weight: 700; font-size: .82rem;
-  letter-spacing: .06em; color: var(--encre);
+  font-family: var(--display); font-weight: 600; font-size: .95rem;
+  color: var(--encre);
   display: flex; align-items: center; gap: 8px;
 }
 a.logo:hover { text-decoration: none; color: var(--flux); }
-.logo .dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--flux);
-}
 .nav-links { display: flex; gap: 24px; }
 .nav-links a {
   font-family: var(--mono); font-size: .72rem; letter-spacing: .1em;
@@ -110,17 +102,10 @@ a.logo:hover { text-decoration: none; color: var(--flux); }
 /* ── HERO (homepage) ─────────────────────── */
 .hero { padding: 100px 0 80px; position: relative; }
 .hero-kicker {
-  font-family: var(--mono); font-size: .72rem; letter-spacing: .18em;
-  text-transform: uppercase; color: var(--graphite);
-  display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: .72rem; letter-spacing: .1em;
+  color: var(--graphite);
   margin-bottom: 24px;
 }
-.hero-kicker .dot {
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--flux); display: inline-block;
-  animation: pulse 2.4s ease-in-out infinite;
-}
-@keyframes pulse { 50% { opacity: .35; } }
 .hero h1 {
   font-family: var(--display);
   font-size: clamp(2.1rem, 4.8vw, 3.4rem);
@@ -129,10 +114,7 @@ a.logo:hover { text-decoration: none; color: var(--flux); }
   max-width: 800px;
   margin-bottom: 24px;
 }
-.hero h1 em, .page-head h1 em {
-  font-style: normal; color: var(--flux);
-  background: linear-gradient(transparent 72%, rgba(201,138,45,.30) 72%);
-}
+.hero h1 em, .page-head h1 em { font-style: normal; color: var(--flux); }
 .hero .lead {
   font-size: 1.1rem; color: var(--graphite);
   max-width: 660px; line-height: 1.7;
@@ -181,18 +163,13 @@ a.logo:hover { text-decoration: none; color: var(--flux); }
   text-transform: uppercase; color: var(--graphite); margin-top: 4px;
 }
 
-/* ── SECTION HEADERS (node-head) ─────────── */
+/* ── SECTION HEADERS ──────────────────────── */
 section { padding: 88px 0; }
 .node-head { margin-bottom: 48px; }
 .node-label {
-  font-family: var(--mono); font-size: .68rem; letter-spacing: .16em;
-  text-transform: uppercase; color: var(--flux);
-  display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: .68rem; letter-spacing: .1em;
+  color: var(--flux);
   margin-bottom: 14px;
-}
-.node-label .dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--flux); display: inline-block;
 }
 .node-head h2 {
   font-family: var(--display);
@@ -214,10 +191,10 @@ section { padding: 88px 0; }
 @media(max-width:700px) { .values { grid-template-columns: 1fr; } }
 .value {
   background: var(--bg-card); border: 1px solid var(--line-soft);
-  padding: 28px; box-shadow: 0 1px 2px rgba(60,45,25,.05);
-  transition: border-color .3s, transform .3s, box-shadow .3s;
+  padding: 28px; box-shadow: 0 1px 2px rgba(44,47,34,.05);
+  transition: border-color .3s, box-shadow .3s;
 }
-.value:hover { border-color: var(--flux); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(60,45,25,.10); }
+.value:hover { border-color: var(--flux); box-shadow: 0 4px 16px rgba(44,47,34,.07); }
 .v-num {
   font-family: var(--mono); font-size: .68rem; color: var(--flux);
   letter-spacing: .08em; margin-bottom: 10px;
@@ -260,10 +237,10 @@ section { padding: 88px 0; }
 .project {
   background: var(--bg-card); border: 1px solid var(--line-soft);
   margin-bottom: 36px;
-  box-shadow: 0 1px 2px rgba(60,45,25,.05);
-  transition: border-color .3s, box-shadow .3s, transform .3s;
+  box-shadow: 0 1px 2px rgba(44,47,34,.05);
+  transition: border-color .3s, box-shadow .3s;
 }
-.project:hover { border-color: var(--flux); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(60,45,25,.10); }
+.project:hover { border-color: var(--flux); box-shadow: 0 4px 16px rgba(44,47,34,.07); }
 
 .project-ports {
   display: flex; justify-content: space-between; align-items: center;
@@ -298,7 +275,7 @@ section { padding: 88px 0; }
 .project-text .impact {
   margin-top: 16px; padding: 12px 14px;
   border-left: 3px solid var(--ambre);
-  background: rgba(201,138,45,.06);
+  background: rgba(111,143,91,.06);
   font-size: .88rem; color: var(--encre-2);
 }
 .project-text .impact strong { font-family: var(--mono); color: var(--encre); }
@@ -315,8 +292,7 @@ section { padding: 88px 0; }
   border: 1px solid var(--flux-mid); padding: 7px 14px;
   transition: background .2s, color .2s;
 }
-.project-more { transition: background .2s, color .2s, transform .2s; }
-.project-more:hover { background: var(--flux); border-color: var(--flux); color: #fff; text-decoration: none; transform: translateX(2px); }
+.project-more:hover { background: var(--flux); border-color: var(--flux); color: #fff; text-decoration: none; }
 
 /* ── Mini-DAG (IN→PROC→OUT) ──────────────── */
 .minidag {
@@ -385,10 +361,10 @@ section { padding: 88px 0; }
 @media(max-width:700px) { .missions-grid { grid-template-columns: 1fr; } }
 .mission {
   background: var(--bg-card); border: 1px solid var(--line-soft);
-  padding: 24px; box-shadow: 0 1px 2px rgba(60,45,25,.05);
-  transition: border-color .3s, transform .3s, box-shadow .3s;
+  padding: 24px; box-shadow: 0 1px 2px rgba(44,47,34,.05);
+  transition: border-color .3s, box-shadow .3s;
 }
-.mission:hover { border-color: var(--flux); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(60,45,25,.10); }
+.mission:hover { border-color: var(--flux); box-shadow: 0 4px 16px rgba(44,47,34,.07); }
 .m-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 10px; }
 .m-head h3 { font-size: .95rem; font-weight: 600; }
 .m-ctx {
@@ -453,9 +429,9 @@ section { padding: 88px 0; }
 .nbox-out   { fill: var(--encre); stroke: var(--encre); stroke-width: 1.5; }
 .nbox-store { fill: var(--bg); stroke: var(--graphite); stroke-width: 1.5; stroke-dasharray: 4 3; }
 .ntitle     { font-size: 12px; font-weight: 700; fill: var(--encre); }
-.ntitle-inv { font-size: 12px; font-weight: 700; fill: #f5f1ea; }
+.ntitle-inv { font-size: 12px; font-weight: 700; fill: #f7f3df; }
 .nsub       { font-size: 9.5px; fill: var(--graphite); }
-.nsub-inv   { font-size: 9.5px; fill: #b9ad9c; }
+.nsub-inv   { font-size: 9.5px; fill: #c9c19a; }
 .ntag       { font-size: 8.5px; font-weight: 700; letter-spacing: .1em; fill: var(--flux); }
 .ntag-guard { font-size: 8.5px; font-weight: 700; letter-spacing: .1em; fill: var(--ambre); }
 
@@ -521,8 +497,6 @@ footer {
 .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
-  .project:hover, .value:hover, .mission:hover, .project-more:hover { transform: none; }
-  .hero-kicker .dot { animation: none; }
   .edge-flow { animation: none; stroke-dasharray: none; }
   html { scroll-behavior: auto; }
 }

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="POC MCP : architecture d'un connecteur Model Context Protocol entre un LLM et Snowflake — outils typés, référentiel de documentation injecté en contexte, accès lecture seule.">
 <title>POC MCP — LLM ↔ Snowflake | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f5f1ea'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%23b3572c'/%3E%3Cpath d='M12 16h8' stroke='%23b3572c' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2323201b'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f7f3df'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%239c7a1f'/%3E%3Cpath d='M12 16h8' stroke='%239c7a1f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%232c2f22'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
 <header>
   <div class="wrap">
     <nav>
-      <a class="logo" href="../../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
+      <a class="logo" href="../../">Adrien Tripon</a>
       <div class="nav-links">
         <a href="../../">Accueil</a>
         <a href="../" aria-current="page">Projets</a>
@@ -35,7 +35,7 @@
 <div class="wrap">
   <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">projets</a><span class="sep">/</span>poc-mcp</div>
   <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJET [06]</div>
+    <div class="node-label" style="margin-bottom:14px">PROJET [06]</div>
     <h1>POC MCP — <em>interroger le datawarehouse</em> en langage naturel</h1>
     <p class="lead">Un serveur MCP (Model Context Protocol) place le LLM face à Snowflake avec des outils typés et un périmètre contrôlé. Le référentiel de documentation du datawarehouse — construit à la main — devient le contexte qui rend le modèle fiable sur un entrepôt réel.</p>
   </div>
@@ -45,14 +45,14 @@
 <section style="padding-top:40px; padding-bottom:48px">
   <div class="wrap">
     <div class="node-head reveal" style="margin-bottom:24px">
-      <div class="node-label"><span class="dot"></span> ARCHITECTURE : LLM ↔ MCP ↔ SNOWFLAKE</div>
+      <div class="node-label">ARCHITECTURE : LLM ↔ MCP ↔ SNOWFLAKE</div>
       <h2>Trois couches, deux frontières contrôlées</h2>
     </div>
     <div class="arch reveal">
       <svg viewBox="0 0 820 330" role="img" aria-label="Schéma d'architecture du POC MCP : utilisateur, Claude, serveur MCP, Snowflake, avec référentiel de documentation injecté et accès en lecture seule">
         <defs>
           <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#6f675c"/>
+            <path d="M0 0 L8 4 L0 8 z" fill="#6f6c52"/>
           </marker>
         </defs>
 
@@ -63,12 +63,12 @@
         <text class="nsub" x="34" y="74">langage naturel</text>
 
         <rect class="nbox" x="250" y="34" width="160" height="56" rx="2"/>
-        <text class="ntitle" x="264" y="58">Claude · LLM</text>
+        <text class="ntitle" x="264" y="58">Claude, LLM</text>
         <text class="nsub" x="264" y="74">orchestre les outils</text>
 
         <rect class="nbox" x="480" y="34" width="160" height="56" rx="2"/>
         <text class="ntitle" x="494" y="58">Serveur MCP</text>
-        <text class="nsub" x="494" y="74">outils typés · Python</text>
+        <text class="nsub" x="494" y="74">outils typés, Python</text>
 
         <rect class="nbox-store" x="700" y="34" width="100" height="56" rx="2"/>
         <text class="ntitle" x="712" y="58">Snowflake</text>
@@ -94,19 +94,19 @@
         <text class="edge-label" x="644" y="92">lignes</text>
 
         <!-- outils exposés -->
-        <text class="edge-label" x="480" y="116" style="letter-spacing:.04em">list_schemas() · describe_view() · run_query(SELECT…)</text>
+        <text class="edge-label" x="480" y="116" style="letter-spacing:.04em">list_schemas(), describe_view(), run_query(SELECT…)</text>
 
         <!-- ── Rangée 2 : réponse, contexte injecté, garde-fous ── -->
         <text class="ntag" x="20" y="188">OUT</text>
         <rect class="nbox-out" x="20" y="196" width="160" height="56" rx="2"/>
         <text class="ntitle-inv" x="34" y="220">Réponse sourcée</text>
-        <text class="nsub-inv" x="34" y="236">SQL joint · vues citées</text>
+        <text class="nsub-inv" x="34" y="236">SQL joint, vues citées</text>
         <path class="edge" d="M330 90 V224 H180" marker-end="url(#arr)"/>
         <path class="edge-flow" d="M330 90 V224 H186"/>
 
         <rect class="nbox-store" x="250" y="196" width="190" height="56" rx="2"/>
         <text class="ntitle" x="264" y="220">Référentiel de doc</text>
-        <text class="nsub" x="264" y="236">lineage 65 vues · 314 lignes</text>
+        <text class="nsub" x="264" y="236">lineage 65 vues, 314 lignes</text>
         <path class="edge" d="M440 210 H530 V145" marker-end="url(#arr)"/>
         <path class="edge-flow slow" d="M440 210 H530 V151"/>
         <text class="edge-label" x="448" y="202">contexte injecté</text>
@@ -116,8 +116,8 @@
         <text class="ntag-guard" x="600" y="188">GARDE-FOUS</text>
         <rect class="nbox-guard" x="600" y="196" width="200" height="56" rx="2"/>
         <text class="ntitle" x="614" y="216">Rôle lecture seule</text>
-        <text class="nsub" x="614" y="232">SELECT only · périmètre de</text>
-        <text class="nsub" x="614" y="244">schémas contrôlé · quotas</text>
+        <text class="nsub" x="614" y="232">SELECT only, périmètre de</text>
+        <text class="nsub" x="614" y="244">schémas contrôlé, quotas</text>
         <path class="edge" d="M690 196 V104" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
         <text class="edge-label" x="698" y="152">encadre chaque appel</text>
       </svg>
@@ -136,7 +136,7 @@
 <section style="padding-top:0">
   <div class="wrap">
     <div class="node-head reveal">
-      <div class="node-label"><span class="dot"></span> NODE : CE QUI REND LE POC FIABLE</div>
+      <div class="node-label">CE QUI REND LE POC FIABLE</div>
       <h2>La documentation d'hier est le garde-fou d'aujourd'hui</h2>
     </div>
     <div class="values">
@@ -167,7 +167,7 @@
 <section style="padding-top:0; padding-bottom:60px">
   <div class="wrap">
     <div class="node-head reveal">
-      <div class="node-label"><span class="dot"></span> NODE : EN CHIFFRES</div>
+      <div class="node-label">EN CHIFFRES</div>
       <h2>Ce que le serveur MCP expose au modèle</h2>
     </div>
     <div class="reveal" style="max-width:560px">
@@ -185,7 +185,7 @@
   <div class="wrap">
     <div class="foot-row reveal">
       <div>
-        <div class="node-label"><span class="dot"></span> CONTACT</div>
+        <div class="node-label">CONTACT</div>
         <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
       </div>
       <div class="foot-links">
@@ -195,7 +195,7 @@
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
-    <div class="foot-note">// site statique · aucun tracking · chiffres agrégés et anonymisés · 2026</div>
+    <div class="foot-note">site statique, aucun tracking, chiffres agrégés et anonymisés, 2026</div>
   </div>
 </footer>
 

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Investigation d'un bug de calcul critique : remontée d'un indicateur de service faussé jusqu'à sa cause racine — une table de secours gelée depuis 2022 absorbant 83–85 % des lignes simulées.">
 <title>Investigation d'un bug de calcul critique | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f5f1ea'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%23b3572c'/%3E%3Cpath d='M12 16h8' stroke='%23b3572c' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2323201b'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f7f3df'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%239c7a1f'/%3E%3Cpath d='M12 16h8' stroke='%239c7a1f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%232c2f22'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
 <header>
   <div class="wrap">
     <nav>
-      <a class="logo" href="../../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
+      <a class="logo" href="../../">Adrien Tripon</a>
       <div class="nav-links">
         <a href="../../">Accueil</a>
         <a href="../" aria-current="page">Projets</a>
@@ -35,7 +35,7 @@
 <div class="wrap">
   <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">projets</a><span class="sep">/</span>investigation-bug</div>
   <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJET [05]</div>
+    <div class="node-label" style="margin-bottom:14px">PROJET [05]</div>
     <h1>Remonter le lineage <em>à contre-courant</em> — anatomie d'une investigation</h1>
     <p class="lead">Un indicateur de service publié chaque semaine, faux depuis des mois, sans qu'aucune alerte ne se déclenche. L'investigation a remonté la chaîne de calcul jusqu'à une table de secours gelée depuis juillet 2022 — sur laquelle 83 à 85 % des lignes simulées basculaient en silence.</p>
   </div>
@@ -45,17 +45,17 @@
 <section style="padding-top:40px; padding-bottom:48px">
   <div class="wrap">
     <div class="node-head reveal" style="margin-bottom:24px">
-      <div class="node-label"><span class="dot"></span> ARCHITECTURE : DU SYMPTÔME À LA CAUSE RACINE</div>
+      <div class="node-label">ARCHITECTURE : DU SYMPTÔME À LA CAUSE RACINE</div>
       <h2>La chaîne de calcul, descendue nœud par nœud</h2>
     </div>
     <div class="arch reveal">
       <svg viewBox="0 0 760 440" role="img" aria-label="Schéma de l'investigation : symptôme sur l'indicateur, vue de reporting, moteur de simulation, bascule silencieuse sur une table de secours gelée depuis 2022, correctif documenté">
         <defs>
           <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#6f675c"/>
+            <path d="M0 0 L8 4 L0 8 z" fill="#6f6c52"/>
           </marker>
           <marker id="arr-amber" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#c98a2d"/>
+            <path d="M0 0 L8 4 L0 8 z" fill="#6f8f5b"/>
           </marker>
         </defs>
 
@@ -63,7 +63,7 @@
         <text class="ntag" x="290" y="16">SYMPTÔME</text>
         <rect class="nbox-in" x="290" y="24" width="220" height="56" rx="2"/>
         <text class="ntitle" x="304" y="48">Indicateur de service</text>
-        <text class="nsub" x="304" y="64">valeur anormale · aucune alerte</text>
+        <text class="nsub" x="304" y="64">valeur anormale, aucune alerte</text>
 
         <path class="edge" d="M400 80 V136" marker-end="url(#arr)"/>
         <path class="edge-flow" d="M400 80 V130"/>
@@ -93,7 +93,7 @@
         <!-- table gelée, à droite de la cause racine -->
         <rect class="nbox-store" x="560" y="360" width="180" height="56" rx="2"/>
         <text class="ntitle" x="574" y="384">Table de secours</text>
-        <text class="nsub" x="574" y="400">figée 07/2022 · ~3,6 M lignes</text>
+        <text class="nsub" x="574" y="400">figée 07/2022, ~3,6 M lignes</text>
         <path class="edge" d="M560 388 H510" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
         <path class="edge-flow amber slow" d="M560 388 H516"/>
 
@@ -101,7 +101,7 @@
         <text class="ntag" x="20" y="352">OUT</text>
         <rect class="nbox-out" x="20" y="360" width="200" height="56" rx="2"/>
         <text class="ntitle-inv" x="34" y="384">Correctif documenté</text>
-        <text class="nsub-inv" x="34" y="400">impact quantifié · reproductible</text>
+        <text class="nsub-inv" x="34" y="400">impact quantifié, reproductible</text>
         <path class="edge" d="M290 388 H220" marker-end="url(#arr)"/>
         <path class="edge-flow" d="M290 388 H226"/>
       </svg>
@@ -110,7 +110,7 @@
         <span><span class="sw proc"></span>étape de la chaîne de calcul</span>
         <span><span class="sw guard"></span>cause racine</span>
         <span><span class="sw out"></span>livrable</span>
-        <span>— flux ambre : le chemin de l'anomalie</span>
+        <span>— flux vert : le chemin de l'anomalie</span>
       </div>
     </div>
   </div>
@@ -119,7 +119,7 @@
 <section style="padding-top:0; padding-bottom:60px">
   <div class="wrap">
     <div class="node-head reveal">
-      <div class="node-label"><span class="dot"></span> NODE : LA MÉTHODE</div>
+      <div class="node-label">LA MÉTHODE</div>
       <h2>Une investigation, pas une intuition</h2>
     </div>
     <div class="values" style="margin-bottom:36px">
@@ -150,7 +150,7 @@
   <div class="wrap">
     <div class="foot-row reveal">
       <div>
-        <div class="node-label"><span class="dot"></span> CONTACT</div>
+        <div class="node-label">CONTACT</div>
         <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
       </div>
       <div class="foot-links">
@@ -160,7 +160,7 @@
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
-    <div class="foot-note">// site statique · aucun tracking · chiffres agrégés et anonymisés · 2026</div>
+    <div class="foot-note">site statique, aucun tracking, chiffres agrégés et anonymisés, 2026</div>
   </div>
 </footer>
 

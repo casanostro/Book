@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Root-cause investigation of a critical calculation bug: walking a distorted service-level KPI back to its root cause — a fallback table frozen since 2022 absorbing 83–85% of simulated lines.">
 <title>Root-cause investigation of a critical bug | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f5f1ea'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%23b3572c'/%3E%3Cpath d='M12 16h8' stroke='%23b3572c' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2323201b'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f7f3df'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%239c7a1f'/%3E%3Cpath d='M12 16h8' stroke='%239c7a1f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%232c2f22'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
 <header>
   <div class="wrap">
     <nav>
-      <a class="logo" href="../../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
+      <a class="logo" href="../../">Adrien Tripon</a>
       <div class="nav-links">
         <a href="../../">Home</a>
         <a href="../" aria-current="page">Projects</a>
@@ -35,7 +35,7 @@
 <div class="wrap">
   <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">projects</a><span class="sep">/</span>bug-investigation</div>
   <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJECT [05]</div>
+    <div class="node-label" style="margin-bottom:14px">PROJECT [05]</div>
     <h1>Walking the lineage <em>upstream</em> — anatomy of an investigation</h1>
     <p class="lead">A service-level KPI published every week, wrong for months, with no alert ever firing. The investigation walked the calculation chain back to a fallback table frozen since July 2022 — onto which 83–85% of simulated lines were silently falling back.</p>
   </div>
@@ -45,17 +45,17 @@
 <section style="padding-top:40px; padding-bottom:48px">
   <div class="wrap">
     <div class="node-head reveal" style="margin-bottom:24px">
-      <div class="node-label"><span class="dot"></span> ARCHITECTURE : FROM SYMPTOM TO ROOT CAUSE</div>
+      <div class="node-label">ARCHITECTURE : FROM SYMPTOM TO ROOT CAUSE</div>
       <h2>The calculation chain, walked down node by node</h2>
     </div>
     <div class="arch reveal">
       <svg viewBox="0 0 760 440" role="img" aria-label="Investigation diagram: KPI symptom, reporting view, simulation engine, silent fallback to a table frozen since 2022, documented fix">
         <defs>
           <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#6f675c"/>
+            <path d="M0 0 L8 4 L0 8 z" fill="#6f6c52"/>
           </marker>
           <marker id="arr-amber" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#c98a2d"/>
+            <path d="M0 0 L8 4 L0 8 z" fill="#6f8f5b"/>
           </marker>
         </defs>
 
@@ -63,7 +63,7 @@
         <text class="ntag" x="290" y="16">SYMPTOM</text>
         <rect class="nbox-in" x="290" y="24" width="220" height="56" rx="2"/>
         <text class="ntitle" x="304" y="48">Service-level KPI</text>
-        <text class="nsub" x="304" y="64">abnormal value · no alert</text>
+        <text class="nsub" x="304" y="64">abnormal value, no alert</text>
 
         <path class="edge" d="M400 80 V136" marker-end="url(#arr)"/>
         <path class="edge-flow" d="M400 80 V130"/>
@@ -93,7 +93,7 @@
         <!-- frozen table, right of the root cause -->
         <rect class="nbox-store" x="560" y="360" width="180" height="56" rx="2"/>
         <text class="ntitle" x="574" y="384">Fallback table</text>
-        <text class="nsub" x="574" y="400">frozen 07/2022 · ~3.6M rows</text>
+        <text class="nsub" x="574" y="400">frozen 07/2022, ~3.6M rows</text>
         <path class="edge" d="M560 388 H510" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
         <path class="edge-flow amber slow" d="M560 388 H516"/>
 
@@ -101,7 +101,7 @@
         <text class="ntag" x="20" y="352">OUT</text>
         <rect class="nbox-out" x="20" y="360" width="200" height="56" rx="2"/>
         <text class="ntitle-inv" x="34" y="384">Documented fix</text>
-        <text class="nsub-inv" x="34" y="400">impact quantified · replayable</text>
+        <text class="nsub-inv" x="34" y="400">impact quantified, replayable</text>
         <path class="edge" d="M290 388 H220" marker-end="url(#arr)"/>
         <path class="edge-flow" d="M290 388 H226"/>
       </svg>
@@ -110,7 +110,7 @@
         <span><span class="sw proc"></span>step in the calculation chain</span>
         <span><span class="sw guard"></span>root cause</span>
         <span><span class="sw out"></span>deliverable</span>
-        <span>— amber flow: the anomaly's path</span>
+        <span>— green flow: the anomaly's path</span>
       </div>
     </div>
   </div>
@@ -119,7 +119,7 @@
 <section style="padding-top:0; padding-bottom:60px">
   <div class="wrap">
     <div class="node-head reveal">
-      <div class="node-label"><span class="dot"></span> NODE : THE METHOD</div>
+      <div class="node-label">THE METHOD</div>
       <h2>An investigation, not an intuition</h2>
     </div>
     <div class="values" style="margin-bottom:36px">
@@ -150,7 +150,7 @@
   <div class="wrap">
     <div class="foot-row reveal">
       <div>
-        <div class="node-label"><span class="dot"></span> CONTACT</div>
+        <div class="node-label">CONTACT</div>
         <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Supply Chain &amp; Data Business Analyst</div>
       </div>
       <div class="foot-links">
@@ -160,7 +160,7 @@
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
-    <div class="foot-note">// static site · no tracking · figures aggregated and anonymised · 2026</div>
+    <div class="foot-note">static site, no tracking, figures aggregated and anonymised, 2026</div>
   </div>
 </footer>
 

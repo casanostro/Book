@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Two interactive dashboards built on the same supply chain data: a C-level view (5 seconds to understand) and an operations view (dense, filterable, actionable). Live demo.">
 <title>Dataviz: two readings of the same data | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23eef1f5'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2331708f'/%3E%3Cpath d='M12 16h8' stroke='%2331708f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%23161d24'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f5f1ea'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%23b3572c'/%3E%3Cpath d='M12 16h8' stroke='%23b3572c' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2323201b'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/projets/dataviz/">
 <link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/projects/dataviz/">
 <link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/projets/dataviz/">
@@ -253,14 +253,14 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
   var fmt = function (v, d) { return v.toFixed(d === undefined ? 1 : d); };
   var nfmt = function (v) { return v.toLocaleString('en-US'); };
   var PLOT = { responsive: true, displayModeBar: false };
-  var FONT = { family: 'IBM Plex Mono, monospace', size: 11, color: '#5c6b7a' };
+  var FONT = { family: 'Spline Sans Mono, monospace', size: 11, color: '#6f675c' };
   function baseLayout(extra) {
     var l = {
       margin: { l: 46, r: 12, t: 8, b: 36 },
       paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
       font: FONT, showlegend: false,
-      xaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc' },
-      yaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc' }
+      xaxis: { gridcolor: '#eae3d6', linecolor: '#ded5c6' },
+      yaxis: { gridcolor: '#eae3d6', linecolor: '#ded5c6' }
     };
     Object.keys(extra || {}).forEach(function (k) { l[k] = extra[k]; });
     return l;
@@ -294,21 +294,21 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     var months = S.serviceByMonth();
     Plotly.react('chA1', [
       { x: months.map(function (m) { return m.month; }), y: months.map(function (m) { return m.service; }),
-        mode: 'lines+markers', line: { color: '#31708f', width: 2.6 }, marker: { size: 5 },
+        mode: 'lines+markers', line: { color: '#b3572c', width: 2.6 }, marker: { size: 5 },
         hovertemplate: '%{y:.1f}%<extra></extra>' },
       { x: months.map(function (m) { return m.month; }), y: months.map(function () { return 95; }),
         mode: 'lines', line: { color: '#c98a2d', width: 1.2, dash: 'dash' }, hoverinfo: 'skip' }
-    ], baseLayout({ yaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc', range: [90, 98], ticksuffix: '%' } }), PLOT);
+    ], baseLayout({ yaxis: { gridcolor: '#eae3d6', linecolor: '#ded5c6', range: [90, 98], ticksuffix: '%' } }), PLOT);
 
     var fams = S.stockByFamily();
     Plotly.react('chA2', [
       { y: fams.map(function (f) { return FAM[f.family]; }), x: fams.map(function (f) { return (f.stock - f.slob) / 1000; }),
-        type: 'bar', orientation: 'h', marker: { color: '#161d24' }, name: 'healthy stock',
+        type: 'bar', orientation: 'h', marker: { color: '#23201b' }, name: 'healthy stock',
         hovertemplate: '%{x:.1f} M€ healthy<extra></extra>' },
       { y: fams.map(function (f) { return FAM[f.family]; }), x: fams.map(function (f) { return f.slob / 1000; }),
         type: 'bar', orientation: 'h', marker: { color: '#c98a2d' }, name: 'SLOB',
         hovertemplate: '%{x:.2f} M€ SLOB<extra></extra>' }
-    ], baseLayout({ barmode: 'stack', margin: { l: 110, r: 12, t: 8, b: 36 }, xaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc', ticksuffix: ' M€' } }), PLOT);
+    ], baseLayout({ barmode: 'stack', margin: { l: 110, r: 12, t: 8, b: 36 }, xaxis: { gridcolor: '#eae3d6', linecolor: '#ded5c6', ticksuffix: ' M€' } }), PLOT);
   }
 
   /* ═══════ DASHBOARD B ═══════ */
@@ -379,15 +379,15 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     }
     document.getElementById('chB1title').textContent = title;
     Plotly.react('chB1', [
-      { x: S.weekLabels, y: svc, mode: 'lines', line: { color: '#31708f', width: 1.8 }, hovertemplate: '%{y:.1f}%<extra></extra>' },
+      { x: S.weekLabels, y: svc, mode: 'lines', line: { color: '#b3572c', width: 1.8 }, hovertemplate: '%{y:.1f}%<extra></extra>' },
       { x: S.weekLabels, y: S.weekLabels.map(function () { return 95; }), mode: 'lines',
         line: { color: '#c98a2d', width: 1, dash: 'dash' }, hoverinfo: 'skip' }
-    ], baseLayout({ yaxis: { gridcolor: '#e2e6eb', linecolor: '#d0d5dc', ticksuffix: '%' } }), PLOT);
+    ], baseLayout({ yaxis: { gridcolor: '#eae3d6', linecolor: '#ded5c6', ticksuffix: '%' } }), PLOT);
 
     var byWh = S.stockoutsByWarehouse(f);
     Plotly.react('chB2', [{
       x: byWh.map(function (r) { return r.warehouse; }), y: byWh.map(function (r) { return r.count; }),
-      type: 'bar', marker: { color: byWh.map(function (r) { return r.warehouse === f.warehouse ? '#31708f' : '#161d24'; }) },
+      type: 'bar', marker: { color: byWh.map(function (r) { return r.warehouse === f.warehouse ? '#b3572c' : '#23201b'; }) },
       hovertemplate: '%{y} stockouts<extra></extra>'
     }], baseLayout(), PLOT);
 
@@ -395,7 +395,7 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     Plotly.react('chB3', [{
       y: late.map(function (r) { return r.supplier; }), x: late.map(function (r) { return r.late; }),
       type: 'bar', orientation: 'h',
-      marker: { color: late.map(function (r) { return r.supplierId === f.supplierId ? '#31708f' : '#c98a2d'; }) },
+      marker: { color: late.map(function (r) { return r.supplierId === f.supplierId ? '#b3572c' : '#c98a2d'; }) },
       hovertemplate: '%{x} late orders<extra></extra>'
     }], baseLayout({ margin: { l: 150, r: 12, t: 8, b: 36 } }), PLOT);
   }

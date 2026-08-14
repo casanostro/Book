@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Two interactive dashboards built on the same supply chain data: a C-level view (5 seconds to understand) and an operations view (dense, filterable, actionable). Live demo.">
 <title>Dataviz: two readings of the same data | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f5f1ea'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%23b3572c'/%3E%3Cpath d='M12 16h8' stroke='%23b3572c' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2323201b'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f7f3df'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%239c7a1f'/%3E%3Cpath d='M12 16h8' stroke='%239c7a1f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%232c2f22'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Spline+Sans+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -44,9 +44,9 @@
 .klux .k-val small { font-size: .55em; color: var(--graphite); font-weight: 500; }
 .klux .k-delta { font-family: var(--mono); font-size: .74rem; margin-top: 8px; display: flex; align-items: center; gap: 7px; }
 .k-delta .pill { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.k-delta.good .pill { background: #2e7d4f; }  .k-delta.good { color: #2e7d4f; }
+.k-delta.good .pill { background: #4f7a3a; }  .k-delta.good { color: #4f7a3a; }
 .k-delta.warn .pill { background: var(--ambre); } .k-delta.warn { color: var(--ambre); }
-.k-delta.bad .pill { background: #b04437; }   .k-delta.bad { color: #b04437; }
+.k-delta.bad .pill { background: #b5583c; }   .k-delta.bad { color: #b5583c; }
 .klux-charts { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; margin-top: 20px; }
 @media(max-width:860px) { .klux-charts { grid-template-columns: 1fr; } }
 .chart-card { background: var(--bg-card); border: 1px solid var(--line-soft); padding: 18px; }
@@ -79,7 +79,7 @@
 .alerts ul { list-style: none; }
 .alerts li {
   font-family: var(--mono); font-size: .76rem; color: var(--encre-2);
-  padding: 5px 0; border-bottom: 1px dashed rgba(201,138,45,.3);
+  padding: 5px 0; border-bottom: 1px dashed rgba(111,143,91,.3);
   display: flex; gap: 8px; align-items: baseline;
 }
 .alerts li:last-child { border-bottom: none; }
@@ -97,8 +97,8 @@ table.ops th .dir { color: var(--flux); }
 table.ops td { padding: 7px 10px; border-bottom: 1px solid var(--line-soft); color: var(--encre-2); }
 table.ops td.num { font-family: var(--mono); text-align: right; }
 .badge { font-family: var(--mono); font-size: .6rem; letter-spacing: .05em; text-transform: uppercase; padding: 2px 8px; white-space: nowrap; }
-.badge.critique { background: rgba(176,68,55,.12); color: #b04437; border: 1px solid rgba(176,68,55,.4); }
-.badge.élevée { background: var(--ambre-light); color: var(--ambre); border: 1px solid rgba(201,138,45,.4); }
+.badge.critique { background: rgba(181,88,60,.12); color: #b5583c; border: 1px solid rgba(181,88,60,.4); }
+.badge.élevée { background: var(--ambre-light); color: var(--ambre); border: 1px solid rgba(111,143,91,.4); }
 .badge.moyenne { background: var(--flux-light); color: var(--flux); border: 1px solid var(--flux-mid); }
 .ops-charts { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 18px; }
 @media(max-width:1000px) { .ops-charts { grid-template-columns: 1fr 1fr; } }
@@ -111,7 +111,7 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
 <header>
   <div class="wrap">
     <nav>
-      <a class="logo" href="../../"><span class="dot"></span> LINEAGE://SUPPLY-DATA</a>
+      <a class="logo" href="../../">Adrien Tripon</a>
       <div class="nav-links">
         <a href="../../">Home</a>
         <a href="../" aria-current="page">Projects</a>
@@ -126,7 +126,7 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
 <div class="wrap">
   <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">projects</a><span class="sep">/</span>dataviz</div>
   <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px"><span class="dot"></span> NODE : PROJECT [07] · LIVE DEMO</div>
+    <div class="node-label" style="margin-bottom:14px">PROJECT [07], LIVE DEMO</div>
     <h1>Dataviz — <em>two readings</em> of the same data</h1>
     <p class="lead">Same supply chain dataset (service level, stockouts, inventory — 6 warehouses, 25 suppliers, 12 months), two audiences, two designs. The one-size-fits-all dashboard is the classic reporting mistake: the C-suite doesn't need filters, operations don't need large type. Flip between the two views to make the contrast obvious.</p>
   </div>
@@ -144,11 +144,11 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
       <div class="klux-grid reveal" id="kpiRow"></div>
       <div class="klux-charts reveal">
         <div class="chart-card">
-          <h3>Service level — 12 months · 95% target</h3>
+          <h3>Service level — 12 months, 95% target</h3>
           <div id="chA1" style="min-height:300px"><div class="fallback-msg">loading…</div></div>
         </div>
         <div class="chart-card">
-          <h3>Inventory by family · SLOB share in amber</h3>
+          <h3>Inventory by family, SLOB share in green</h3>
           <div id="chA2" style="min-height:300px"><div class="fallback-msg">loading…</div></div>
         </div>
       </div>
@@ -206,17 +206,17 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     </div>
 
     <div class="node-head reveal" style="margin-top:64px; margin-bottom:24px">
-      <div class="node-label"><span class="dot"></span> NODE : THE APPROACH</div>
+      <div class="node-label">THE APPROACH</div>
       <h2>Why two dashboards and not one</h2>
     </div>
     <div class="values reveal" style="max-width:900px">
       <div class="value">
-        <div class="v-num">audience_01 · c-level</div>
+        <div class="v-num">audience_01, c-level</div>
         <h3>A reading, not an exploration</h3>
         <p>Five numbers, one trend, one breakdown, one sentence. No filters: if the reader has to operate the tool to understand, the design has failed. The month-over-month change carries the message; the detail is asked for in the meeting, not in the dashboard.</p>
       </div>
       <div class="value">
-        <div class="v-num">audience_02 · operations</div>
+        <div class="v-num">audience_02, operations</div>
         <h3>Actionable before beautiful</h3>
         <p>The teams live in this screen: cross filters, sortable table, today's alerts on top. The density is a deliberate choice — what matters is that the line to handle first is visible first. Same data, inverted hierarchy.</p>
       </div>
@@ -228,7 +228,7 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
   <div class="wrap">
     <div class="foot-row reveal">
       <div>
-        <div class="node-label"><span class="dot"></span> CONTACT</div>
+        <div class="node-label">CONTACT</div>
         <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Supply Chain &amp; Data Business Analyst</div>
       </div>
       <div class="foot-links">
@@ -238,7 +238,7 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
-    <div class="foot-note">// static site · no tracking · synthetic data generated in your browser · 2026</div>
+    <div class="foot-note">static site, no tracking, synthetic data generated in your browser, 2026</div>
   </div>
 </footer>
 
@@ -253,14 +253,14 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
   var fmt = function (v, d) { return v.toFixed(d === undefined ? 1 : d); };
   var nfmt = function (v) { return v.toLocaleString('en-US'); };
   var PLOT = { responsive: true, displayModeBar: false };
-  var FONT = { family: 'Spline Sans Mono, monospace', size: 11, color: '#6f675c' };
+  var FONT = { family: 'Spline Sans Mono, monospace', size: 11, color: '#6f6c52' };
   function baseLayout(extra) {
     var l = {
       margin: { l: 46, r: 12, t: 8, b: 36 },
       paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
       font: FONT, showlegend: false,
-      xaxis: { gridcolor: '#eae3d6', linecolor: '#ded5c6' },
-      yaxis: { gridcolor: '#eae3d6', linecolor: '#ded5c6' }
+      xaxis: { gridcolor: '#ece6cc', linecolor: '#ddd6b0' },
+      yaxis: { gridcolor: '#ece6cc', linecolor: '#ddd6b0' }
     };
     Object.keys(extra || {}).forEach(function (k) { l[k] = extra[k]; });
     return l;
@@ -294,21 +294,21 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     var months = S.serviceByMonth();
     Plotly.react('chA1', [
       { x: months.map(function (m) { return m.month; }), y: months.map(function (m) { return m.service; }),
-        mode: 'lines+markers', line: { color: '#b3572c', width: 2.6 }, marker: { size: 5 },
+        mode: 'lines+markers', line: { color: '#9c7a1f', width: 2.6 }, marker: { size: 5 },
         hovertemplate: '%{y:.1f}%<extra></extra>' },
       { x: months.map(function (m) { return m.month; }), y: months.map(function () { return 95; }),
-        mode: 'lines', line: { color: '#c98a2d', width: 1.2, dash: 'dash' }, hoverinfo: 'skip' }
-    ], baseLayout({ yaxis: { gridcolor: '#eae3d6', linecolor: '#ded5c6', range: [90, 98], ticksuffix: '%' } }), PLOT);
+        mode: 'lines', line: { color: '#6f8f5b', width: 1.2, dash: 'dash' }, hoverinfo: 'skip' }
+    ], baseLayout({ yaxis: { gridcolor: '#ece6cc', linecolor: '#ddd6b0', range: [90, 98], ticksuffix: '%' } }), PLOT);
 
     var fams = S.stockByFamily();
     Plotly.react('chA2', [
       { y: fams.map(function (f) { return FAM[f.family]; }), x: fams.map(function (f) { return (f.stock - f.slob) / 1000; }),
-        type: 'bar', orientation: 'h', marker: { color: '#23201b' }, name: 'healthy stock',
+        type: 'bar', orientation: 'h', marker: { color: '#2c2f22' }, name: 'healthy stock',
         hovertemplate: '%{x:.1f} M€ healthy<extra></extra>' },
       { y: fams.map(function (f) { return FAM[f.family]; }), x: fams.map(function (f) { return f.slob / 1000; }),
-        type: 'bar', orientation: 'h', marker: { color: '#c98a2d' }, name: 'SLOB',
+        type: 'bar', orientation: 'h', marker: { color: '#6f8f5b' }, name: 'SLOB',
         hovertemplate: '%{x:.2f} M€ SLOB<extra></extra>' }
-    ], baseLayout({ barmode: 'stack', margin: { l: 110, r: 12, t: 8, b: 36 }, xaxis: { gridcolor: '#eae3d6', linecolor: '#ded5c6', ticksuffix: ' M€' } }), PLOT);
+    ], baseLayout({ barmode: 'stack', margin: { l: 110, r: 12, t: 8, b: 36 }, xaxis: { gridcolor: '#ece6cc', linecolor: '#ddd6b0', ticksuffix: ' M€' } }), PLOT);
   }
 
   /* ═══════ DASHBOARD B ═══════ */
@@ -334,12 +334,12 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
   function renderAlerts(f) {
     var items = [];
     filteredStockouts(f).filter(function (o) { return o.criticality === 'critique'; }).forEach(function (o) {
-      items.push('Stockout day ' + o.daysOut + ' · ' + o.product + ' · ' + o.warehouse + ' · ' + o.supplier);
+      items.push('Stockout day ' + o.daysOut + ', ' + o.product + ', ' + o.warehouse + ', ' + o.supplier);
     });
     S.failingSuppliers().forEach(function (s) {
       if (f.supplierId && s.supplierId !== f.supplierId) return;
       if (f.family && s.family !== f.family) return;
-      items.push('Service < 85% · 3 weeks running · ' + s.supplier + ' (' + FAM[s.family].toLowerCase() + ') · avg ' + fmt(s.avg) + '%');
+      items.push('Service < 85%, 3 weeks running, ' + s.supplier + ' (' + FAM[s.family].toLowerCase() + '), avg ' + fmt(s.avg) + '%');
     });
     var list = document.getElementById('alertList');
     list.innerHTML = items.length
@@ -379,15 +379,15 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     }
     document.getElementById('chB1title').textContent = title;
     Plotly.react('chB1', [
-      { x: S.weekLabels, y: svc, mode: 'lines', line: { color: '#b3572c', width: 1.8 }, hovertemplate: '%{y:.1f}%<extra></extra>' },
+      { x: S.weekLabels, y: svc, mode: 'lines', line: { color: '#9c7a1f', width: 1.8 }, hovertemplate: '%{y:.1f}%<extra></extra>' },
       { x: S.weekLabels, y: S.weekLabels.map(function () { return 95; }), mode: 'lines',
-        line: { color: '#c98a2d', width: 1, dash: 'dash' }, hoverinfo: 'skip' }
-    ], baseLayout({ yaxis: { gridcolor: '#eae3d6', linecolor: '#ded5c6', ticksuffix: '%' } }), PLOT);
+        line: { color: '#6f8f5b', width: 1, dash: 'dash' }, hoverinfo: 'skip' }
+    ], baseLayout({ yaxis: { gridcolor: '#ece6cc', linecolor: '#ddd6b0', ticksuffix: '%' } }), PLOT);
 
     var byWh = S.stockoutsByWarehouse(f);
     Plotly.react('chB2', [{
       x: byWh.map(function (r) { return r.warehouse; }), y: byWh.map(function (r) { return r.count; }),
-      type: 'bar', marker: { color: byWh.map(function (r) { return r.warehouse === f.warehouse ? '#b3572c' : '#23201b'; }) },
+      type: 'bar', marker: { color: byWh.map(function (r) { return r.warehouse === f.warehouse ? '#9c7a1f' : '#2c2f22'; }) },
       hovertemplate: '%{y} stockouts<extra></extra>'
     }], baseLayout(), PLOT);
 
@@ -395,7 +395,7 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     Plotly.react('chB3', [{
       y: late.map(function (r) { return r.supplier; }), x: late.map(function (r) { return r.late; }),
       type: 'bar', orientation: 'h',
-      marker: { color: late.map(function (r) { return r.supplierId === f.supplierId ? '#b3572c' : '#c98a2d'; }) },
+      marker: { color: late.map(function (r) { return r.supplierId === f.supplierId ? '#9c7a1f' : '#6f8f5b'; }) },
       hovertemplate: '%{x} late orders<extra></extra>'
     }], baseLayout({ margin: { l: 150, r: 12, t: 8, b: 36 } }), PLOT);
   }

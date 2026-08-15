@@ -10,16 +10,16 @@
   --encre: #2c2f22;
   --encre-2: #3f4530;
   --graphite: #6f6c52;
-  --flux: #9c7a1f;
+  --flux: #d0a93e;
   --flux-light: rgba(156,122,31,.08);
   --flux-mid: rgba(156,122,31,.15);
-  --ambre: #6f8f5b;
+  --ambre: #81cc53;
   --ambre-light: rgba(111,143,91,.08);
   --line: #ddd6b0;
   --line-soft: #ece6cc;
-  --sans: 'Hanken Grotesk', system-ui, sans-serif;
-  --display: 'Space Grotesk', 'Hanken Grotesk', system-ui, sans-serif;
-  --mono: 'Spline Sans Mono', ui-monospace, monospace;
+  --sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --display: 'Outfit', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
   --wrap: 1080px;
 }
 

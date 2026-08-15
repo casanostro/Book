@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Outil de prévision des ventes dans le navigateur : choisissez un scénario ou chargez votre CSV, un clic, une prévision avec intervalle et export — auto-tuning silencieux, aucune donnée envoyée.">
 <title>Prévision des ventes — outil en un clic | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f7f3df'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%239c7a1f'/%3E%3Cpath d='M12 16h8' stroke='%239c7a1f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%232c2f22'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d1312'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2334d399'/%3E%3Cpath d='M12 16h8' stroke='%2334d399' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2394a3b8'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -43,8 +43,8 @@
 .btn.big { font-size: .8rem; padding: 12px 28px; }
 .tool-error {
   margin-top: 16px; padding: 12px 16px;
-  border-left: 3px solid #b5583c; background: rgba(181,88,60,.07);
-  font-size: .86rem; color: #b5583c; font-family: var(--mono);
+  border-left: 3px solid #f2755c; background: rgba(242,117,92,.07);
+  font-size: .86rem; color: #f2755c; font-family: var(--mono);
 }
 .results { margin-top: 26px; }
 .keyfigs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); margin-bottom: 18px; }
@@ -397,17 +397,17 @@ details.how .body p + p { margin-top: 8px; }
     Plotly.react('chart', [
       { x: fcDates.map(iso), y: upper, mode: 'lines', line: { width: 0 }, hoverinfo: 'skip', showlegend: false },
       { x: fcDates.map(iso), y: lower, mode: 'lines', line: { width: 0 }, fill: 'tonexty',
-        fillcolor: 'rgba(208,169,62,.13)', name: 'intervalle 95 %', hoverinfo: 'skip' },
+        fillcolor: 'rgba(52,211,153,.13)', name: 'intervalle 95 %', hoverinfo: 'skip' },
       { x: data.dates.map(iso), y: data.values, mode: 'lines', name: 'historique',
-        line: { color: '#6f6c52', width: 1.4 } },
+        line: { color: '#94a3b8', width: 1.4 } },
       { x: fcDates.map(iso), y: model.forecast, mode: 'lines', name: 'prévision',
-        line: { color: '#9c7a1f', width: 2.6 } }
+        line: { color: '#34d399', width: 2.6 } }
     ], {
       margin: { l: 52, r: 16, t: 12, b: 44 },
       paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
-      font: { family: 'Spline Sans Mono, monospace', size: 11, color: '#6f6c52' },
-      xaxis: { gridcolor: '#ece6cc', linecolor: '#ddd6b0' },
-      yaxis: { gridcolor: '#ece6cc', linecolor: '#ddd6b0', title: { text: 'unités / ' + freq.unit } },
+      font: { family: 'Spline Sans Mono, monospace', size: 11, color: '#94a3b8' },
+      xaxis: { gridcolor: '#182420', linecolor: '#20332d' },
+      yaxis: { gridcolor: '#182420', linecolor: '#20332d', title: { text: 'unités / ' + freq.unit } },
       legend: { orientation: 'h', y: -0.18, font: { size: 10 } }
     }, { responsive: true, displayModeBar: false });
   }

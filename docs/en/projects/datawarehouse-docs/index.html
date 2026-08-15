@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Documenting a Snowflake data warehouse from scratch: systematic exploration of 3 databases, lineage of 65 views reconstructed, a technical reference that became the source of truth.">
 <title>A data warehouse documented from scratch | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f7f3df'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%239c7a1f'/%3E%3Cpath d='M12 16h8' stroke='%239c7a1f' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%232c2f22'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d1312'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2334d399'/%3E%3Cpath d='M12 16h8' stroke='%2334d399' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2394a3b8'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -52,14 +52,14 @@
       <svg viewBox="0 0 760 330" role="img" aria-label="Documentation project diagram: 3 Snowflake databases explored, lineage of 65 views parsed, technical reference consumed by data teams and the MCP POC">
         <defs>
           <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#6f6c52"/>
+            <path d="M0 0 L8 4 L0 8 z" fill="#94a3b8"/>
           </marker>
         </defs>
 
         <!-- stack of the 3 databases -->
         <rect class="nbox" x="36" y="40" width="170" height="56" rx="2" style="stroke:var(--line-soft)"/>
         <rect class="nbox" x="28" y="32" width="170" height="56" rx="2" style="stroke:var(--line-soft)"/>
-        <text class="ntag" x="20" y="16">IN</text>
+        <text class="ntag ntag-in" x="20" y="16">IN</text>
         <rect class="nbox-store" x="20" y="24" width="170" height="56" rx="2"/>
         <text class="ntitle" x="34" y="48">3 Snowflake DBs</text>
         <text class="nsub" x="34" y="64">24 real schemas, 4 documented</text>
@@ -80,7 +80,7 @@
         <text class="edge-label" x="488" y="44">view DDL</text>
 
         <!-- the reference as output -->
-        <text class="ntag" x="560" y="172">OUT</text>
+        <text class="ntag ntag-out" x="560" y="172">OUT</text>
         <rect class="nbox-out" x="560" y="180" width="180" height="56" rx="2"/>
         <text class="ntitle-inv" x="574" y="204">Technical reference</text>
         <text class="nsub-inv" x="574" y="220">314 lines, source of truth</text>

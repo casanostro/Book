@@ -11,10 +11,10 @@
   --encre-2: #3f4530;
   --graphite: #6f6c52;
   --flux: #d0a93e;
-  --flux-light: rgba(156,122,31,.08);
-  --flux-mid: rgba(156,122,31,.15);
+  --flux-light: rgba(208,169,62,.08);
+  --flux-mid: rgba(208,169,62,.15);
   --ambre: #81cc53;
-  --ambre-light: rgba(111,143,91,.08);
+  --ambre-light: rgba(129,204,83,.08);
   --line: #ddd6b0;
   --line-soft: #ece6cc;
   --sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -275,7 +275,7 @@ section { padding: 88px 0; }
 .project-text .impact {
   margin-top: 16px; padding: 12px 14px;
   border-left: 3px solid var(--ambre);
-  background: rgba(111,143,91,.06);
+  background: rgba(129,204,83,.06);
   font-size: .88rem; color: var(--encre-2);
 }
 .project-text .impact strong { font-family: var(--mono); color: var(--encre); }

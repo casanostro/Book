@@ -469,14 +469,14 @@ h1.hero .sig { color: var(--signal); }
    11. CARTE DU SYSTEME
    ───────────────────────────────────────────── */
 .systemmap {
-  border: 1px solid var(--line); background: var(--paper-2);
-  display: grid; grid-template-columns: 1.3fr .7fr; gap: 0;
+  border: 1px solid var(--line-ink); background: var(--paper-2);
+  display: grid; grid-template-columns: 1.4fr .6fr; gap: 0;
 }
 @media (max-width: 860px) { .systemmap { grid-template-columns: 1fr; } }
-.systemmap .canvas { padding: var(--s-5); }
-.systemmap svg { display: block; width: 100%; height: auto; }
+.systemmap .canvas { padding: var(--s-7) var(--s-6); display: flex; align-items: center; }
+.systemmap svg { display: block; width: 100%; height: auto; max-width: 660px; margin: 0 auto; }
 .systemmap .panel {
-  border-left: 1px solid var(--line); padding: var(--s-6);
+  border-left: 1px solid var(--line); padding: var(--s-6); background: var(--paper);
   display: flex; flex-direction: column; gap: var(--s-3);
 }
 @media (max-width: 860px) { .systemmap .panel { border-left: none; border-top: 1px solid var(--line); } }
@@ -500,6 +500,19 @@ h1.hero .sig { color: var(--signal); }
 .sm-node.active text { fill: var(--paper); }
 .sm-edge { stroke: var(--line-2); stroke-width: 1.2; fill: none; transition: stroke .2s, stroke-width .2s; }
 .sm-edge.lit { stroke: var(--signal); stroke-width: 1.8; }
+.sm-node circle { transition: fill .2s, stroke .2s, opacity .2s; }
+
+/* Bande continuum sous la carte (terrain vers IA) */
+.continuum {
+  border: 1px solid var(--line-ink); border-top: none; background: var(--paper);
+  padding: var(--s-4) var(--s-6);
+  display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center;
+  font-family: var(--mono); font-size: .66rem; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+.continuum b { color: var(--ink); font-weight: 700; }
+.continuum .sep { color: var(--signal); font-weight: 700; }
+.continuum .lead-in { color: var(--signal-ink); margin-right: 4px; }
 
 /* ─────────────────────────────────────────────
    12. METHODE (echelle en temps)

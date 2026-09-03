@@ -61,8 +61,8 @@
 
 <nav class="toc" aria-label="Contents">
   <a href="#opening"><span class="toc-label">Opening</span></a>
-  <a href="#evidence"><span class="toc-label">Evidence</span></a>
   <a href="#system"><span class="toc-label">System</span></a>
+  <a href="#evidence"><span class="toc-label">Evidence</span></a>
   <a href="#cases"><span class="toc-label">Cases</span></a>
   <a href="#method"><span class="toc-label">Method</span></a>
   <a href="#beliefs"><span class="toc-label">Beliefs</span></a>
@@ -107,34 +107,10 @@
   </div>
 </section>
 
-<section class="chapter" id="evidence">
-  <div class="wrap">
-    <div class="chapter-head reveal">
-      <div class="row"><span class="chapter-id">01</span><span class="node-label">Evidence</span></div>
-      <h2 class="chapter-title">What it adds up to, in numbers</h2>
-      <p class="sub">Five years from the warehouse floor to the data warehouse. Food retail, consumer electronics, industrial SaaS, healthcare logistics. The figures below are raw, dated, reproducible.</p>
-    </div>
-    <div class="evidence reveal">
-      <div class="cell"><div class="n"><span class="count" data-target="37.8" data-decimals="1">37.8</span><span class="u"> M€</span></div><div class="l">of inventory analysed, SLOB method</div></div>
-      <div class="cell"><div class="n"><span class="count" data-target="5376" data-group="1">5,376</span></div><div class="l">failed executions traced to cause</div></div>
-      <div class="cell"><div class="n"><span class="count" data-target="24">24</span></div><div class="l">Snowflake schemas mapped, 4 documented at first</div></div>
-      <div class="cell"><div class="n">−<span class="count" data-target="94">94</span><span class="u"> %</span></div><div class="l">time on a weekly report, 4 h down to 15 min</div></div>
-      <div class="cell"><div class="n"><span class="count" data-target="15">15</span><span class="u"> M€</span></div><div class="l">of weekly flows piloted at Samsung</div></div>
-      <div class="cell"><div class="n">−<span class="count" data-target="20">20</span><span class="u"> %</span></div><div class="l">stock discrepancies, supply KPIs hardened</div></div>
-      <div class="cell"><div class="n"><span class="count" data-target="250">250</span></div><div class="l">staff managed in healthcare logistics</div></div>
-      <div class="cell"><div class="n"><span class="count" data-target="905">905</span><span class="u">/990</span></div><div class="l">TOEIC, fluent English in international settings</div></div>
-    </div>
-    <div class="prose reveal" style="margin-top:var(--s-8)">
-      <p class="big">A standard BA has not traced 27,625 € of risk line by line. A pure data profile has not managed 250 people or piloted 15 M€ of flows a week. A junior Product Manager has not traced a calculation chain to a table frozen in July 2022.</p>
-      <p>What follows is not a list of projects. It is a way of working, applied to real systems.</p>
-    </div>
-  </div>
-</section>
-
 <section class="chapter" id="system">
   <div class="wrap">
     <div class="chapter-head reveal">
-      <div class="row"><span class="chapter-id">02</span><span class="node-label sig">System</span></div>
+      <div class="row"><span class="chapter-id">01</span><span class="node-label sig">System</span></div>
       <h2 class="chapter-title">The projects are not independent</h2>
       <p class="sub">Six domains, one thread. A warehouse's documentation becomes the guardrail of an AI agent. A failure diagnosis becomes a monitoring system. Hover a node to see what it connects.</p>
     </div>
@@ -178,6 +154,34 @@
         <p>SQL, Snowflake, lineage, quality. Anomaly investigation and mapping of what actually exists.</p>
         <a class="plink" href="projects/datawarehouse-docs/">See the warehouse →</a>
       </div>
+    </div>
+    <div class="continuum reveal">
+      <span class="lead-in">A continuum, not silos:</span>
+      <b>Field</b> <span class="sep">→</span> <b>Process</b> <span class="sep">→</span> <b>Data</b> <span class="sep">→</span> <b>Systems</b> <span class="sep">→</span> <b>Automation</b> <span class="sep">→</span> <b>Product</b> <span class="sep">→</span> <b>AI</b>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="evidence">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="chapter-id">02</span><span class="node-label">Evidence</span></div>
+      <h2 class="chapter-title">What it adds up to, in numbers</h2>
+      <p class="sub">Five years from the warehouse floor to the data warehouse. Food retail, consumer electronics, industrial SaaS, healthcare logistics. The figures below are raw, dated, reproducible.</p>
+    </div>
+    <div class="evidence reveal">
+      <div class="cell"><div class="n"><span class="count" data-target="37.8" data-decimals="1">37.8</span><span class="u"> M€</span></div><div class="l">of inventory analysed, SLOB method</div></div>
+      <div class="cell"><div class="n"><span class="count" data-target="5376" data-group="1">5,376</span></div><div class="l">failed executions traced to cause</div></div>
+      <div class="cell"><div class="n"><span class="count" data-target="24">24</span></div><div class="l">Snowflake schemas mapped, 4 documented at first</div></div>
+      <div class="cell"><div class="n">−<span class="count" data-target="94">94</span><span class="u"> %</span></div><div class="l">time on a weekly report, 4 h down to 15 min</div></div>
+      <div class="cell"><div class="n"><span class="count" data-target="15">15</span><span class="u"> M€</span></div><div class="l">of weekly flows piloted at Samsung</div></div>
+      <div class="cell"><div class="n">−<span class="count" data-target="20">20</span><span class="u"> %</span></div><div class="l">stock discrepancies, supply KPIs hardened</div></div>
+      <div class="cell"><div class="n"><span class="count" data-target="250">250</span></div><div class="l">staff managed in healthcare logistics</div></div>
+      <div class="cell"><div class="n"><span class="count" data-target="905">905</span><span class="u">/990</span></div><div class="l">TOEIC, fluent English in international settings</div></div>
+    </div>
+    <div class="prose reveal" style="margin-top:var(--s-8)">
+      <p class="big">A standard BA has not traced 27,625 € of risk line by line. A pure data profile has not managed 250 people or piloted 15 M€ of flows a week. A junior Product Manager has not traced a calculation chain to a table frozen in July 2022.</p>
+      <p>What follows is not a list of projects. It is a way of working, applied to real systems.</p>
     </div>
   </div>
 </section>
@@ -370,7 +374,6 @@
       </div>
       <div class="cta-row">
         <a class="btn primary" href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a class="btn ghost" href="mailto:adrien.tripon@gmail.com">Email</a>
         <a class="btn ghost" href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </div>

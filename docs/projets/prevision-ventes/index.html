@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Outil de prévision des ventes dans le navigateur : choisissez un scénario ou chargez votre CSV, un clic, une prévision avec intervalle et export — auto-tuning silencieux, aucune donnée envoyée.">
 <title>Prévision des ventes — outil en un clic | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d1312'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2334d399'/%3E%3Cpath d='M12 16h8' stroke='%2334d399' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2394a3b8'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/projets/prevision-ventes/">
-<link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/projects/sales-forecast/">
-<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/projets/prevision-ventes/">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/projets/prevision-ventes/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/projects/sales-forecast/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/projets/prevision-ventes/">
 <link rel="stylesheet" href="../../assets/site.css">
 <script src="../../assets/site.js" defer></script>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
@@ -72,16 +72,19 @@ details.how .body p + p { margin-top: 8px; }
 </style>
 </head>
 <body>
+<a class="skip" href="#dossier">Aller au contenu</a>
+<div class="readbar" aria-hidden="true"></div>
 
-<header>
+<header class="site">
   <div class="wrap">
-    <nav>
-      <a class="logo" href="../../">Adrien Tripon</a>
-      <div class="nav-links">
-        <a href="../../">Accueil</a>
-        <a href="../" aria-current="page">Projets</a>
-        <a href="../../actualites/">Actualités</a>
-        <a href="../../#contact">Contact</a>
+    <nav aria-label="Navigation principale">
+      <a class="brand" href="../../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../../#dossiers">Dossiers</a>
+        <a href="../" aria-current="page">Index</a>
+        <a href="../../#méthode">Méthode</a>
+        <a href="../../#position">Contact</a>
       </div>
       <a class="lang-toggle" data-lang="en" href="../../en/projects/sales-forecast/" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
     </nav>
@@ -89,10 +92,10 @@ details.how .body p + p { margin-top: 8px; }
 </header>
 
 <div class="wrap">
-  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">projets</a><span class="sep">/</span>prevision-ventes</div>
-  <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px">PROJET [08], OUTIL LIVE</div>
-    <h1>Prévision des ventes — <em>un clic, une prévision</em></h1>
+  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">dossiers</a><span class="sep">/</span>case 06</div>
+  <div class="page-head reveal" id="dossier">
+    <div class="toprow" style="margin-bottom:16px"><span class="chapter-id sig">CASE 06</span> <span class="stamp ok">Outil live</span></div>
+    <h1>Un clic, une prévision</h1>
     <p class="lead">L'expérience d'un outil interne fini : choisissez un profil de produit — ou chargez votre propre historique — et obtenez une prévision avec intervalle de confiance, prête à exporter. Pas de paramètres à régler : le modèle s'auto-calibre en silence.</p>
   </div>
 </div>
@@ -140,21 +143,24 @@ details.how .body p + p { margin-top: 8px; }
   </div>
 </section>
 
-<footer id="contact">
+<div class="wrap">
+  <div class="convert reveal">
+    <p>Vu comment je travaille ? Reste à voir sur quel problème.</p>
+    <a class="btn ghost" href="../../#position">Me contacter →</a>
+  </div>
+</div>
+
+<footer class="site">
   <div class="wrap">
-    <div class="foot-row reveal">
-      <div>
-        <div class="node-label">CONTACT</div>
-        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
-      </div>
-      <div class="foot-links">
-        <a href="../../">Accueil</a>
-        <a href="../">Projets</a>
+    <div class="row">
+      <div><a class="brand" href="../../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks">
+        <a href="../../">Accueil</a><a href="../">Dossiers</a>
         <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
-    <div class="foot-note">site statique, aucun tracking, vos fichiers restent dans votre navigateur, 2026</div>
+    <div class="note">Site statique, aucun tracking. Vos fichiers restent dans votre navigateur. Paris, 2026.</div>
   </div>
 </footer>
 
@@ -399,15 +405,15 @@ details.how .body p + p { margin-top: 8px; }
       { x: fcDates.map(iso), y: lower, mode: 'lines', line: { width: 0 }, fill: 'tonexty',
         fillcolor: 'rgba(52,211,153,.13)', name: 'intervalle 95 %', hoverinfo: 'skip' },
       { x: data.dates.map(iso), y: data.values, mode: 'lines', name: 'historique',
-        line: { color: '#94a3b8', width: 1.4 } },
+        line: { color: '#6a6357', width: 1.4 } },
       { x: fcDates.map(iso), y: model.forecast, mode: 'lines', name: 'prévision',
-        line: { color: '#34d399', width: 2.6 } }
+        line: { color: '#bf3626', width: 2.6 } }
     ], {
       margin: { l: 52, r: 16, t: 12, b: 44 },
       paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
-      font: { family: 'Spline Sans Mono, monospace', size: 11, color: '#94a3b8' },
-      xaxis: { gridcolor: '#182420', linecolor: '#20332d' },
-      yaxis: { gridcolor: '#182420', linecolor: '#20332d', title: { text: 'unités / ' + freq.unit } },
+      font: { family: 'JetBrains Mono, monospace', size: 11, color: '#6a6357' },
+      xaxis: { gridcolor: '#d3cab5', linecolor: '#c2b89f' },
+      yaxis: { gridcolor: '#d3cab5', linecolor: '#c2b89f', title: { text: 'unités / ' + freq.unit } },
       legend: { orientation: 'h', y: -0.18, font: { size: 10 } }
     }, { responsive: true, displayModeBar: false });
   }

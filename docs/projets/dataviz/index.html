@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Deux dashboards interactifs construits sur la même donnée supply chain : une vue C-level (5 secondes pour comprendre) et une vue opérations (dense, filtrable, actionnable). Démo live.">
 <title>Dataviz : deux lectures d'une même donnée | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d1312'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2334d399'/%3E%3Cpath d='M12 16h8' stroke='%2334d399' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2394a3b8'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/projets/dataviz/">
-<link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/projects/dataviz/">
-<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/projets/dataviz/">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/projets/dataviz/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/projects/dataviz/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/projets/dataviz/">
 <link rel="stylesheet" href="../../assets/site.css">
 <script src="../../assets/site.js" defer></script>
 <script src="../../assets/supply-data.js"></script>
@@ -45,7 +45,7 @@
 .klux .k-val small { font-size: .55em; color: var(--graphite); font-weight: 500; }
 .klux .k-delta { font-family: var(--mono); font-size: .74rem; margin-top: 8px; display: flex; align-items: center; gap: 7px; }
 .k-delta .pill { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.k-delta.good .pill { background: #34d399; }  .k-delta.good { color: #34d399; }
+.k-delta.good .pill { background: #2f6b4f; }  .k-delta.good { color: #2f6b4f; }
 .k-delta.warn .pill { background: var(--ambre); } .k-delta.warn { color: var(--ambre); }
 .k-delta.bad .pill { background: #f2755c; }   .k-delta.bad { color: #f2755c; }
 .klux-charts { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; margin-top: 20px; }
@@ -109,16 +109,19 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
 </style>
 </head>
 <body>
+<a class="skip" href="#dossier">Aller au contenu</a>
+<div class="readbar" aria-hidden="true"></div>
 
-<header>
+<header class="site">
   <div class="wrap">
-    <nav>
-      <a class="logo" href="../../">Adrien Tripon</a>
-      <div class="nav-links">
-        <a href="../../">Accueil</a>
-        <a href="../" aria-current="page">Projets</a>
-        <a href="../../actualites/">Actualités</a>
-        <a href="../../#contact">Contact</a>
+    <nav aria-label="Navigation principale">
+      <a class="brand" href="../../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../../#dossiers">Dossiers</a>
+        <a href="../" aria-current="page">Index</a>
+        <a href="../../#méthode">Méthode</a>
+        <a href="../../#position">Contact</a>
       </div>
       <a class="lang-toggle" data-lang="en" href="../../en/projects/dataviz/" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
     </nav>
@@ -126,10 +129,10 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
 </header>
 
 <div class="wrap">
-  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">projets</a><span class="sep">/</span>dataviz</div>
-  <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px">PROJET [07], DÉMO LIVE</div>
-    <h1>Dataviz — <em>deux lectures</em> d'une même donnée</h1>
+  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">dossiers</a><span class="sep">/</span>case 05</div>
+  <div class="page-head reveal" id="dossier">
+    <div class="toprow" style="margin-bottom:16px"><span class="chapter-id sig">CASE 05</span> <span class="stamp ok">Démo live</span></div>
+    <h1>Deux lectures d'une même donnée</h1>
     <p class="lead">Même jeu de données supply chain (taux de service, ruptures, stock — 6 entrepôts, 25 fournisseurs, 12 mois), deux audiences, deux designs. Le dashboard unique « pour tout le monde » est l'erreur classique du reporting : le COMEX n'a pas besoin de filtres, les opérations n'ont pas besoin de grandes typographies. Basculez entre les deux vues pour rendre le contraste évident.</p>
   </div>
 </div>
@@ -226,21 +229,24 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
   </div>
 </section>
 
-<footer id="contact">
+<div class="wrap">
+  <div class="convert reveal">
+    <p>Un modèle qui disparaît derrière l'usage : la prévision en un clic.</p>
+    <a class="btn ghost" href="../prevision-ventes/">CASE 06 · Prévision des ventes →</a>
+  </div>
+</div>
+
+<footer class="site">
   <div class="wrap">
-    <div class="foot-row reveal">
-      <div>
-        <div class="node-label">CONTACT</div>
-        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
-      </div>
-      <div class="foot-links">
-        <a href="../../">Accueil</a>
-        <a href="../">Projets</a>
+    <div class="row">
+      <div><a class="brand" href="../../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks">
+        <a href="../../">Accueil</a><a href="../">Dossiers</a>
         <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
-    <div class="foot-note">site statique, aucun tracking, données synthétiques générées dans votre navigateur, 2026</div>
+    <div class="note">Site statique, aucun tracking. Données synthétiques générées dans votre navigateur. Paris, 2026.</div>
   </div>
 </footer>
 
@@ -254,14 +260,14 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
   var S = window.SUPPLY;
   var fmt = function (v, d) { return v.toFixed(d === undefined ? 1 : d).replace('.', ','); };
   var PLOT = { responsive: true, displayModeBar: false };
-  var FONT = { family: 'Spline Sans Mono, monospace', size: 11, color: '#94a3b8' };
+  var FONT = { family: 'JetBrains Mono, monospace', size: 11, color: '#6a6357' };
   function baseLayout(extra) {
     var l = {
       margin: { l: 46, r: 12, t: 8, b: 36 },
       paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
       font: FONT, showlegend: false,
-      xaxis: { gridcolor: '#182420', linecolor: '#20332d' },
-      yaxis: { gridcolor: '#182420', linecolor: '#20332d' }
+      xaxis: { gridcolor: '#d3cab5', linecolor: '#c2b89f' },
+      yaxis: { gridcolor: '#d3cab5', linecolor: '#c2b89f' }
     };
     Object.keys(extra || {}).forEach(function (k) { l[k] = extra[k]; });
     return l;
@@ -296,21 +302,21 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     var months = S.serviceByMonth();
     Plotly.react('chA1', [
       { x: months.map(function (m) { return m.month; }), y: months.map(function (m) { return m.service; }),
-        mode: 'lines+markers', line: { color: '#34d399', width: 2.6 }, marker: { size: 5 },
+        mode: 'lines+markers', line: { color: '#bf3626', width: 2.6 }, marker: { size: 5 },
         hovertemplate: '%{y:.1f} %<extra></extra>' },
       { x: months.map(function (m) { return m.month; }), y: months.map(function () { return 95; }),
-        mode: 'lines', line: { color: '#c86d51', width: 1.2, dash: 'dash' }, hoverinfo: 'skip' }
-    ], baseLayout({ yaxis: { gridcolor: '#182420', linecolor: '#20332d', range: [90, 98], ticksuffix: ' %' } }), PLOT);
+        mode: 'lines', line: { color: '#a8641b', width: 1.2, dash: 'dash' }, hoverinfo: 'skip' }
+    ], baseLayout({ yaxis: { gridcolor: '#d3cab5', linecolor: '#c2b89f', range: [90, 98], ticksuffix: ' %' } }), PLOT);
 
     var fams = S.stockByFamily();
     Plotly.react('chA2', [
       { y: fams.map(function (f) { return f.family; }), x: fams.map(function (f) { return (f.stock - f.slob) / 1000; }),
-        type: 'bar', orientation: 'h', marker: { color: '#f1f5f9' }, name: 'stock sain',
+        type: 'bar', orientation: 'h', marker: { color: '#3a352c' }, name: 'stock sain',
         hovertemplate: '%{x:.1f} M€ sain<extra></extra>' },
       { y: fams.map(function (f) { return f.family; }), x: fams.map(function (f) { return f.slob / 1000; }),
-        type: 'bar', orientation: 'h', marker: { color: '#c86d51' }, name: 'SLOB',
+        type: 'bar', orientation: 'h', marker: { color: '#a8641b' }, name: 'SLOB',
         hovertemplate: '%{x:.2f} M€ SLOB<extra></extra>' }
-    ], baseLayout({ barmode: 'stack', margin: { l: 76, r: 12, t: 8, b: 36 }, xaxis: { gridcolor: '#182420', linecolor: '#20332d', ticksuffix: ' M€' } }), PLOT);
+    ], baseLayout({ barmode: 'stack', margin: { l: 76, r: 12, t: 8, b: 36 }, xaxis: { gridcolor: '#d3cab5', linecolor: '#c2b89f', ticksuffix: ' M€' } }), PLOT);
   }
 
   /* ═══════ DASHBOARD B ═══════ */
@@ -382,15 +388,15 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     }
     document.getElementById('chB1title').textContent = title;
     Plotly.react('chB1', [
-      { x: S.weekLabels, y: svc, mode: 'lines', line: { color: '#34d399', width: 1.8 }, hovertemplate: '%{y:.1f} %<extra></extra>' },
+      { x: S.weekLabels, y: svc, mode: 'lines', line: { color: '#bf3626', width: 1.8 }, hovertemplate: '%{y:.1f} %<extra></extra>' },
       { x: S.weekLabels, y: S.weekLabels.map(function () { return 95; }), mode: 'lines',
-        line: { color: '#c86d51', width: 1, dash: 'dash' }, hoverinfo: 'skip' }
-    ], baseLayout({ yaxis: { gridcolor: '#182420', linecolor: '#20332d', ticksuffix: ' %' } }), PLOT);
+        line: { color: '#a8641b', width: 1, dash: 'dash' }, hoverinfo: 'skip' }
+    ], baseLayout({ yaxis: { gridcolor: '#d3cab5', linecolor: '#c2b89f', ticksuffix: ' %' } }), PLOT);
 
     var byWh = S.stockoutsByWarehouse(f);
     Plotly.react('chB2', [{
       x: byWh.map(function (r) { return r.warehouse; }), y: byWh.map(function (r) { return r.count; }),
-      type: 'bar', marker: { color: byWh.map(function (r) { return r.warehouse === f.warehouse ? '#34d399' : '#f1f5f9'; }) },
+      type: 'bar', marker: { color: byWh.map(function (r) { return r.warehouse === f.warehouse ? '#bf3626' : '#3a352c'; }) },
       hovertemplate: '%{y} ruptures<extra></extra>'
     }], baseLayout(), PLOT);
 
@@ -398,7 +404,7 @@ table.ops td.num { font-family: var(--mono); text-align: right; }
     Plotly.react('chB3', [{
       y: late.map(function (r) { return r.supplier; }), x: late.map(function (r) { return r.late; }),
       type: 'bar', orientation: 'h',
-      marker: { color: late.map(function (r) { return r.supplierId === f.supplierId ? '#34d399' : '#c86d51'; }) },
+      marker: { color: late.map(function (r) { return r.supplierId === f.supplierId ? '#bf3626' : '#a8641b'; }) },
       hovertemplate: '%{x} commandes en retard<extra></extra>'
     }], baseLayout({ margin: { l: 150, r: 12, t: 8, b: 36 } }), PLOT);
   }

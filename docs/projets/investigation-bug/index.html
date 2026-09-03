@@ -3,29 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Investigation d'un bug de calcul critique : remontée d'un indicateur de service faussé jusqu'à sa cause racine — une table de secours gelée depuis 2022 absorbant 83–85 % des lignes simulées.">
-<title>Investigation d'un bug de calcul critique | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d1312'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2334d399'/%3E%3Cpath d='M12 16h8' stroke='%2334d399' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2394a3b8'/%3E%3C/svg%3E" />
+<title>CASE 01 | L'indicateur mentait depuis des mois | Adrien Tripon</title>
+<meta name="description" content="Investigation d'un KPI de service faux publié chaque semaine sans alerte. Remontée de la chaîne de calcul jusqu'à une table de secours figée en 2022, absorbant 83 à 85 % des lignes simulées.">
+<link rel="canonical" href="https://casanostro.github.io/Book/projets/investigation-bug/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/projets/investigation-bug/">
-<link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/projects/bug-investigation/">
-<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/projets/investigation-bug/">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/projets/investigation-bug/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/projects/bug-investigation/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/projets/investigation-bug/">
 <link rel="stylesheet" href="../../assets/site.css">
 <script src="../../assets/site.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#dossier">Aller au contenu</a>
+<div class="readbar" aria-hidden="true"></div>
 
-<header>
+<header class="site">
   <div class="wrap">
-    <nav>
-      <a class="logo" href="../../">Adrien Tripon</a>
-      <div class="nav-links">
-        <a href="../../">Accueil</a>
-        <a href="../" aria-current="page">Projets</a>
-        <a href="../../actualites/">Actualités</a>
-        <a href="../../#contact">Contact</a>
+    <nav aria-label="Navigation principale">
+      <a class="brand" href="../../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../../#dossiers">Dossiers</a>
+        <a href="../">Index</a>
+        <a href="../../#méthode">Méthode</a>
+        <a href="../../#position">Contact</a>
       </div>
       <a class="lang-toggle" data-lang="en" href="../../en/projects/bug-investigation/" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
     </nav>
@@ -33,134 +37,184 @@
 </header>
 
 <div class="wrap">
-  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">projets</a><span class="sep">/</span>investigation-bug</div>
-  <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px">PROJET [05]</div>
-    <h1>Remonter le lineage <em>à contre-courant</em> — anatomie d'une investigation</h1>
-    <p class="lead">Un indicateur de service publié chaque semaine, faux depuis des mois, sans qu'aucune alerte ne se déclenche. L'investigation a remonté la chaîne de calcul jusqu'à une table de secours gelée depuis juillet 2022 — sur laquelle 83 à 85 % des lignes simulées basculaient en silence.</p>
+  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">dossiers</a><span class="sep">/</span>case 01</div>
+
+  <div class="dossier-head" id="dossier">
+    <div class="toprow reveal">
+      <span class="chapter-id sig">CASE 01</span>
+      <span class="stamp">Cause racine confirmée</span>
+      <span class="stamp warn">Sévérité haute</span>
+    </div>
+    <h1 class="reveal">L'indicateur mentait depuis des mois</h1>
+    <div class="meta reveal">
+      <div>Domaine<b>Data quality</b></div>
+      <div>Rôle<b>Investigation, root cause</b></div>
+      <div>Stack<b>SQL, Snowflake</b></div>
+      <div>Statut<b>Correctif documenté</b></div>
+    </div>
+    <p class="lead reveal">Un KPI de service publié chaque semaine, faux depuis des mois, sans qu'aucune alerte ne se déclenche. Le système disait que tout allait bien. Les données disaient l'inverse.</p>
+    <div class="depth reveal" data-default="full" role="group" aria-label="Profondeur de lecture">
+      <button data-mode="synth" aria-pressed="false">Synthèse</button>
+      <button data-mode="full" aria-pressed="true">Dossier complet</button>
+    </div>
   </div>
 </div>
 
-<!-- ═══════════ SCHÉMA D'ARCHITECTURE ═══════════ -->
-<section style="padding-top:40px; padding-bottom:48px">
+<!-- ═══════════ CONTRADICTION ═══════════ -->
+<section class="chapter" style="padding-top:var(--s-6)">
   <div class="wrap">
-    <div class="node-head reveal" style="margin-bottom:24px">
-      <div class="node-label">ARCHITECTURE : DU SYMPTÔME À LA CAUSE RACINE</div>
-      <h2>La chaîne de calcul, descendue nœud par nœud</h2>
+    <div class="contradiction reveal">
+      <div class="side expected">
+        <div class="cl">Volume attendu</div>
+        <div class="cn"><span class="count" data-target="10244" data-group="1">10 244</span></div>
+      </div>
+      <div class="vs">colis simulés · vs</div>
+      <div class="side actual">
+        <div class="cl">Volume réellement généré</div>
+        <div class="cn"><span class="count" data-target="54">54</span></div>
+      </div>
     </div>
-    <div class="arch reveal">
-      <svg viewBox="0 0 760 440" role="img" aria-label="Schéma de l'investigation : symptôme sur l'indicateur, vue de reporting, moteur de simulation, bascule silencieuse sur une table de secours gelée depuis 2022, correctif documenté">
+    <p class="prose reveal" style="margin-top:var(--s-5)">0,53 % du volume attendu. L'écart n'était pas une dérive de quelques pourcents ; c'était un effondrement. Restait à comprendre pourquoi personne ne l'avait vu.</p>
+  </div>
+</section>
+
+<!-- ═══════════ INVESTIGATION + PANNEAU D'ÉTAT ═══════════ -->
+<section class="chapter" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label sig">Investigation</span></div>
+      <h2 class="chapter-title">Du symptôme à la cause racine</h2>
+    </div>
+
+    <div class="investigation">
+      <div class="steps">
+        <div class="inv-step reveal" data-status="Signal reçu" data-metric="1" data-unit="KPI" data-metric-label="indicateur de service faux, aucune alerte déclenchée">
+          <div class="st-id">01 · Symptôme</div>
+          <h3>Un chiffre qui contredit le terrain</h3>
+          <p>L'indicateur de service affichait une valeur anormale en reporting hebdomadaire. Aucune alerte, aucun log d'erreur. Le premier réflexe n'a pas été de corriger, mais de quantifier l'écart.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Investigation" data-metric="10 244" data-metric-label="volume attendu, contre 54 colis réellement générés">
+          <div class="st-id">02 · Trace</div>
+          <h3>Remonter le calcul, nœud par nœud</h3>
+          <p>De la vue de reporting au moteur de simulation de commandes. Chaque hypothèse testée par une requête reproductible : volume attendu contre volume généré, puis la part exacte des lignes en anomalie.</p>
+          <p class="deep">Le diagnostic tient parce que chaque chiffre est rejouable. Une intuition n'aurait pas suffi à défendre le résultat devant la direction ; une requête, si.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Anomalie localisée" data-metric="84" data-unit="%" data-metric-label="des lignes basculent en silence sur le fallback (83 à 85 %)">
+          <div class="st-id">03 · Fallback</div>
+          <h3>La bascule silencieuse</h3>
+          <p>83 à 85 % des lignes simulées ne passaient pas par le calcul nominal. Elles basculaient sur une table de secours, sans alerte ni trace. Le fallback était devenu le chemin principal.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Cause racine confirmée" data-metric="07/2022" data-metric-label="table de secours figée depuis juillet 2022, 3,6 M lignes historiques">
+          <div class="st-id">04 · Cause racine</div>
+          <h3>Une table gelée depuis 2022</h3>
+          <p>La table de secours n'était plus alimentée depuis juillet 2022 : environ 3,6 millions de lignes historiques figées. Le moteur y puisait des données périmées en croyant faire son travail.</p>
+          <p class="deep">La table gelée est une erreur. La bascule sans alerte ni log est le vrai défaut de conception. Un fallback silencieux est une dette qui se paie en confiance.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Correctif livré" data-metric="1" data-metric-label="correctif documenté, chiffré, reproductible">
+          <div class="st-id">05 · Correctif</div>
+          <h3>Réparer la source et le silence</h3>
+          <p>Le correctif proposé traite les deux niveaux : réactiver la source alimentée, et rendre toute bascule future bruyante. Impact quantifié, cause documentée, diagnostic reproductible.</p>
+        </div>
+      </div>
+
+      <aside class="statuspanel" aria-hidden="true">
+        <div class="sp-head">État du dossier</div>
+        <div class="sp-body">
+          <div class="sp-status">Signal reçu</div>
+          <div class="sp-metric">
+            <div class="n">1</div>
+            <div class="l">indicateur de service faux, aucune alerte déclenchée</div>
+          </div>
+          <div class="sp-track"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SCHÉMA ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Architecture</span></div>
+      <h2 class="chapter-title">La chaîne de calcul, descendue à contre-courant</h2>
+    </div>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 760 440" role="img" aria-label="Schéma : symptôme sur l'indicateur, vue de reporting, moteur de simulation, bascule silencieuse sur une table figée depuis 2022, correctif documenté">
         <defs>
-          <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#94a3b8"/>
-          </marker>
-          <marker id="arr-amber" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#c86d51"/>
-          </marker>
+          <marker id="a1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#6a6357"/></marker>
+          <marker id="a2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#a8641b"/></marker>
         </defs>
-
-        <!-- colonne centrale : la chaîne de calcul -->
-        <text class="ntag" x="290" y="16">SYMPTÔME</text>
-        <rect class="nbox-in" x="290" y="24" width="220" height="56" rx="2"/>
-        <text class="ntitle" x="304" y="48">Indicateur de service</text>
-        <text class="nsub" x="304" y="64">valeur anormale, aucune alerte</text>
-
-        <path class="edge" d="M400 80 V136" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M400 80 V130"/>
-        <text class="edge-label" x="410" y="112">remontée du calcul</text>
-
-        <rect class="nbox" x="290" y="136" width="220" height="56" rx="2"/>
-        <text class="ntitle" x="304" y="160">Vue de reporting</text>
-        <text class="nsub" x="304" y="176">agrégation hebdomadaire</text>
-
-        <path class="edge" d="M400 192 V248" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M400 192 V242"/>
-        <text class="edge-label" x="410" y="224">requêtes de contrôle</text>
-
-        <rect class="nbox" x="290" y="248" width="220" height="56" rx="2"/>
-        <text class="ntitle" x="304" y="272">Moteur de simulation</text>
-        <text class="nsub" x="304" y="288">54 colis générés vs ~10 244</text>
-
-        <path class="edge" d="M400 304 V360" marker-end="url(#arr-amber)" style="stroke:var(--ambre); stroke-opacity:.55"/>
-        <path class="edge-flow amber" d="M400 304 V354"/>
-        <text class="edge-label" x="410" y="336" style="fill:var(--ambre)">83–85 % des lignes</text>
-
-        <text class="ntag-guard" x="290" y="352">CAUSE RACINE</text>
-        <rect class="nbox-guard" x="290" y="360" width="220" height="56" rx="2"/>
-        <text class="ntitle" x="304" y="384">Bascule silencieuse</text>
-        <text class="nsub" x="304" y="400">fallback sans alerte ni log</text>
-
-        <!-- table gelée, à droite de la cause racine -->
-        <rect class="nbox-store" x="560" y="360" width="180" height="56" rx="2"/>
-        <text class="ntitle" x="574" y="384">Table de secours</text>
-        <text class="nsub" x="574" y="400">figée 07/2022, ~3,6 M lignes</text>
-        <path class="edge" d="M560 388 H510" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
-        <path class="edge-flow amber slow" d="M560 388 H516"/>
-
-        <!-- livrable, à gauche -->
-        <text class="ntag ntag-out" x="20" y="352">OUT</text>
-        <rect class="nbox-out" x="20" y="360" width="200" height="56" rx="2"/>
-        <text class="ntitle-inv" x="34" y="384">Correctif documenté</text>
-        <text class="nsub-inv" x="34" y="400">impact quantifié, reproductible</text>
-        <path class="edge" d="M290 388 H220" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M290 388 H226"/>
+        <text class="d-tag" x="290" y="16">SYMPTÔME</text>
+        <rect class="d-in" x="290" y="24" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="48">Indicateur de service</text>
+        <text class="d-sub" x="304" y="64">valeur anormale, aucune alerte</text>
+        <path class="d-edge" d="M400 80 V136" marker-end="url(#a1)"/>
+        <path class="d-flow draw" d="M400 82 V130"/>
+        <text class="d-edge-label" x="410" y="112">remontée du calcul</text>
+        <rect class="d-box" x="290" y="136" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="160">Vue de reporting</text>
+        <text class="d-sub" x="304" y="176">agrégation hebdomadaire</text>
+        <path class="d-edge" d="M400 192 V248" marker-end="url(#a1)"/>
+        <path class="d-flow draw" d="M400 194 V242"/>
+        <text class="d-edge-label" x="410" y="224">requêtes de contrôle</text>
+        <rect class="d-box" x="290" y="248" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="272">Moteur de simulation</text>
+        <text class="d-sub" x="304" y="288">54 colis générés vs 10 244</text>
+        <path class="d-edge" d="M400 304 V360" marker-end="url(#a2)" style="stroke:#a8641b;stroke-opacity:.55"/>
+        <path class="d-flow draw" d="M400 306 V354" style="stroke:#a8641b"/>
+        <text class="d-edge-label" x="410" y="336" style="fill:#a8641b">83 à 85 % des lignes</text>
+        <text class="d-tag" x="290" y="352" style="fill:#a8641b">CAUSE RACINE</text>
+        <rect class="d-guard" x="290" y="360" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="384">Bascule silencieuse</text>
+        <text class="d-sub" x="304" y="400">fallback sans alerte ni log</text>
+        <rect class="d-store" x="560" y="360" width="180" height="56" rx="2"/>
+        <text class="d-title" x="574" y="384">Table de secours</text>
+        <text class="d-sub" x="574" y="400">figée 07/2022, 3,6 M lignes</text>
+        <path class="d-edge" d="M560 388 H512" marker-end="url(#a1)" style="stroke-dasharray:3 4"/>
+        <text class="d-tag" x="20" y="352">CORRECTIF</text>
+        <rect class="d-out" x="20" y="360" width="200" height="56" rx="2"/>
+        <text class="d-title-inv" x="34" y="384">Correctif documenté</text>
+        <text class="d-sub-inv" x="34" y="400">impact quantifié, reproductible</text>
+        <path class="d-edge" d="M290 388 H222" marker-end="url(#a1)"/>
+        <path class="d-flow draw" d="M288 388 H226"/>
       </svg>
       <div class="legend">
-        <span><span class="sw in"></span>symptôme observé</span>
-        <span><span class="sw proc"></span>étape de la chaîne de calcul</span>
+        <span><span class="sw in"></span>symptôme</span>
+        <span><span class="sw proc"></span>chaîne de calcul</span>
         <span><span class="sw guard"></span>cause racine</span>
         <span><span class="sw out"></span>livrable</span>
-        <span>— flux vert : le chemin de l'anomalie</span>
       </div>
     </div>
   </div>
 </section>
 
-<section style="padding-top:0; padding-bottom:60px">
+<!-- ═══════════ LEÇON + LIEN ═══════════ -->
+<section class="chapter" style="padding-top:0">
   <div class="wrap">
-    <div class="node-head reveal">
-      <div class="node-label">LA MÉTHODE</div>
-      <h2>Une investigation, pas une intuition</h2>
-    </div>
-    <div class="values" style="margin-bottom:36px">
-      <div class="value reveal">
-        <div class="v-num">méthode_01</div>
-        <h3>Quantifier avant d'accuser</h3>
-        <p>Chaque hypothèse est testée par une requête reproductible : le volume attendu (~10 244 colis) contre le volume généré (54), puis la part exacte des lignes basculant sur le fallback (83–85 %). Le diagnostic tient parce que chaque chiffre est rejouable.</p>
-      </div>
-      <div class="value reveal">
-        <div class="v-num">méthode_02</div>
-        <h3>Le silence était le vrai bug</h3>
-        <p>La table gelée est une erreur ; la bascule sans alerte ni log est le défaut de conception. Le correctif proposé traite les deux : réactiver la source, et rendre toute bascule future bruyante — un fallback silencieux est une dette qui se paie en confiance.</p>
+    <div class="prose reveal">
+      <div class="fieldnote">Le silence d'un système n'est pas une preuve qu'il fonctionne. C'est souvent la première chose à ne pas croire.
+        <cite>Leçon du dossier</cite>
       </div>
     </div>
-    <div class="reveal" style="max-width:560px">
-      <div class="mini-tiles">
-        <div class="mt"><div class="v"><span class="count" data-target="0.53" data-decimals="2">0,53</span> <small>%</small></div><div class="l">du volume attendu réellement généré</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="84">84</span> <small>%</small></div><div class="l">des lignes basculant sur le fallback (83–85 %)</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="3.6" data-decimals="1">3,6</span> <small>M</small></div><div class="l">de lignes figées depuis juillet 2022</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="1">1</span></div><div class="l">correctif proposé, documenté, chiffré</div></div>
-      </div>
-      <a class="project-more" href="../plateforme-make/">Voir aussi : Plateforme Make — diagnostic DLQ →</a>
+    <div class="convert reveal">
+      <p>Même méthode, autre système : une file d'échecs opaque devenue 27 625 € de risque chiffré.</p>
+      <a class="btn ghost" href="../plateforme-make/">CASE 02 · Plateforme Make →</a>
     </div>
   </div>
 </section>
 
-<footer id="contact">
+<footer class="site">
   <div class="wrap">
-    <div class="foot-row reveal">
-      <div>
-        <div class="node-label">CONTACT</div>
-        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
-      </div>
-      <div class="foot-links">
-        <a href="../../">Accueil</a>
-        <a href="../">Projets</a>
-        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <div class="row">
+      <div><a class="brand" href="../../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks">
+        <a href="../../">Accueil</a><a href="../">Dossiers</a>
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </div>
-    <div class="foot-note">site statique, aucun tracking, chiffres agrégés et anonymisés, 2026</div>
+    <div class="note">Site statique, aucun tracking. Chiffres agrégés et anonymisés. Paris, 2026.</div>
   </div>
 </footer>
 

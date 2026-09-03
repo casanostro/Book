@@ -3,29 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Automated KPI newsletter: pipeline architecture — 9 MicroStrategy BI sources aggregated in Python, editorial commentary injected, distribution to 50+ recipients in 15 minutes.">
-<title>Automated KPI newsletter | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d1312'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2334d399'/%3E%3Cpath d='M12 16h8' stroke='%2334d399' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2394a3b8'/%3E%3C/svg%3E" />
+<title>CASE 07 | The weekly chore, cut to 15 minutes | Adrien Tripon</title>
+<meta name="description" content="Industrialising a weekly KPI newsletter: 9 BI sources aggregated and sent to 50+ recipients. 4 h of production cut to 15 min, 94 % of time saved every week.">
+<link rel="canonical" href="https://casanostro.github.io/Book/en/projects/kpi-newsletter/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/projets/newsletter-kpi/">
-<link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/projects/kpi-newsletter/">
-<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/projets/newsletter-kpi/">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/projets/newsletter-kpi/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/projects/kpi-newsletter/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/projets/newsletter-kpi/">
 <link rel="stylesheet" href="../../../assets/site.css">
 <script src="../../../assets/site.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#dossier">Skip to content</a>
+<div class="readbar" aria-hidden="true"></div>
 
-<header>
+<header class="site">
   <div class="wrap">
-    <nav>
-      <a class="logo" href="../../">Adrien Tripon</a>
-      <div class="nav-links">
-        <a href="../../">Home</a>
-        <a href="../" aria-current="page">Projects</a>
-        <a href="../../news/">News</a>
-        <a href="../../#contact">Contact</a>
+    <nav aria-label="Primary">
+      <a class="brand" href="../../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../../#cases">Cases</a><a href="../">Index</a><a href="../../#method">Method</a><a href="../../#position">Contact</a>
       </div>
       <a class="lang-toggle" data-lang="fr" href="../../../projets/newsletter-kpi/" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
     </nav>
@@ -33,120 +34,72 @@
 </header>
 
 <div class="wrap">
-  <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">projects</a><span class="sep">/</span>kpi-newsletter</div>
-  <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px">PROJECT [03]</div>
-    <h1>KPI newsletter — <em>4 hours turned into 15 minutes</em>, every week</h1>
-    <p class="lead">The textbook case of immediate-ROI automation: a weekly steering newsletter, aggregated from 9 BI sources, formatted and sent to 50+ recipients — without losing the human editorial voice.</p>
+  <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">cases</a><span class="sep">/</span>case 07</div>
+  <div class="page-head reveal" id="dossier">
+    <div class="toprow" style="margin-bottom:16px"><span class="chapter-id sig">CASE 07</span> <span class="stamp ok">Immediate ROI</span></div>
+    <h1>The weekly chore, cut to 15 minutes</h1>
+    <p class="lead">A recurring, time-consuming task with no manual value added: aggregate 9 BI sources, format, send to 50+ recipients. The textbook case of automation with immediate return on investment.</p>
   </div>
 </div>
 
-<!-- ═══════════ ARCHITECTURE ═══════════ -->
-<section style="padding-top:40px; padding-bottom:48px">
+<section class="chapter" style="padding-top:var(--s-6)">
   <div class="wrap">
-    <div class="node-head reveal" style="margin-bottom:24px">
-      <div class="node-label">ARCHITECTURE : SOURCES → AGGREGATION → DISTRIBUTION</div>
-      <h2>A linear pipeline, one deliberate human step</h2>
+    <div class="contradiction reveal">
+      <div class="side expected"><div class="cl">Before, by hand</div><div class="cn"><span class="count" data-target="240">240</span> <small style="font-size:.4em;font-family:var(--mono)">min</small></div></div>
+      <div class="vs">per edition · vs</div>
+      <div class="side actual"><div class="cl">After, industrialised</div><div class="cn"><span class="count" data-target="15">15</span> <small style="font-size:.4em;font-family:var(--mono)">min</small></div></div>
     </div>
-    <div class="arch reveal">
-      <svg viewBox="0 0 760 280" role="img" aria-label="KPI newsletter pipeline diagram: 9 BI sources, Python aggregation script, editorial commentary injection, e-mail distribution">
-        <defs>
-          <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#94a3b8"/>
-          </marker>
-        </defs>
+    <p class="prose reveal" style="margin-top:var(--s-5)">94 % of production time saved, every week. But the real gain is not time: it is reliability. A manual edition drops a source on a bad day. A process does not.</p>
+  </div>
+</section>
 
-        <!-- stacked sources -->
-        <rect class="nbox" x="36" y="40" width="170" height="56" rx="2" style="stroke:var(--line-soft)"/>
-        <rect class="nbox" x="28" y="32" width="170" height="56" rx="2" style="stroke:var(--line-soft)"/>
-        <text class="ntag ntag-in" x="20" y="16">IN</text>
-        <rect class="nbox-in" x="20" y="24" width="170" height="56" rx="2"/>
-        <text class="ntitle" x="34" y="48">9 BI sources</text>
-        <text class="nsub" x="34" y="64">MicroStrategy, exports</text>
-
-        <rect class="nbox" x="290" y="24" width="190" height="56" rx="2"/>
-        <text class="ntitle" x="304" y="48">Python script</text>
-        <text class="nsub" x="304" y="64">aggregation, formatting</text>
-
-        <text class="ntag ntag-out" x="560" y="16">OUT</text>
-        <rect class="nbox-out" x="560" y="24" width="180" height="56" rx="2"/>
-        <text class="ntitle-inv" x="574" y="48">E-mail distribution</text>
-        <text class="nsub-inv" x="574" y="64">50+ recipients, weekly</text>
-
-        <path class="edge" d="M206 52 H290" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M206 52 H284"/>
-        <text class="edge-label" x="214" y="44">extraction</text>
-        <path class="edge" d="M480 52 H560" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M480 52 H554"/>
-        <text class="edge-label" x="488" y="44">final HTML</text>
-
-        <!-- editorial commentary: the one human step -->
-        <rect class="nbox-store" x="290" y="170" width="190" height="52" rx="2"/>
-        <text class="ntitle" x="304" y="192">Editorial commentary</text>
-        <text class="nsub" x="304" y="208">injection script, human voice</text>
-        <path class="edge" d="M385 170 V80" marker-end="url(#arr)"/>
-        <path class="edge-flow slow" d="M385 170 V86"/>
-        <text class="edge-label" x="393" y="128">injection</text>
-
-        <!-- timing -->
-        <text class="edge-label" x="560" y="130" style="font-size:11px; fill:var(--flux); font-weight:700">⏱ 240 min → 15 min / issue</text>
-        <text class="edge-label" x="560" y="148">−94% production time</text>
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap">
+    <div class="node-head reveal"><div class="node-label">Architecture</div><h2>From nine sources to a reliable send</h2></div>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 760 220" role="img" aria-label="Diagram: 9 BI sources aggregated and formatted by Python, sent to 50+ recipients">
+        <defs><marker id="n1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#6a6357"/></marker></defs>
+        <text class="d-tag" x="20" y="26">SOURCES</text>
+        <rect class="d-store" x="20" y="34" width="180" height="56" rx="2"/>
+        <text class="d-title" x="34" y="58">9 BI sources</text><text class="d-sub" x="34" y="74">MicroStrategy, exports</text>
+        <rect class="d-box" x="290" y="34" width="180" height="56" rx="2"/>
+        <text class="d-title" x="304" y="58">Python aggregation</text><text class="d-sub" x="304" y="74">formatting, comments</text>
+        <text class="d-tag" x="560" y="26">SEND</text>
+        <rect class="d-out" x="560" y="34" width="180" height="56" rx="2"/>
+        <text class="d-title-inv" x="574" y="58">50+ recipients</text><text class="d-sub-inv" x="574" y="74">15 min per edition</text>
+        <path class="d-edge" d="M200 62 H290" marker-end="url(#n1)"/><path class="d-flow draw" d="M202 62 H284"/>
+        <path class="d-edge" d="M470 62 H560" marker-end="url(#n1)"/><path class="d-flow draw" d="M472 62 H554"/>
+        <rect class="d-store" x="290" y="140" width="180" height="52" rx="2"/>
+        <text class="d-title" x="304" y="162">Editorial injection</text><text class="d-sub" x="304" y="178">comment script</text>
+        <path class="d-edge" d="M380 140 V90" marker-end="url(#n1)" style="stroke-dasharray:3 4"/>
       </svg>
-      <div class="legend">
-        <span><span class="sw in"></span>sources</span>
-        <span><span class="sw proc"></span>automated processing</span>
-        <span><span class="sw out"></span>distribution</span>
-        <span>— dashed: the one step deliberately kept human</span>
-      </div>
+      <div class="legend"><span><span class="sw proc"></span>processing</span><span><span class="sw out"></span>send</span></div>
     </div>
   </div>
 </section>
 
-<section style="padding-top:0; padding-bottom:60px">
-  <div class="wrap">
-    <div class="node-head reveal">
-      <div class="node-label">WHAT IT CHANGES</div>
-      <h2>Automate the mechanics, keep the judgment</h2>
+<section class="chapter" style="padding-top:0">
+  <div class="wrap read">
+    <div class="prose reveal">
+      <div class="fieldnote">The most profitable automation is not the most impressive. It is the one that makes a boring task both faster and more reliable.
+        <cite>Lesson from the case</cite></div>
     </div>
-    <div class="values" style="margin-bottom:36px">
-      <div class="value reveal">
-        <div class="v-num">choice_01</div>
-        <h3>Everything repetitive is scripted</h3>
-        <p>Extraction of the 9 sources, consistency checks, variance calculations, HTML formatting: the mechanical part of the newsletter no longer touches a human. That part cost 4 hours — and produced the copy-paste errors.</p>
-      </div>
-      <div class="value reveal">
-        <div class="v-num">choice_02</div>
-        <h3>The commentary stays editorial</h3>
-        <p>The remaining 15 minutes are exactly where a human adds value: reading the numbers, writing the week's commentary, injecting it through a dedicated script. Automation didn't replace the analysis — it gave it its time back.</p>
-      </div>
-    </div>
-    <div class="reveal" style="max-width:560px">
-      <div class="mini-tiles">
-        <div class="mt"><div class="v"><span class="count" data-target="9">9</span></div><div class="l">BI sources aggregated</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="50">50</span>+</div><div class="l">recipients every week</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="15">15</span> <small>min</small></div><div class="l">per issue (vs 240 before)</div></div>
-        <div class="mt"><div class="v">−<span class="count" data-target="94">94</span> <small>%</small></div><div class="l">production time</div></div>
-      </div>
-      <a class="project-more" href="../datawarehouse-docs/">Next project: A data warehouse documented from scratch →</a>
+    <div class="convert reveal">
+      <p>See the tools run for real, in the browser.</p>
+      <a class="btn ghost" href="../dataviz/">CASE 05 · Dataviz, live demo →</a>
     </div>
   </div>
 </section>
 
-<footer id="contact">
+<footer class="site">
   <div class="wrap">
-    <div class="foot-row reveal">
-      <div>
-        <div class="node-label">CONTACT</div>
-        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Supply Chain &amp; Data Business Analyst</div>
-      </div>
-      <div class="foot-links">
-        <a href="../../">Home</a>
-        <a href="../">Projects</a>
-        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <div class="row">
+      <div><a class="brand" href="../../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks"><a href="../../">Home</a><a href="../">Cases</a>
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      </div>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a></div>
     </div>
-    <div class="foot-note">static site, no tracking, figures aggregated and anonymised, 2026</div>
+    <div class="note">Static site, no tracking. Figures aggregated and anonymised. Paris, 2026.</div>
   </div>
 </footer>
 

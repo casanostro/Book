@@ -151,6 +151,29 @@
     });
     // etat initial : premier noeud
     if (nodes.length) activate(nodes[0]);
+
+    // Boot de la carte : les aretes se tracent, les noeuds apparaissent
+    // en cascade quand la carte entre dans le champ. Sans JS ou en
+    // reduced-motion, tout reste visible d'emblee.
+    if (!reduce) nodes.forEach(function (n) { n.style.opacity = '0'; });
+    var booted = false;
+    function bootMap() {
+      if (booted) return; booted = true;
+      if (reduce) { nodes.forEach(function (n) { n.style.opacity = '1'; }); return; }
+      edges.forEach(function (e) {
+        var L; try { L = e.getTotalLength(); } catch (x) { L = 260; }
+        e.style.strokeDasharray = L; e.style.strokeDashoffset = L;
+        e.style.transition = 'stroke-dashoffset .7s var(--ease)';
+      });
+      nodes.forEach(function (n) { n.style.transition = 'opacity .45s var(--ease)'; });
+      void map.offsetWidth; // reflow
+      edges.forEach(function (e, i) { e.style.transitionDelay = (i * 0.05) + 's'; e.style.strokeDashoffset = '0'; });
+      nodes.forEach(function (n, i) { n.style.transitionDelay = (0.28 + i * 0.07) + 's'; n.style.opacity = '1'; });
+    }
+    var bootIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { bootMap(); bootIO.disconnect(); } });
+    }, { threshold: 0.25 });
+    bootIO.observe(map);
   }
 
   /* ── Panneau d'etat de dossier (au scroll) ─── */

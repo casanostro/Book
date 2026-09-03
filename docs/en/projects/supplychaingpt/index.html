@@ -3,29 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="SupplyChainGPT: full architecture of a text-to-SQL assistant — business question, schema context, LLM, read-only SQL validation, SQLite execution, visualisation.">
-<title>SupplyChainGPT — text-to-SQL architecture | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d1312'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2334d399'/%3E%3Cpath d='M12 16h8' stroke='%2334d399' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2394a3b8'/%3E%3C/svg%3E" />
+<title>CASE 04 | From plain English to SQL, with guardrails | Adrien Tripon</title>
+<meta name="description" content="SupplyChainGPT: a text-to-SQL assistant presented as a product. Plain-language question, validated read-only SQL, execution, and a response with result, SQL and a visualisation. Guardrails and regression tests.">
+<link rel="canonical" href="https://casanostro.github.io/Book/en/projects/supplychaingpt/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/projets/supplychaingpt/">
-<link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/projects/supplychaingpt/">
-<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/projets/supplychaingpt/">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/projets/supplychaingpt/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/projects/supplychaingpt/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/projets/supplychaingpt/">
 <link rel="stylesheet" href="../../../assets/site.css">
 <script src="../../../assets/site.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#dossier">Skip to content</a>
+<div class="readbar" aria-hidden="true"></div>
 
-<header>
+<header class="site">
   <div class="wrap">
-    <nav>
-      <a class="logo" href="../../">Adrien Tripon</a>
-      <div class="nav-links">
-        <a href="../../">Home</a>
-        <a href="../" aria-current="page">Projects</a>
-        <a href="../../news/">News</a>
-        <a href="../../#contact">Contact</a>
+    <nav aria-label="Primary">
+      <a class="brand" href="../../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../../#cases">Cases</a><a href="../">Index</a><a href="../../#method">Method</a><a href="../../#position">Contact</a>
       </div>
       <a class="lang-toggle" data-lang="fr" href="../../../projets/supplychaingpt/" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
     </nav>
@@ -33,182 +34,139 @@
 </header>
 
 <div class="wrap">
-  <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">projects</a><span class="sep">/</span>supplychaingpt</div>
-  <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px">PROJECT [01]</div>
-    <h1>SupplyChainGPT — <em>from plain language to SQL</em>, with guardrails</h1>
-    <p class="lead">A text-to-SQL assistant that turns a business question into a validated query, runs it against a realistic database and returns the result, the generated SQL and an automatic chart. Every sensitive step is an explicit node in the pipeline.</p>
+  <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">cases</a><span class="sep">/</span>case 04</div>
+  <div class="dossier-head" id="dossier">
+    <div class="toprow reveal">
+      <span class="chapter-id sig">CASE 04</span><span class="stamp ok">Open source</span><span class="stamp">Read-only</span>
+    </div>
+    <h1 class="reveal">From plain English to SQL, with guardrails</h1>
+    <div class="meta reveal">
+      <div>Domain<b>Applied AI, product</b></div>
+      <div>Role<b>Design, development</b></div>
+      <div>Stack<b>Claude API, SQLite, Streamlit</b></div>
+      <div>Status<b>Public demonstrator</b></div>
+    </div>
+    <p class="lead reveal">An assistant that turns a business question into a validated query, runs it on a realistic database and returns the result, the generated SQL and a visualisation. This is not a chatbot. It is a product, with its guardrails.</p>
+    <div class="depth reveal" data-default="full" role="group" aria-label="Reading depth">
+      <button data-mode="synth" aria-pressed="false">Summary</button>
+      <button data-mode="full" aria-pressed="true">Full case</button>
+    </div>
   </div>
 </div>
 
-<!-- ═══════════ ARCHITECTURE ═══════════ -->
-<section style="padding-top:40px; padding-bottom:48px">
+<section class="chapter" style="padding-top:var(--s-6)">
   <div class="wrap">
-    <div class="node-head reveal" style="margin-bottom:24px">
-      <div class="node-label">ARCHITECTURE : RAG / TEXT-TO-SQL PIPELINE</div>
-      <h2>The flow, from question to chart</h2>
+    <div class="chapter-head reveal"><div class="row"><span class="node-label sig">Product pipeline</span></div><h2 class="chapter-title">From question to visualisation, no black box</h2></div>
+    <div class="investigation">
+      <div class="steps">
+        <div class="inv-step reveal" data-status="Business question" data-metric="EN" data-metric-label="natural language, in the interface, no SQL">
+          <div class="st-id">01 · Input</div><h3>A question, in plain language</h3>
+          <p>"Which suppliers have the most stockouts this month?" The business user writes no SQL. The schema context (6 tables, sample queries) is injected into the prompt.</p>
+        </div>
+        <div class="inv-step reveal" data-status="SQL generated" data-metric="1" data-metric-label="candidate query produced by the model">
+          <div class="st-id">02 · Generation</div><h3>The LLM proposes, it does not dispose</h3>
+          <p>Claude API generates a candidate SQL query from the question and schema. Nothing runs at this stage: the SQL first passes a check.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Guardrail" data-metric="SELECT" data-metric-label="read-only only, otherwise regeneration with the reason for refusal">
+          <div class="st-id">03 · Validation</div><h3>Validation is a node, not a footnote</h3>
+          <p>A validator accepts only SELECT: no writes, no DDL, no multiple statements. A rejected query goes back for regeneration with the reason for refusal.</p>
+          <p class="deep">Defence in depth: even if a write passed validation, the connection is opened read-only. The worst possible case is a query that fails, never modified data.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Read-only" data-metric="6" data-metric-label="tables, demo database, read-only connection with timeout">
+          <div class="st-id">04 · Execution</div><h3>A bounded scope</h3>
+          <p>Execution on a realistic SQLite demo database: 6 tables, 90 days of orders and stock positions. Read-only connection, timeout, enough volume for joins to be non-trivial.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Full response" data-metric="3" data-metric-label="result, SQL shown, automatic visualisation">
+          <div class="st-id">05 · Response</div><h3>The SQL is always shown</h3>
+          <p>Every response shows the query next to the result and a visualisation. The business user can have the SQL checked, the analyst can audit what the model asked the database. No black box between the question and the number.</p>
+        </div>
+      </div>
+      <aside class="statuspanel" aria-hidden="true">
+        <div class="sp-head">Pipeline status</div>
+        <div class="sp-body">
+          <div class="sp-status">Business question</div>
+          <div class="sp-metric"><div class="n">EN</div><div class="l">natural language, in the interface, no SQL</div></div>
+          <div class="sp-track"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </aside>
     </div>
-    <div class="arch reveal">
-      <svg viewBox="0 0 760 372" role="img" aria-label="SupplyChainGPT architecture diagram: user question, schema context, LLM, read-only SQL validation, SQLite execution, visualisation">
+  </div>
+</section>
+
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal"><div class="row"><span class="node-label">Architecture</span></div><h2 class="chapter-title">The flow, guardrails included</h2></div>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 760 372" role="img" aria-label="SupplyChainGPT diagram: question, schema context, LLM, read-only SQL validation, SQLite execution, response, demo DB and regression tests">
         <defs>
-          <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#94a3b8"/>
-          </marker>
-          <marker id="arr-amber" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#c86d51"/>
-          </marker>
+          <marker id="d1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#6a6357"/></marker>
+          <marker id="d2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#a8641b"/></marker>
         </defs>
-
-        <!-- ── Row 1: question → context → LLM ── -->
-        <text class="ntag ntag-in" x="20" y="16">IN</text>
-        <rect class="nbox-in" x="20" y="24" width="170" height="56" rx="2"/>
-        <text class="ntitle" x="34" y="48">Business question</text>
-        <text class="nsub" x="34" y="64">plain language, Streamlit UI</text>
-
-        <rect class="nbox" x="255" y="24" width="190" height="56" rx="2"/>
-        <text class="ntitle" x="269" y="48">Schema context</text>
-        <text class="nsub" x="269" y="64">6 tables, example queries</text>
-
-        <rect class="nbox" x="510" y="24" width="170" height="56" rx="2"/>
-        <text class="ntitle" x="524" y="48">LLM, Claude API</text>
-        <text class="nsub" x="524" y="64">SQL generation</text>
-
-        <path class="edge" d="M190 52 H255" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M190 52 H249"/>
-        <text class="edge-label" x="196" y="44">embedding</text>
-        <path class="edge" d="M445 52 H510" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M445 52 H504"/>
-        <text class="edge-label" x="451" y="44">prompt</text>
-
-        <!-- ── Down: LLM → validation ── -->
-        <path class="edge" d="M620 80 V160" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M620 80 V154"/>
-        <text class="edge-label" x="628" y="122">candidate SQL</text>
-
-        <!-- rejection loop: validation → LLM (amber, slow) -->
-        <path class="edge" d="M540 160 V80" marker-end="url(#arr-amber)" style="stroke:var(--ambre); stroke-opacity:.45"/>
-        <path class="edge-flow amber slow" d="M540 160 V86"/>
-        <text class="edge-label" x="448" y="122" style="fill:var(--ambre)">reject → regenerate</text>
-
-        <!-- ── Row 2: validation → execution → output ── -->
-        <text class="ntag-guard" x="510" y="152">GUARDRAIL</text>
-        <rect class="nbox-guard" x="510" y="160" width="170" height="56" rx="2"/>
-        <text class="ntitle" x="524" y="184">SQL validation</text>
-        <text class="nsub" x="524" y="200">read-only, SELECT only</text>
-
-        <text class="ntag-guard" x="255" y="152">GUARDRAIL</text>
-        <rect class="nbox-guard" x="255" y="160" width="190" height="56" rx="2"/>
-        <text class="ntitle" x="269" y="184">SQLite execution</text>
-        <text class="nsub" x="269" y="200">read-only connection, timeout</text>
-
-        <text class="ntag ntag-out" x="20" y="152">OUT</text>
-        <rect class="nbox-out" x="20" y="160" width="170" height="56" rx="2"/>
-        <text class="ntitle-inv" x="34" y="184">Full answer</text>
-        <text class="nsub-inv" x="34" y="200">result, SQL, Plotly</text>
-
-        <path class="edge" d="M510 188 H445" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M510 188 H451"/>
-        <text class="edge-label" x="452" y="180">validated SQL</text>
-        <path class="edge" d="M255 188 H190" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M255 188 H196"/>
-        <text class="edge-label" x="197" y="180">result</text>
-
-        <!-- ── Row 3: stores and tests ── -->
-        <rect class="nbox-store" x="255" y="290" width="190" height="52" rx="2"/>
-        <text class="ntitle" x="269" y="312">Demo database</text>
-        <text class="nsub" x="269" y="328">SQLite, 6 tables, 90 days</text>
-        <path class="edge" d="M350 290 V216" marker-end="url(#arr)"/>
-        <path class="edge-flow slow" d="M350 290 V222"/>
-
-        <rect class="nbox-store" x="510" y="290" width="170" height="52" rx="2"/>
-        <text class="ntitle" x="524" y="312">Regression suite</text>
-        <text class="nsub" x="524" y="328">10 business questions</text>
-        <path class="edge" d="M595 290 V216" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
-        <text class="edge-label" x="603" y="256">verifies the pipeline</text>
+        <text class="d-tag" x="20" y="16">INPUT</text>
+        <rect class="d-in" x="20" y="24" width="170" height="56" rx="2"/>
+        <text class="d-title" x="34" y="48">Business question</text><text class="d-sub" x="34" y="64">English, Streamlit UI</text>
+        <rect class="d-box" x="255" y="24" width="190" height="56" rx="2"/>
+        <text class="d-title" x="269" y="48">Schema context</text><text class="d-sub" x="269" y="64">6 tables, examples</text>
+        <rect class="d-box" x="510" y="24" width="170" height="56" rx="2"/>
+        <text class="d-title" x="524" y="48">LLM, Claude API</text><text class="d-sub" x="524" y="64">SQL generation</text>
+        <path class="d-edge" d="M190 52 H255" marker-end="url(#d1)"/><path class="d-flow draw" d="M192 52 H249"/>
+        <path class="d-edge" d="M445 52 H510" marker-end="url(#d1)"/><path class="d-flow draw" d="M447 52 H504"/>
+        <path class="d-edge" d="M620 80 V160" marker-end="url(#d1)"/><path class="d-flow draw" d="M620 82 V154"/>
+        <text class="d-edge-label" x="628" y="122">candidate SQL</text>
+        <path class="d-edge" d="M540 160 V80" marker-end="url(#d2)" style="stroke:#a8641b;stroke-opacity:.45"/>
+        <text class="d-edge-label" x="448" y="122" style="fill:#a8641b">reject, regenerate</text>
+        <text class="d-tag" x="510" y="152" style="fill:#a8641b">GUARDRAIL</text>
+        <rect class="d-guard" x="510" y="160" width="170" height="56" rx="2"/>
+        <text class="d-title" x="524" y="184">SQL validation</text><text class="d-sub" x="524" y="200">read-only, SELECT only</text>
+        <text class="d-tag" x="255" y="152" style="fill:#a8641b">GUARDRAIL</text>
+        <rect class="d-guard" x="255" y="160" width="190" height="56" rx="2"/>
+        <text class="d-title" x="269" y="184">SQLite execution</text><text class="d-sub" x="269" y="200">read-only, timeout</text>
+        <text class="d-tag" x="20" y="152">OUTPUT</text>
+        <rect class="d-out" x="20" y="160" width="170" height="56" rx="2"/>
+        <text class="d-title-inv" x="34" y="184">Full response</text><text class="d-sub-inv" x="34" y="200">result, SQL, Plotly</text>
+        <path class="d-edge" d="M510 188 H445" marker-end="url(#d1)"/><path class="d-flow draw" d="M508 188 H451"/>
+        <text class="d-edge-label" x="452" y="180">validated SQL</text>
+        <path class="d-edge" d="M255 188 H190" marker-end="url(#d1)"/><path class="d-flow draw" d="M253 188 H196"/>
+        <text class="d-edge-label" x="197" y="180">result</text>
+        <rect class="d-store" x="255" y="290" width="190" height="52" rx="2"/>
+        <text class="d-title" x="269" y="312">Demo database</text><text class="d-sub" x="269" y="328">SQLite, 6 tables, 90 days</text>
+        <path class="d-edge" d="M350 290 V216" marker-end="url(#d1)"/>
+        <rect class="d-store" x="510" y="290" width="170" height="52" rx="2"/>
+        <text class="d-title" x="524" y="312">Regression tests</text><text class="d-sub" x="524" y="328">10 business questions</text>
+        <path class="d-edge" d="M595 290 V216" marker-end="url(#d1)" style="stroke-dasharray:3 4"/>
+        <text class="d-edge-label" x="603" y="256">checks the pipeline</text>
       </svg>
       <div class="legend">
-        <span><span class="sw in"></span>user input</span>
-        <span><span class="sw proc"></span>processing</span>
-        <span><span class="sw guard"></span>explicit guardrail</span>
-        <span><span class="sw out"></span>output</span>
-        <span>— animated flows follow the data path</span>
+        <span><span class="sw in"></span>input</span><span><span class="sw proc"></span>processing</span>
+        <span><span class="sw guard"></span>guardrail</span><span><span class="sw out"></span>output</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ DETAIL ═══════════ -->
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="node-head reveal">
-      <div class="node-label">THE GUARDRAILS</div>
-      <h2>Why validation is a node, not a footnote</h2>
+<section class="chapter" style="padding-top:0">
+  <div class="wrap read">
+    <div class="prose reveal">
+      <div class="fieldnote">A profile that can "talk about AI" describes a chatbot. A profile that can work with real systems asks the validation and data-access question first.
+        <cite>Lesson from the case</cite></div>
+      <p>Open source: <a href="https://github.com/casanostro/supply-chain-gpt" target="_blank" rel="noopener noreferrer">github.com/casanostro/supply-chain-gpt</a>. A regression suite of 10 reference business questions is replayed on every prompt or schema change: if a response changes meaning, the pipeline does not ship.</p>
     </div>
-    <div class="values">
-      <div class="value reveal">
-        <div class="v-num">guardrail_01</div>
-        <h3>SQL validated before execution</h3>
-        <p>SQL generated by the LLM is never executed directly: it goes through a validator that only accepts SELECT statements — no writes, no DDL, no multi-statements. A rejected query is regenerated with the rejection reason.</p>
-      </div>
-      <div class="value reveal">
-        <div class="v-num">guardrail_02</div>
-        <h3>Read-only connection</h3>
-        <p>Defence in depth: even if a write query slipped past validation, the SQLite connection is opened read-only. The worst possible outcome is a failed query — never modified data.</p>
-      </div>
-      <div class="value reveal">
-        <div class="v-num">guardrail_03</div>
-        <h3>The SQL is always shown</h3>
-        <p>Every answer displays the generated query next to the result: business users can have the SQL checked, and analysts can audit exactly what the model asked the database. No black box between the question and the number.</p>
-      </div>
-      <div class="value reveal">
-        <div class="v-num">guardrail_04</div>
-        <h3>Business regression tests</h3>
-        <p>A suite of 10 reference business questions (stockouts, service level, inventory) is replayed on every prompt or schema change: if an answer changes meaning, the pipeline doesn't ship.</p>
-      </div>
+    <div class="convert reveal">
+      <p>Two readings of the same data: the product is not the tech, it is the audience.</p>
+      <a class="btn ghost" href="../dataviz/">CASE 05 · Dataviz, live demo →</a>
     </div>
   </div>
 </section>
 
-<section style="padding-top:0; padding-bottom:60px">
+<footer class="site">
   <div class="wrap">
-    <div class="node-head reveal">
-      <div class="node-label">IN NUMBERS</div>
-      <h2>The demo database</h2>
-      <p class="sub">A realistic dataset for a real test: enough volume for the queries to be meaningful, enough structure for the joins to be non-trivial.</p>
+    <div class="row">
+      <div><a class="brand" href="../../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks"><a href="../../">Home</a><a href="../">Cases</a>
+        <a href="https://github.com/casanostro/supply-chain-gpt" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a></div>
     </div>
-    <div class="reveal" style="max-width:560px">
-      <div class="mini-tiles" style="grid-template-columns:repeat(3,1fr)">
-        <div class="mt"><div class="v"><span class="count" data-target="500">500</span></div><div class="l">products</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="90">90</span></div><div class="l">days of history</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="25">25</span></div><div class="l">suppliers</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="6">6</span></div><div class="l">warehouses</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="6">6</span></div><div class="l">joined tables</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="10">10</span></div><div class="l">business tests</div></div>
-      </div>
-      <p style="margin-top:20px; font-size:.9rem; color:var(--graphite)">
-        Full source code:
-        <a href="https://github.com/casanostro/supply-chain-gpt" target="_blank" rel="noopener noreferrer">github.com/casanostro/supply-chain-gpt</a>
-      </p>
-      <a class="project-more" href="../mcp-poc/">Next project: MCP POC — LLM ↔ Snowflake →</a>
-    </div>
-  </div>
-</section>
-
-<footer id="contact">
-  <div class="wrap">
-    <div class="foot-row reveal">
-      <div>
-        <div class="node-label">CONTACT</div>
-        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Supply Chain &amp; Data Business Analyst</div>
-      </div>
-      <div class="foot-links">
-        <a href="../../">Home</a>
-        <a href="../">Projects</a>
-        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      </div>
-    </div>
-    <div class="foot-note">static site, no tracking, figures aggregated and anonymised, 2026</div>
+    <div class="note">Static site, no tracking. Figures aggregated and anonymised. Paris, 2026.</div>
   </div>
 </footer>
 

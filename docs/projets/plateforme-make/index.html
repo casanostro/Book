@@ -3,29 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Plateforme d'automatisation Make : architecture du diagnostic post-migration — 159 scénarios, dead letter queue, classification des échecs, chiffrage du risque et priorisation des reprises.">
-<title>Plateforme Make — du parc à la DLQ | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d1312'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2334d399'/%3E%3Cpath d='M12 16h8' stroke='%2334d399' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2394a3b8'/%3E%3C/svg%3E" />
+<title>CASE 02 | 159 flows, mais combien de flows fiables ? | Adrien Tripon</title>
+<meta name="description" content="Administration de 159 scénarios Make en production. Après une migration d'API, 5 376 exécutions en échec silencieux transformées en 27 625 € de risque chiffré et en plan de reprise priorisé.">
+<link rel="canonical" href="https://casanostro.github.io/Book/projets/plateforme-make/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/projets/plateforme-make/">
-<link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/projects/make-platform/">
-<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/projets/plateforme-make/">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/projets/plateforme-make/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/projects/make-platform/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/projets/plateforme-make/">
 <link rel="stylesheet" href="../../assets/site.css">
 <script src="../../assets/site.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#dossier">Aller au contenu</a>
+<div class="readbar" aria-hidden="true"></div>
 
-<header>
+<header class="site">
   <div class="wrap">
-    <nav>
-      <a class="logo" href="../../">Adrien Tripon</a>
-      <div class="nav-links">
-        <a href="../../">Accueil</a>
-        <a href="../" aria-current="page">Projets</a>
-        <a href="../../actualites/">Actualités</a>
-        <a href="../../#contact">Contact</a>
+    <nav aria-label="Navigation principale">
+      <a class="brand" href="../../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../../#dossiers">Dossiers</a>
+        <a href="../">Index</a>
+        <a href="../../#méthode">Méthode</a>
+        <a href="../../#position">Contact</a>
       </div>
       <a class="lang-toggle" data-lang="en" href="../../en/projects/make-platform/" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
     </nav>
@@ -33,172 +37,190 @@
 </header>
 
 <div class="wrap">
-  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">projets</a><span class="sep">/</span>plateforme-make</div>
-  <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px">PROJET [02]</div>
-    <h1>Plateforme Make — <em>rendre visibles</em> les échecs silencieux</h1>
-    <p class="lead">159 scénarios d'automatisation en production, 6 domaines métier — et une migration d'API qui a fait échouer des milliers d'exécutions sans déclencher d'alerte. Le travail : transformer une dead letter queue opaque en risque chiffré et en plan de reprise priorisé.</p>
+  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">dossiers</a><span class="sep">/</span>case 02</div>
+
+  <div class="dossier-head" id="dossier">
+    <div class="toprow reveal">
+      <span class="chapter-id sig">CASE 02</span>
+      <span class="stamp">En production</span>
+      <span class="stamp warn">Point aveugle traité</span>
+    </div>
+    <h1 class="reveal">159 flows, mais combien de flows fiables ?</h1>
+    <div class="meta reveal">
+      <div>Domaine<b>Automatisation métier</b></div>
+      <div>Rôle<b>Administration, diagnostic</b></div>
+      <div>Stack<b>Make, API, Python</b></div>
+      <div>Statut<b>Plan de reprise livré</b></div>
+    </div>
+    <p class="lead reveal">159 scénarios en production, 6 domaines métier, et une migration d'API qui fait échouer des milliers d'exécutions sans un bruit. 159 automatisations ne veulent pas dire 159 automatisations fiables.</p>
+    <div class="depth reveal" data-default="full" role="group" aria-label="Profondeur de lecture">
+      <button data-mode="synth" aria-pressed="false">Synthèse</button>
+      <button data-mode="full" aria-pressed="true">Dossier complet</button>
+    </div>
   </div>
 </div>
 
-<!-- ═══════════ SCHÉMA D'ARCHITECTURE ═══════════ -->
-<section style="padding-top:40px; padding-bottom:48px">
+<!-- ═══════════ INVESTIGATION + PANNEAU ═══════════ -->
+<section class="chapter" style="padding-top:var(--s-6)">
   <div class="wrap">
-    <div class="node-head reveal" style="margin-bottom:24px">
-      <div class="node-label">ARCHITECTURE : SCÉNARIOS → DLQ → DIAGNOSTIC → PRIORISATION</div>
-      <h2>Le chemin de l'échec, du webhook au plan d'action</h2>
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label sig">Investigation</span></div>
+      <h2 class="chapter-title">De la file d'échecs au plan d'action</h2>
     </div>
-    <div class="arch reveal">
-      <svg viewBox="0 0 760 400" role="img" aria-label="Schéma du diagnostic de la plateforme Make : parc de scénarios, exécutions, dead letter queue, diagnostic, chiffrage du risque, priorisation des reprises">
+
+    <div class="investigation">
+      <div class="steps">
+        <div class="inv-step reveal" data-status="En production" data-metric="159" data-metric-label="scénarios administrés, 6 domaines métier">
+          <div class="st-id">01 · Le parc</div>
+          <h3>Ce qui tourne tous les jours</h3>
+          <p>159 scénarios couvrant gestes commerciaux, alertes qualité, base des manquants et autres flux du quotidien des équipes. Un parc vivant, connecté à plusieurs SI par webhooks et API.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Signal reçu" data-metric="5 376" data-metric-label="exécutions en échec après une migration d'API">
+          <div class="st-id">02 · La rupture</div>
+          <h3>Une migration d'API, des milliers d'échecs</h3>
+          <p>Une rupture de compatibilité côté API fait échouer les exécutions sans déclencher d'alerte. Les échecs s'accumulent dans une dead letter queue que personne ne regarde. Un angle mort par construction.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Investigation" data-metric="6" data-metric-label="domaines métier, échecs extraits un à un via l'API">
+          <div class="st-id">03 · Le diagnostic</div>
+          <h3>Extraire, pas échantillonner</h3>
+          <p>Extraction systématique de l'historique via l'API Make, sur tout le parc. Les 5 376 échecs sont recensés un par un, pas estimés, puis classés par domaine : un geste commercial perdu n'a pas le même coût qu'une alerte manquée.</p>
+          <p class="deep">Un diagnostic partiel aurait produit une priorisation partielle. Le périmètre complet est ce qui rend l'arbitrage défendable.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Risque chiffré" data-metric="27 625" data-unit="€" data-metric-label="de risque financier tracé ligne à ligne">
+          <div class="st-id">04 · Le chiffrage</div>
+          <h3>Chiffrer le risque en euros</h3>
+          <p>Les échecs porteurs d'un enjeu financier sont valorisés ligne à ligne. C'est ce chiffre, pas le nombre d'échecs, qui permet d'arbitrer les reprises avec le métier.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Plan de reprise livré" data-metric="1" data-metric-label="plan priorisé par impact décroissant, boucle refermée">
+          <div class="st-id">05 · L'action</div>
+          <h3>Prioriser, rejouer, refermer</h3>
+          <p>Reprises ordonnées par impact décroissant, rejouées dans le parc corrigé. Le même mécanisme d'extraction sert ensuite de surveillance : la file d'échecs ne redevient jamais un angle mort.</p>
+        </div>
+      </div>
+
+      <aside class="statuspanel" aria-hidden="true">
+        <div class="sp-head">État du dossier</div>
+        <div class="sp-body">
+          <div class="sp-status">En production</div>
+          <div class="sp-metric"><div class="n">159</div><div class="l">scénarios administrés, 6 domaines métier</div></div>
+          <div class="sp-track"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TABLE DE CONSTAT ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap read">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Constat</span></div>
+      <h2 class="chapter-title">Le risque, par domaine</h2>
+      <p class="sub">Toutes les valeurs sont agrégées et anonymisées. La logique de priorisation, elle, est réelle : trier par impact, pas par volume.</p>
+    </div>
+    <table class="ledger reveal">
+      <thead><tr><th>Domaine métier</th><th>Échecs</th><th>Nature du risque</th><th>Priorité</th></tr></thead>
+      <tbody>
+        <tr><td><b>Gestes commerciaux</b></td><td>élevé</td><td class="sig">coût direct</td><td>1</td></tr>
+        <tr><td><b>Base des manquants</b></td><td>élevé</td><td>rupture d'appro</td><td>2</td></tr>
+        <tr><td><b>Alertes qualité</b></td><td>moyen</td><td>coût de risque</td><td>3</td></tr>
+        <tr><td>Autres flux</td><td>diffus</td><td>friction opérationnelle</td><td>4</td></tr>
+        <tr><td><b>Total tracé</b></td><td><b>5 376</b></td><td class="sig"><b>27 625 €</b></td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ SCHÉMA ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Architecture</span></div>
+      <h2 class="chapter-title">Le chemin de l'échec, du webhook au plan d'action</h2>
+    </div>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 760 400" role="img" aria-label="Schéma : parc de scénarios, exécutions, migration d'API en cause, dead letter queue, diagnostic, chiffrage, plan de reprise">
         <defs>
-          <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#94a3b8"/>
-          </marker>
-          <marker id="arr-amber" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#c86d51"/>
-          </marker>
+          <marker id="b1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#6a6357"/></marker>
+          <marker id="b2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#a8641b"/></marker>
         </defs>
-
-        <!-- ── Rangée 1 : le parc en fonctionnement ── -->
-        <text class="ntag ntag-in" x="20" y="16">IN</text>
-        <rect class="nbox-in" x="20" y="24" width="190" height="56" rx="2"/>
-        <text class="ntitle" x="34" y="48">Parc Make</text>
-        <text class="nsub" x="34" y="64">159 scénarios, 6 domaines</text>
-
-        <rect class="nbox" x="285" y="24" width="180" height="56" rx="2"/>
-        <text class="ntitle" x="299" y="48">Exécutions</text>
-        <text class="nsub" x="299" y="64">webhooks, connecteurs API</text>
-
-        <rect class="nbox" x="560" y="24" width="180" height="56" rx="2"/>
-        <text class="ntitle" x="574" y="48">Flux nominal</text>
-        <text class="nsub" x="574" y="64">gestes commerciaux, alertes</text>
-
-        <path class="edge" d="M210 52 H285" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M210 52 H279"/>
-        <path class="edge" d="M465 52 H560" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M465 52 H554"/>
-        <text class="edge-label" x="472" y="44">succès</text>
-
-        <!-- cause racine : migration API -->
-        <rect class="nbox-store" x="560" y="150" width="180" height="52" rx="2"/>
-        <text class="ntitle" x="574" y="172">Migration d'API</text>
-        <text class="nsub" x="574" y="188">rupture de compatibilité</text>
-        <path class="edge" d="M560 176 H400 V80" marker-end="url(#arr)" style="stroke-dasharray:3 4; stroke:var(--ambre); stroke-opacity:.55"/>
-        <text class="edge-label" x="420" y="120" style="fill:var(--ambre)">cause racine</text>
-
-        <!-- ── Descente : échecs → DLQ ── -->
-        <path class="edge" d="M340 80 V150" marker-end="url(#arr-amber)" style="stroke:var(--ambre); stroke-opacity:.55"/>
-        <path class="edge-flow amber" d="M340 80 V144"/>
-        <text class="edge-label" x="216" y="118" style="fill:var(--ambre)">échecs silencieux</text>
-
-        <text class="ntag-guard" x="285" y="142">POINT AVEUGLE</text>
-        <rect class="nbox-guard" x="285" y="150" width="180" height="56" rx="2"/>
-        <text class="ntitle" x="299" y="174">Dead letter queue</text>
-        <text class="nsub" x="299" y="190">5 376 exécutions en échec</text>
-
-        <!-- ── Rangée 2 : diagnostic ← DLQ ── -->
-        <rect class="nbox" x="20" y="150" width="190" height="56" rx="2"/>
-        <text class="ntitle" x="34" y="174">Diagnostic</text>
-        <text class="nsub" x="34" y="190">extraction API, classification</text>
-        <path class="edge" d="M285 178 H210" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M285 178 H216"/>
-
-        <!-- ── Rangée 3 : chiffrage → priorisation ── -->
-        <rect class="nbox" x="20" y="280" width="190" height="56" rx="2"/>
-        <text class="ntitle" x="34" y="304">Chiffrage du risque</text>
-        <text class="nsub" x="34" y="320">27 625 € tracés ligne à ligne</text>
-        <path class="edge" d="M115 206 V280" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M115 206 V274"/>
-        <text class="edge-label" x="123" y="246">par domaine métier</text>
-
-        <text class="ntag ntag-out" x="285" y="272">OUT</text>
-        <rect class="nbox-out" x="285" y="280" width="180" height="56" rx="2"/>
-        <text class="ntitle-inv" x="299" y="304">Plan de reprise</text>
-        <text class="nsub-inv" x="299" y="320">priorisé par impact financier</text>
-        <path class="edge" d="M210 308 H285" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M210 308 H279"/>
-
-        <!-- retour vers le parc : reprises rejouées -->
-        <path class="edge" d="M465 308 H660 V202" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
-        <path class="edge-flow slow" d="M465 308 H660 V208"/>
-        <text class="edge-label" x="475" y="300">reprises rejouées</text>
+        <text class="d-tag" x="20" y="16">PARC</text>
+        <rect class="d-in" x="20" y="24" width="190" height="56" rx="2"/>
+        <text class="d-title" x="34" y="48">Parc Make</text>
+        <text class="d-sub" x="34" y="64">159 scénarios, 6 domaines</text>
+        <rect class="d-box" x="285" y="24" width="180" height="56" rx="2"/>
+        <text class="d-title" x="299" y="48">Exécutions</text>
+        <text class="d-sub" x="299" y="64">webhooks, connecteurs API</text>
+        <rect class="d-box" x="560" y="24" width="180" height="56" rx="2"/>
+        <text class="d-title" x="574" y="48">Flux nominal</text>
+        <text class="d-sub" x="574" y="64">gestes commerciaux, alertes</text>
+        <path class="d-edge" d="M210 52 H285" marker-end="url(#b1)"/><path class="d-flow draw" d="M212 52 H281"/>
+        <path class="d-edge" d="M465 52 H560" marker-end="url(#b1)"/><path class="d-flow draw" d="M467 52 H556"/>
+        <text class="d-edge-label" x="472" y="44">succès</text>
+        <rect class="d-store" x="560" y="150" width="180" height="52" rx="2"/>
+        <text class="d-title" x="574" y="172">Migration d'API</text>
+        <text class="d-sub" x="574" y="188">rupture de compatibilité</text>
+        <path class="d-edge" d="M560 176 H400 V80" marker-end="url(#b1)" style="stroke-dasharray:3 4;stroke:#a8641b;stroke-opacity:.55"/>
+        <text class="d-edge-label" x="420" y="120" style="fill:#a8641b">cause racine</text>
+        <path class="d-edge" d="M340 80 V150" marker-end="url(#b2)" style="stroke:#a8641b;stroke-opacity:.55"/>
+        <path class="d-flow draw" d="M340 82 V144" style="stroke:#a8641b"/>
+        <text class="d-edge-label" x="216" y="118" style="fill:#a8641b">échecs silencieux</text>
+        <text class="d-tag" x="285" y="142" style="fill:#a8641b">POINT AVEUGLE</text>
+        <rect class="d-guard" x="285" y="150" width="180" height="56" rx="2"/>
+        <text class="d-title" x="299" y="174">Dead letter queue</text>
+        <text class="d-sub" x="299" y="190">5 376 exécutions en échec</text>
+        <rect class="d-box" x="20" y="150" width="190" height="56" rx="2"/>
+        <text class="d-title" x="34" y="174">Diagnostic</text>
+        <text class="d-sub" x="34" y="190">extraction API, classification</text>
+        <path class="d-edge" d="M285 178 H210" marker-end="url(#b1)"/><path class="d-flow draw" d="M283 178 H216"/>
+        <rect class="d-box" x="20" y="280" width="190" height="56" rx="2"/>
+        <text class="d-title" x="34" y="304">Chiffrage du risque</text>
+        <text class="d-sub" x="34" y="320">27 625 € tracés</text>
+        <path class="d-edge" d="M115 206 V280" marker-end="url(#b1)"/><path class="d-flow draw" d="M115 208 V274"/>
+        <text class="d-edge-label" x="123" y="246">par domaine</text>
+        <text class="d-tag" x="285" y="272">LIVRABLE</text>
+        <rect class="d-out" x="285" y="280" width="180" height="56" rx="2"/>
+        <text class="d-title-inv" x="299" y="304">Plan de reprise</text>
+        <text class="d-sub-inv" x="299" y="320">priorisé par impact</text>
+        <path class="d-edge" d="M210 308 H285" marker-end="url(#b1)"/><path class="d-flow draw" d="M212 308 H281"/>
+        <path class="d-edge" d="M465 308 H660 V204" marker-end="url(#b1)" style="stroke-dasharray:3 4"/>
+        <text class="d-edge-label" x="475" y="300">reprises rejouées</text>
       </svg>
       <div class="legend">
         <span><span class="sw in"></span>parc en production</span>
         <span><span class="sw proc"></span>traitement</span>
-        <span><span class="sw guard"></span>zone de risque rendue visible</span>
+        <span><span class="sw guard"></span>zone de risque</span>
         <span><span class="sw out"></span>livrable</span>
-        <span>— flux vert : le chemin de l'échec</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ DÉTAIL ═══════════ -->
-<section style="padding-top:0">
+<section class="chapter" style="padding-top:0">
   <div class="wrap">
-    <div class="node-head reveal">
-      <div class="node-label">LA MÉTHODE</div>
-      <h2>D'une file d'échecs opaque à un plan d'action défendable</h2>
+    <div class="prose reveal">
+      <div class="fieldnote">Le bon indicateur d'un parc d'automatisation, ce n'est pas le nombre de scénarios. C'est le nombre d'échecs que personne ne voit.
+        <cite>Leçon du dossier</cite>
+      </div>
     </div>
-    <div class="values">
-      <div class="value reveal">
-        <div class="v-num">étape_01</div>
-        <h3>Extraire, pas échantillonner</h3>
-        <p>Extraction systématique de l'historique d'exécutions via l'API Make, sur l'ensemble du parc : les 5 376 échecs sont recensés un par un, pas estimés. Un diagnostic partiel aurait produit une priorisation partielle.</p>
-      </div>
-      <div class="value reveal">
-        <div class="v-num">étape_02</div>
-        <h3>Classer par domaine métier</h3>
-        <p>Chaque échec est rattaché à son domaine — gestes commerciaux, alertes qualité, base des manquants… — parce qu'un échec ne vaut pas un autre : un geste commercial perdu a un coût direct, une alerte manquée un coût de risque.</p>
-      </div>
-      <div class="value reveal">
-        <div class="v-num">étape_03</div>
-        <h3>Chiffrer le risque en euros</h3>
-        <p>Les exécutions en échec porteuses d'un enjeu financier sont valorisées ligne à ligne : 27 625 € de risque tracé. C'est ce chiffre — pas le nombre d'échecs — qui permet d'arbitrer les reprises avec le métier.</p>
-      </div>
-      <div class="value reveal">
-        <div class="v-num">étape_04</div>
-        <h3>Prioriser, rejouer, refermer</h3>
-        <p>Les reprises sont ordonnées par impact décroissant et rejouées dans le parc corrigé. La boucle est fermée : le même mécanisme d'extraction sert ensuite de surveillance pour que la DLQ ne redevienne jamais un angle mort.</p>
-      </div>
+    <div class="convert reveal">
+      <p>L'automatisation suppose de connaître le SI. J'ai d'abord dû cartographier l'entrepôt.</p>
+      <a class="btn ghost" href="../doc-datawarehouse/">CASE 03 · Avant l'agent, l'entrepôt →</a>
     </div>
   </div>
 </section>
 
-<section style="padding-top:0; padding-bottom:60px">
+<footer class="site">
   <div class="wrap">
-    <div class="node-head reveal">
-      <div class="node-label">EN CHIFFRES</div>
-      <h2>Le diagnostic en sortie</h2>
-    </div>
-    <div class="reveal" style="max-width:560px">
-      <div class="mini-tiles">
-        <div class="mt"><div class="v"><span class="count" data-target="159">159</span></div><div class="l">scénarios administrés en production</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="6">6</span></div><div class="l">domaines métier couverts</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="5376" data-group="1">5 376</span></div><div class="l">exécutions en échec identifiées</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="27625" data-group="1">27 625</span> <small>€</small></div><div class="l">de risque financier tracé et priorisé</div></div>
-      </div>
-      <a class="project-more" href="../newsletter-kpi/">Projet suivant : Newsletter KPI automatisée →</a>
-    </div>
-  </div>
-</section>
-
-<footer id="contact">
-  <div class="wrap">
-    <div class="foot-row reveal">
-      <div>
-        <div class="node-label">CONTACT</div>
-        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
-      </div>
-      <div class="foot-links">
-        <a href="../../">Accueil</a>
-        <a href="../">Projets</a>
-        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <div class="row">
+      <div><a class="brand" href="../../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks">
+        <a href="../../">Accueil</a><a href="../">Dossiers</a>
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </div>
-    <div class="foot-note">site statique, aucun tracking, chiffres agrégés et anonymisés, 2026</div>
+    <div class="note">Site statique, aucun tracking. Chiffres agrégés et anonymisés. Paris, 2026.</div>
   </div>
 </footer>
 

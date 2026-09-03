@@ -3,29 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Documentation d'un datawarehouse Snowflake de zéro : exploration systématique de 3 bases, reconstruction du lineage de 65 vues, référentiel technique devenu source de vérité.">
-<title>Datawarehouse documenté de zéro | Adrien Tripon</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d1312'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2334d399'/%3E%3Cpath d='M12 16h8' stroke='%2334d399' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2394a3b8'/%3E%3C/svg%3E" />
+<title>CASE 03 | Avant l'agent, l'entrepôt | Adrien Tripon</title>
+<meta name="description" content="Documentation d'un entrepôt Snowflake de zéro : 4 schémas déclarés, 24 réels, lineage de 65 vues reconstruit. Le référentiel écrit à la main devient le contexte qui rend un agent LLM fiable sur l'entrepôt.">
+<link rel="canonical" href="https://casanostro.github.io/Book/projets/doc-datawarehouse/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/projets/doc-datawarehouse/">
-<link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/projects/datawarehouse-docs/">
-<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/projets/doc-datawarehouse/">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/projets/doc-datawarehouse/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/projects/datawarehouse-docs/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/projets/doc-datawarehouse/">
 <link rel="stylesheet" href="../../assets/site.css">
 <script src="../../assets/site.js" defer></script>
 </head>
 <body>
+<a class="skip" href="#dossier">Aller au contenu</a>
+<div class="readbar" aria-hidden="true"></div>
 
-<header>
+<header class="site">
   <div class="wrap">
-    <nav>
-      <a class="logo" href="../../">Adrien Tripon</a>
-      <div class="nav-links">
-        <a href="../../">Accueil</a>
-        <a href="../" aria-current="page">Projets</a>
-        <a href="../../actualites/">Actualités</a>
-        <a href="../../#contact">Contact</a>
+    <nav aria-label="Navigation principale">
+      <a class="brand" href="../../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../../#dossiers">Dossiers</a>
+        <a href="../">Index</a>
+        <a href="../../#méthode">Méthode</a>
+        <a href="../../#position">Contact</a>
       </div>
       <a class="lang-toggle" data-lang="en" href="../../en/projects/datawarehouse-docs/" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
     </nav>
@@ -33,130 +37,171 @@
 </header>
 
 <div class="wrap">
-  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">projets</a><span class="sep">/</span>doc-datawarehouse</div>
-  <div class="page-head reveal">
-    <div class="node-label" style="margin-bottom:14px">PROJET [04]</div>
-    <h1>Le datawarehouse <em>documenté de zéro</em> — du reverse-engineering à la source de vérité</h1>
-    <p class="lead">La documentation existante mentionnait 4 schémas. L'exploration en a révélé 24, répartis sur 3 bases. Ce projet a reconstruit le lineage réel d'environ 65 vues et produit le référentiel technique qui sert aujourd'hui de contexte au <a href="../poc-mcp/">POC MCP</a>.</p>
+  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">dossiers</a><span class="sep">/</span>case 03</div>
+
+  <div class="dossier-head" id="dossier">
+    <div class="toprow reveal">
+      <span class="chapter-id sig">CASE 03</span>
+      <span class="stamp">Source de vérité</span>
+      <span class="stamp mute">Deux parties</span>
+    </div>
+    <h1 class="reveal">Avant l'agent, l'entrepôt</h1>
+    <div class="meta reveal">
+      <div>Domaine<b>Data, IA appliquée</b></div>
+      <div>Rôle<b>Reverse-engineering, doc</b></div>
+      <div>Stack<b>Snowflake, SQL, MCP</b></div>
+      <div>Statut<b>Consommé par les équipes et le LLM</b></div>
+    </div>
+    <p class="lead reveal">La documentation existante mentionnait 4 schémas. L'exploration en a révélé 24. Avant de construire l'agent, il a fallu comprendre l'entrepôt. Deux projets, une seule histoire.</p>
+    <div class="depth reveal" data-default="full" role="group" aria-label="Profondeur de lecture">
+      <button data-mode="synth" aria-pressed="false">Synthèse</button>
+      <button data-mode="full" aria-pressed="true">Dossier complet</button>
+    </div>
   </div>
 </div>
 
-<!-- ═══════════ SCHÉMA D'ARCHITECTURE ═══════════ -->
-<section style="padding-top:40px; padding-bottom:48px">
+<!-- ═══════════ CONTRADICTION ═══════════ -->
+<section class="chapter" style="padding-top:var(--s-6)">
   <div class="wrap">
-    <div class="node-head reveal" style="margin-bottom:24px">
-      <div class="node-label">ARCHITECTURE : EXPLORATION → LINEAGE → RÉFÉRENTIEL</div>
-      <h2>Cartographier ce qui existe, pas ce qui est déclaré</h2>
+    <div class="contradiction reveal">
+      <div class="side expected">
+        <div class="cl">Schémas documentés</div>
+        <div class="cn"><span class="count" data-target="4">4</span></div>
+      </div>
+      <div class="vs">déclaré · vs · réel</div>
+      <div class="side actual">
+        <div class="cl">Schémas en production</div>
+        <div class="cn"><span class="count" data-target="24">24</span></div>
+      </div>
     </div>
-    <div class="arch reveal">
-      <svg viewBox="0 0 760 330" role="img" aria-label="Schéma du projet de documentation : 3 bases Snowflake explorées, parsing du lineage de 65 vues, référentiel technique consommé par les équipes data et le POC MCP">
-        <defs>
-          <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0 0 L8 4 L0 8 z" fill="#94a3b8"/>
-          </marker>
-        </defs>
+    <p class="prose reveal" style="margin-top:var(--s-5)">Le déclaré n'était pas le réel. L'écart n'était pas un détail : c'était le quotidien des équipes, où chaque question sur une vue inconnue remontait à la même personne.</p>
+  </div>
+</section>
 
-        <!-- pile des 3 bases -->
-        <rect class="nbox" x="36" y="40" width="170" height="56" rx="2" style="stroke:var(--line-soft)"/>
-        <rect class="nbox" x="28" y="32" width="170" height="56" rx="2" style="stroke:var(--line-soft)"/>
-        <text class="ntag ntag-in" x="20" y="16">IN</text>
-        <rect class="nbox-store" x="20" y="24" width="170" height="56" rx="2"/>
-        <text class="ntitle" x="34" y="48">3 bases Snowflake</text>
-        <text class="nsub" x="34" y="64">24 schémas réels, 4 documentés</text>
+<!-- ═══════════ PARTIE 1 : INVESTIGATION ═══════════ -->
+<section class="chapter" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label sig">Partie 1 · L'entrepôt</span></div>
+      <h2 class="chapter-title">Cartographier ce qui existe, pas ce qui est déclaré</h2>
+    </div>
 
-        <rect class="nbox" x="290" y="24" width="190" height="56" rx="2"/>
-        <text class="ntitle" x="304" y="48">Exploration</text>
-        <text class="nsub" x="304" y="64">information_schema, GET_DDL</text>
+    <div class="investigation">
+      <div class="steps">
+        <div class="inv-step reveal" data-status="Écart constaté" data-metric="4" data-metric-label="schémas documentés au départ, sur 3 bases opaques">
+          <div class="st-id">01 · Le déclaré</div>
+          <h3>Une doc qui ne dit pas le réel</h3>
+          <p>Trois bases Snowflake, une documentation qui n'en couvrait qu'une fraction. Impossible de faire évoluer ou déboguer sereinement une chaîne data dont personne n'a la carte complète.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Exploration" data-metric="24" data-metric-label="schémas réels révélés par l'exploration système">
+          <div class="st-id">02 · L'exploration</div>
+          <h3>Interroger le système lui-même</h3>
+          <p>Exploration systématique via information_schema et GET_DDL. Le système décrit sa propre structure ; il suffit de savoir lui poser la question. 24 schémas réels, six fois le périmètre documenté.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Lineage reconstruit" data-metric="65" data-metric-label="vues au lineage reconstitué depuis leur DDL">
+          <div class="st-id">03 · Le lineage</div>
+          <h3>Reconstruire les dépendances réelles</h3>
+          <p>Parsing du DDL des vues pour reconstituer qui dépend de quoi : environ 65 vues, leurs dépendances réelles, pas celles supposées. La carte devient exploitable.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Source de vérité" data-metric="314" data-metric-label="lignes de référentiel technique, 3 fichiers de référence">
+          <div class="st-id">04 · Le référentiel</div>
+          <h3>Un actif, pas une corvée</h3>
+          <p>Un référentiel technique de 314 lignes, devenu la source de vérité de la chaîne data. Il casse la dépendance aux savoirs individuels : la carte survit à celui qui l'a dessinée.</p>
+          <p class="deep">Écrit d'abord pour les humains, il s'est révélé être exactement ce dont un modèle a besoin pour interroger l'entrepôt sans inventer de tables.</p>
+        </div>
+      </div>
 
-        <rect class="nbox" x="560" y="24" width="180" height="56" rx="2"/>
-        <text class="ntitle" x="574" y="48">Parsing lineage</text>
-        <text class="nsub" x="574" y="64">~65 vues, dépendances réelles</text>
+      <aside class="statuspanel" aria-hidden="true">
+        <div class="sp-head">État du dossier</div>
+        <div class="sp-body">
+          <div class="sp-status">Écart constaté</div>
+          <div class="sp-metric"><div class="n">4</div><div class="l">schémas documentés au départ, sur 3 bases opaques</div></div>
+          <div class="sp-track"><i></i><i></i><i></i><i></i></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
 
-        <path class="edge" d="M206 52 H290" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M206 52 H284"/>
-        <text class="edge-label" x="214" y="44">requêtes système</text>
-        <path class="edge" d="M480 52 H560" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M480 52 H554"/>
-        <text class="edge-label" x="488" y="44">DDL des vues</text>
-
-        <!-- référentiel en sortie -->
-        <text class="ntag ntag-out" x="560" y="172">OUT</text>
-        <rect class="nbox-out" x="560" y="180" width="180" height="56" rx="2"/>
-        <text class="ntitle-inv" x="574" y="204">Référentiel technique</text>
-        <text class="nsub-inv" x="574" y="220">314 lignes, source de vérité</text>
-        <path class="edge" d="M650 80 V180" marker-end="url(#arr)"/>
-        <path class="edge-flow" d="M650 80 V174"/>
-
-        <!-- consommateurs -->
-        <rect class="nbox" x="290" y="180" width="190" height="56" rx="2"/>
-        <text class="ntitle" x="304" y="204">Équipes data</text>
-        <text class="nsub" x="304" y="220">onboarding, debug, évolutions</text>
-        <path class="edge" d="M560 208 H480" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
-        <path class="edge-flow slow" d="M560 208 H486"/>
-
-        <rect class="nbox-guard" x="20" y="180" width="190" height="56" rx="2"/>
-        <text class="ntitle" x="34" y="204">POC MCP</text>
-        <text class="nsub" x="34" y="220">contexte injecté au LLM</text>
-        <path class="edge" d="M290 224 H210" marker-end="url(#arr)" style="stroke-dasharray:3 4"/>
-        <path class="edge-flow slow" d="M290 224 H216"/>
-
-        <text class="edge-label" x="20" y="290">un référentiel écrit une fois, consommé par les humains comme par les modèles</text>
+<!-- ═══════════ SCHÉMA ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Architecture</span></div>
+      <h2 class="chapter-title">Exploration, lineage, référentiel</h2>
+    </div>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 760 300" role="img" aria-label="Schéma : 3 bases Snowflake explorées, parsing du lineage de 65 vues, référentiel consommé par les équipes data et par le POC MCP">
+        <defs><marker id="c1" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#6a6357"/></marker></defs>
+        <rect class="d-box" x="36" y="40" width="170" height="56" rx="2" style="stroke:#c2b89f"/>
+        <rect class="d-box" x="28" y="32" width="170" height="56" rx="2" style="stroke:#c2b89f"/>
+        <text class="d-tag" x="20" y="16">SOURCE</text>
+        <rect class="d-store" x="20" y="24" width="170" height="56" rx="2"/>
+        <text class="d-title" x="34" y="48">3 bases Snowflake</text>
+        <text class="d-sub" x="34" y="64">24 schémas réels, 4 documentés</text>
+        <rect class="d-box" x="290" y="24" width="190" height="56" rx="2"/>
+        <text class="d-title" x="304" y="48">Exploration</text>
+        <text class="d-sub" x="304" y="64">information_schema, GET_DDL</text>
+        <rect class="d-box" x="560" y="24" width="180" height="56" rx="2"/>
+        <text class="d-title" x="574" y="48">Parsing lineage</text>
+        <text class="d-sub" x="574" y="64">65 vues, dépendances réelles</text>
+        <path class="d-edge" d="M206 52 H290" marker-end="url(#c1)"/><path class="d-flow draw" d="M208 52 H284"/>
+        <path class="d-edge" d="M480 52 H560" marker-end="url(#c1)"/><path class="d-flow draw" d="M482 52 H554"/>
+        <text class="d-tag" x="560" y="172">LIVRABLE</text>
+        <rect class="d-out" x="560" y="180" width="180" height="56" rx="2"/>
+        <text class="d-title-inv" x="574" y="204">Référentiel technique</text>
+        <text class="d-sub-inv" x="574" y="220">314 lignes, source de vérité</text>
+        <path class="d-edge" d="M650 80 V180" marker-end="url(#c1)"/><path class="d-flow draw" d="M650 82 V174"/>
+        <rect class="d-box" x="290" y="180" width="190" height="56" rx="2"/>
+        <text class="d-title" x="304" y="204">Équipes data</text>
+        <text class="d-sub" x="304" y="220">onboarding, debug, évolutions</text>
+        <path class="d-edge" d="M560 208 H480" marker-end="url(#c1)" style="stroke-dasharray:3 4"/>
+        <rect class="d-guard" x="20" y="180" width="190" height="56" rx="2"/>
+        <text class="d-title" x="34" y="204">POC MCP</text>
+        <text class="d-sub" x="34" y="220">contexte injecté au LLM</text>
+        <path class="d-edge" d="M290 224 H210" marker-end="url(#c1)" style="stroke-dasharray:3 4"/>
+        <text class="d-edge-label" x="20" y="284">un référentiel écrit une fois, consommé par les humains comme par les modèles</text>
       </svg>
       <div class="legend">
         <span><span class="sw proc"></span>traitement</span>
         <span><span class="sw out"></span>livrable</span>
-        <span><span class="sw guard"></span>réutilisation IA (projet 06)</span>
-        <span>— pointillés : consommation du référentiel</span>
+        <span><span class="sw guard"></span>réutilisation IA</span>
       </div>
     </div>
   </div>
 </section>
 
-<section style="padding-top:0; padding-bottom:60px">
-  <div class="wrap">
-    <div class="node-head reveal">
-      <div class="node-label">POURQUOI ÇA COMPTE</div>
-      <h2>La cartographie comme actif, pas comme corvée</h2>
+<!-- ═══════════ PARTIE 2 : AGENT ═══════════ -->
+<section class="chapter" style="padding-top:0">
+  <div class="wrap read">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label sig">Partie 2 · L'agent</span></div>
+      <h2 class="chapter-title">La cartographie d'hier, garde-fou de l'IA d'aujourd'hui</h2>
     </div>
-    <div class="values" style="margin-bottom:36px">
-      <div class="value reveal">
-        <div class="v-num">constat_01</div>
-        <h3>Le déclaré n'était pas le réel</h3>
-        <p>Quatre schémas documentés, vingt-quatre en production : l'écart n'était pas un détail, c'était le quotidien des équipes — chaque question sur une vue inconnue remontait à la même personne. Le référentiel a cassé cette dépendance aux savoirs individuels.</p>
-      </div>
-      <div class="value reveal">
-        <div class="v-num">constat_02</div>
-        <h3>Un référentiel qui sert deux fois</h3>
-        <p>Écrit d'abord pour les humains, le référentiel est devenu le contexte structuré du POC MCP : les 24 schémas et le lineage des vues sont exactement ce dont un LLM a besoin pour interroger l'entrepôt sans halluciner de tables.</p>
+    <div class="prose reveal">
+      <p>Le prolongement direct : un connecteur MCP entre un LLM et Snowflake. Les équipes posent leurs questions en langage naturel, le modèle explore le schéma, génère la requête et répond avec ses sources. Accès en lecture seule, périmètre de schémas contrôlé.</p>
+      <p class="deep">Le référentiel construit en partie 1 n'est pas un document annexe : c'est le contexte structuré qui empêche le modèle d'halluciner des tables. Les 24 schémas et le lineage des vues sont exactement ce dont un LLM a besoin pour rester fiable sur un entrepôt réel. Du reverse-engineering au self-service, sans jamais donner au modèle plus que la lecture.</p>
+      <div class="fieldnote">Un LLM branché sur un entrepôt qu'on n'a pas cartographié invente des réponses avec aplomb. Le garde-fou n'est pas dans le modèle ; il est dans le contexte qu'on lui donne.
+        <cite>Leçon du dossier</cite>
       </div>
     </div>
-    <div class="reveal" style="max-width:560px">
-      <div class="mini-tiles">
-        <div class="mt"><div class="v"><span class="count" data-target="24">24</span></div><div class="l">schémas cartographiés (4 documentés avant)</div></div>
-        <div class="mt"><div class="v">~<span class="count" data-target="65">65</span></div><div class="l">vues au lineage reconstitué</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="314">314</span></div><div class="l">lignes de référentiel technique</div></div>
-        <div class="mt"><div class="v"><span class="count" data-target="3">3</span></div><div class="l">fichiers de référence livrés</div></div>
-      </div>
-      <a class="project-more" href="../poc-mcp/">La suite logique : POC MCP — LLM ↔ Snowflake →</a>
+    <div class="convert reveal">
+      <p>La suite logique : le même principe de garde-fous, poussé jusqu'au produit.</p>
+      <a class="btn ghost" href="../supplychaingpt/">CASE 04 · Du français au SQL →</a>
     </div>
   </div>
 </section>
 
-<footer id="contact">
+<footer class="site">
   <div class="wrap">
-    <div class="foot-row reveal">
-      <div>
-        <div class="node-label">CONTACT</div>
-        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Business Analyst Supply Chain &amp; Data</div>
-      </div>
-      <div class="foot-links">
-        <a href="../../">Accueil</a>
-        <a href="../">Projets</a>
-        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <div class="row">
+      <div><a class="brand" href="../../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks">
+        <a href="../../">Accueil</a><a href="../">Dossiers</a><a href="../poc-mcp/">Détail MCP</a>
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
-    <div class="foot-note">site statique, aucun tracking, chiffres agrégés et anonymisés, 2026</div>
+    <div class="note">Site statique, aucun tracking. Chiffres agrégés et anonymisés. Paris, 2026.</div>
   </div>
 </footer>
 

@@ -3,584 +3,394 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Adrien Tripon — Senior Supply Chain & Data Business Analyst. Data systems, automation and applied AI: text-to-SQL, MCP, demand forecasting.">
-<title>Adrien Tripon — Supply Chain & Data Business Analyst</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d1312'/%3E%3Ccircle cx='8' cy='16' r='4' fill='%2334d399'/%3E%3Cpath d='M12 16h8' stroke='%2334d399' stroke-width='2'/%3E%3Ccircle cx='24' cy='16' r='4' fill='%2394a3b8'/%3E%3C/svg%3E" />
+<title>Adrien Tripon | Senior Business Analyst, Supply Chain, Data & Applied AI</title>
+<meta name="description" content="Adrien Tripon, Senior Business Analyst at the intersection of Supply Chain, Data, Automation and applied AI. Anomaly investigation, automation in production, LLM agents over a data warehouse. Paris, France.">
+<meta name="author" content="Adrien Tripon">
+<link rel="canonical" href="https://casanostro.github.io/Book/en/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Adrien Tripon | Senior Business Analyst, Supply Chain, Data & AI">
+<meta property="og:description" content="I look for where it breaks first. Then I build. Investigation, data, automation and AI applied to operations.">
+<meta property="og:url" content="https://casanostro.github.io/Book/en/">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/PodcastPlatform/">
-<link rel="alternate" hreflang="en" href="https://casanostro.github.io/PodcastPlatform/en/">
-<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/PodcastPlatform/">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/">
 <link rel="stylesheet" href="../assets/site.css">
 <script src="../assets/site.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Adrien Tripon",
+  "jobTitle": "Senior Business Analyst, Supply Chain & Data",
+  "description": "Business Analyst at the intersection of Supply Chain, Data, Automation and applied AI for operations.",
+  "url": "https://casanostro.github.io/Book/en/",
+  "sameAs": ["https://www.linkedin.com/in/adrien-tripon","https://github.com/casanostro"],
+  "knowsAbout": ["Business Analysis","Supply Chain","Data","SQL","Snowflake","Automation","Make","LLM","MCP","text-to-SQL","Data Product","Demand forecasting"],
+  "address": { "@type": "PostalAddress", "addressLocality": "Paris", "addressRegion": "Île-de-France", "addressCountry": "FR" }
+}
+</script>
 </head>
 <body data-lang-root>
+<a class="skip" href="#evidence">Skip to content</a>
+<div class="readbar" aria-hidden="true"></div>
 
-<!-- ═══════════ NAV ═══════════ -->
-<header>
+<header class="site">
   <div class="wrap">
-    <nav>
-      <a class="logo" href="./">Adrien Tripon</a>
-      <div class="nav-links">
-        <a class="nav-sec" href="#about">About</a>
-        <a class="nav-sec" href="#career">Career</a>
-        <a href="projects/">Projects</a>
-        <a href="news/">News</a>
-        <a class="nav-sec" href="#stack">Stack</a>
-        <a href="#contact">Contact</a>
+    <nav aria-label="Primary">
+      <a class="brand" href="./">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="#cases">Cases</a>
+        <a href="#method">Method</a>
+        <a href="#system">System</a>
+        <a href="#beliefs">Beliefs</a>
+        <a href="#capabilities">Career</a>
+        <a href="#position">Contact</a>
       </div>
       <a class="lang-toggle" data-lang="fr" href="../" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
     </nav>
   </div>
 </header>
 
-<!-- ═══════════ HERO ═══════════ -->
-<div class="hero">
-  <div class="wrap">
-    <div class="hero-kicker reveal">Senior Business Analyst, Supply Chain &amp; Data, AI-augmented</div>
-    <h1 class="reveal">I build systems that make teams <em>radically more effective</em> — without adding complexity.</h1>
-    <p class="lead reveal">5 years across data &amp; supply chain — food retail, consumer electronics, industrial SaaS, healthcare logistics. Focused on business automation, applied AI (LLMs, MCP, text-to-SQL) and making data chains reliable.</p>
-    <div class="kpi-row reveal">
-      <div class="kpi"><div class="val"><span class="count" data-target="5">5</span> <small>years</small></div><div class="lbl">of data &amp; supply chain experience</div></div>
-      <div class="kpi"><div class="val"><span class="count" data-target="37.8" data-decimals="1">37.8</span> <small>M€</small></div><div class="lbl">of inventory analysed (SLOB methodology)</div></div>
-      <div class="kpi"><div class="val"><span class="count" data-target="159">159</span> <small>scenarios</small></div><div class="lbl">of automation administered in production</div></div>
-      <div class="kpi"><div class="val">−<span class="count" data-target="94">94</span> <small>%</small></div><div class="lbl">production time on a weekly report</div></div>
-    </div>
-  </div>
-</div>
+<nav class="toc" aria-label="Contents">
+  <a href="#opening"><span class="toc-label">Opening</span></a>
+  <a href="#evidence"><span class="toc-label">Evidence</span></a>
+  <a href="#system"><span class="toc-label">System</span></a>
+  <a href="#cases"><span class="toc-label">Cases</span></a>
+  <a href="#method"><span class="toc-label">Method</span></a>
+  <a href="#beliefs"><span class="toc-label">Beliefs</span></a>
+  <a href="#capabilities"><span class="toc-label">Capabilities</span></a>
+  <a href="#position"><span class="toc-label">Position</span></a>
+</nav>
 
-<!-- ═══════════ STAT BAND ═══════════ -->
-<div class="statband">
-  <div class="wrap">
-    <div class="row reveal">
-      <div class="stat"><div class="val"><span class="count" data-target="5.4" data-decimals="1">5.4</span> <small>M€</small></div><div class="lbl">of at-risk inventory identified</div></div>
-      <div class="stat"><div class="val"><span class="count" data-target="29413" data-group="1">29,413</span></div><div class="lbl">product lines audited</div></div>
-      <div class="stat"><div class="val"><span class="count" data-target="27625" data-group="1">27,625</span> <small>€</small></div><div class="lbl">of financial exposure traced</div></div>
-      <div class="stat"><div class="val"><span class="count" data-target="65">65</span> <small>views</small></div><div class="lbl">of lineage reconstructed</div></div>
-      <div class="stat"><div class="val"><span class="count" data-target="88">88</span></div><div class="lbl">master data mismatches detected</div></div>
-      <div class="stat"><div class="val"><span class="count" data-target="905">905</span><small>/990</small></div><div class="lbl">TOEIC — English C1</div></div>
-    </div>
-  </div>
-</div>
+<main>
 
-<!-- ═══════════ ABOUT ═══════════ -->
-<section id="about">
+<section class="opening" id="opening">
   <div class="wrap">
-    <div class="node-head reveal">
-      <div class="node-label">ABOUT</div>
-      <h2>Before the systems, a way of working</h2>
-    </div>
-    <p class="about-lead reveal">
-      I started on a warehouse dock, not behind a dashboard. That is probably what best defines how I do
-      data work: <strong>I never model a flow I haven't watched run</strong>. Every role since has added a
-      layer — operations, ERP, BI, automation, AI — but the logic hasn't changed: understand the floor
-      first, build the tooling second.
-    </p>
-    <div class="values">
-      <div class="value reveal">
-        <div class="v-num">principle_01</div>
-        <h3>The floor before the slides</h3>
-        <p>A number that contradicts the teams' experience deserves an investigation, not a presentation. The best models I've built came out of conversations with the people who live the flow every day.</p>
+    <div class="frame">
+      <div class="id-line reveal">
+        <span>Personal case file</span>
+        <span>Paris, France</span>
+        <span class="sig">Open to work</span>
       </div>
-      <div class="value reveal">
-        <div class="v-num">principle_02</div>
-        <h3>Sobriety is a feature</h3>
-        <p>I build systems teams can own without me: fewer dependencies, fewer layers, less magic. If a 50-line script is enough, there will be no platform.</p>
+      <h1 class="hero reveal d1">I look<br>for <span class="sig">where it breaks.</span></h1>
+      <div class="hero-domains reveal d2">
+        <span>Data</span><span>Supply Chain</span><span>Systems</span><span>Automation</span><span>AI</span>
       </div>
-      <div class="value reveal">
-        <div class="v-num">principle_03</div>
-        <h3>Say what the numbers say</h3>
-        <p>Quantifying a risk also means owning it in front of leadership — including when the answer is uncomfortable. A wrong but reassuring indicator costs more than a right but inconvenient one.</p>
-      </div>
-      <div class="value reveal">
-        <div class="v-num">principle_04</div>
-        <h3>Documenting is handing over</h3>
-        <p>A system only I can understand is a failure, not an achievement. Documentation is not the end of the project: it's what lets the project outlive me.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ CAREER ═══════════ -->
-<section id="career" style="padding-top:0">
-  <div class="wrap">
-    <div class="node-head reveal">
-      <div class="node-label">CAREER</div>
-      <h2>From the warehouse floor to applied AI</h2>
-      <p class="sub">A path built from the ground up: every role adds a layer — operations, ERP, BI, automation, LLMs.</p>
-    </div>
-    <div class="timeline">
-      <div class="xp reveal">
-        <div class="xp-date">Oct 2025 — present</div>
-        <h3>Senior Business Analyst — Supply Chain Performance</h3>
-        <div class="xp-org">Franprix (Casino Group), food retail</div>
-        <p class="xp-desc">Hardening and tooling of the supply data chain: reporting automation, administration of the Make automation estate, Snowflake data warehouse documentation, LLM integration (MCP POC, text-to-SQL) and root-cause investigations of critical anomalies.</p>
-        <div class="xp-deltas">
-          <div class="delta"><b>−94%</b> weekly reporting</div>
-          <div class="delta"><b>€37.8M</b> inventory analysed (SLOB)</div>
-          <div class="delta"><b>159</b> scenarios in production</div>
+      <p class="hero-lead reveal d2">
+        Senior Business Analyst. I start from an operations problem, investigate the data and the systems,
+        trace it to root cause, then build the fix: automation, data product, LLM agent.
+        <b>The field first, the technology second.</b>
+      </p>
+      <div class="figures reveal d3">
+        <div class="figure">
+          <div class="n"><span class="count" data-target="27625" data-group="1">27,625</span><span class="u">€</span></div>
+          <div class="cap">of financial risk traced line by line in a silent failure queue</div>
         </div>
-      </div>
-      <div class="xp reveal">
-        <div class="xp-date">Oct 2024 — Oct 2025</div>
-        <h3>Supply Chain Analyst</h3>
-        <div class="xp-org">Samsung Electronics, consumer electronics</div>
-        <p class="xp-desc">Steering and continuous improvement on ~€15M of weekly flows, coordinating European teams and Korean HQ. Python / VBA dashboards and supply KPI optimisation on SAP ERP.</p>
-        <div class="xp-deltas">
-          <div class="delta"><b>−20%</b> stock discrepancies</div>
-          <div class="delta"><b>−50%</b> reporting time</div>
-          <div class="delta"><b>€15M</b> weekly flows steered</div>
+        <div class="figure">
+          <div class="n"><span class="count" data-target="159">159</span></div>
+          <div class="cap">automation scenarios run in production across 6 business domains</div>
         </div>
-      </div>
-      <div class="xp reveal">
-        <div class="xp-date">Sep 2023 — Sep 2024</div>
-        <h3>Project Manager — MES/APS Deployment</h3>
-        <div class="xp-org">Oplit (SaaS vendor), manufacturing</div>
-        <p class="xp-desc">Deployment of a production planning solution at 12 strategic clients (aerospace, defence, luxury, steel), with cross-company API integrations and planning process optimisation.</p>
-        <div class="xp-deltas">
-          <div class="delta"><b>12</b> clients deployed</div>
-          <div class="delta"><b>−15%</b> process costs</div>
-          <div class="delta"><b>−25%</b> lead times</div>
-        </div>
-      </div>
-      <div class="xp reveal">
-        <div class="xp-date">Sep 2020 — Sep 2023</div>
-        <h3>Deputy COO — Healthcare Logistics</h3>
-        <div class="xp-org">Arvato (Healthcare BU), healthcare logistics</div>
-        <p class="xp-desc">Operational management of 250 people, ISO 9001 &amp; 13485 certifications obtained in 6 months, Power BI reporting industrialisation, inventory drone rollout and conveyor flow optimisation.</p>
-        <div class="xp-deltas">
-          <div class="delta"><b>250</b> people managed</div>
-          <div class="delta"><b>−18%</b> operating costs</div>
-          <div class="delta"><b>−70%</b> reporting time</div>
-          <div class="delta"><b>+12%</b> conveyor throughput</div>
+        <div class="figure">
+          <div class="n"><span class="count" data-target="83">83</span><span class="u">%</span></div>
+          <div class="cap">of rows silently fell back on a table frozen since 2022. Nobody saw it</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ PROJECTS ═══════════ -->
-<section id="projects" style="padding-top:0">
+<section class="chapter" id="evidence">
   <div class="wrap">
-    <div class="node-head reveal">
-      <div class="node-label">PROJECTS</div>
-      <h2>Eight systems, one thread: making data actionable</h2>
-      <p class="sub">Every project reads like a lineage node: what goes in, what gets transformed, what comes out. Each card opens a detailed page with the full architecture diagram.</p>
+    <div class="chapter-head reveal">
+      <div class="row"><span class="chapter-id">01</span><span class="node-label">Evidence</span></div>
+      <h2 class="chapter-title">What it adds up to, in numbers</h2>
+      <p class="sub">Five years from the warehouse floor to the data warehouse. Food retail, consumer electronics, industrial SaaS, healthcare logistics. The figures below are raw, dated, reproducible.</p>
     </div>
-
-    <!-- PROJECT 1 -->
-    <article class="project reveal">
-      <div class="project-ports">
-        <span class="in">IN: Business question in plain French</span>
-        <span class="out">OUT: Result + SQL + chart</span>
-      </div>
-      <div class="project-head">
-        <span class="num">[01]</span>
-        <h3><a href="projects/supplychaingpt/">SupplyChainGPT — a text-to-SQL assistant</a></h3>
-        <div class="tags"><span class="tag">Python</span><span class="tag">Claude API</span><span class="tag">SQLite</span><span class="tag">Streamlit</span><span class="tag">Plotly</span></div>
-      </div>
-      <div class="project-body">
-        <div class="project-text">
-          <p>An application that turns a business question — "which suppliers had the most stockouts this month?" — into a SQL query, runs it and returns the result, the generated SQL and an automatic chart.</p>
-          <p>A realistic demo database (6 tables, 90 days of orders and stock positions), a regression suite of 10 business questions, and read-only SQL validation before any execution.</p>
-          <div class="impact"><strong>Impact — </strong>A rare hybrid profile: generative AI + SQL + supply chain domain expertise. Open source: <a href="https://github.com/casanostro/supply-chain-gpt" target="_blank" rel="noopener noreferrer">github.com/casanostro/supply-chain-gpt</a></div>
-          <a class="project-more" href="projects/supplychaingpt/">Full page + architecture diagram →</a>
-        </div>
-        <div class="project-viz">
-          <div class="minidag">
-            <div class="dag-in">Business question</div>
-            <div class="arrow">→</div>
-            <div class="dag-proc">LLM → read-only validated SQL</div>
-            <div class="arrow">→</div>
-            <div class="dag-out">Result + SQL + chart</div>
-          </div>
-          <div class="viz-title">demo database volumes</div>
-          <svg class="svg-chart" viewBox="0 0 380 170" aria-label="Demo database volumes">
-            <text class="bar-label" x="0" y="18">Products</text><rect class="bar-fill" x="95" y="8" width="210" height="14" rx="2"/><text class="bar-value" x="310" y="19">500</text>
-            <text class="bar-label" x="0" y="42">Days of history</text><rect class="bar-fill-light" x="95" y="32" width="160" height="14" rx="2"/><text class="bar-value" x="260" y="43">90</text>
-            <text class="bar-label" x="0" y="66">Suppliers</text><rect class="bar-fill-light" x="95" y="56" width="120" height="14" rx="2"/><text class="bar-value" x="220" y="67">25</text>
-            <text class="bar-label" x="0" y="90">Warehouses</text><rect class="bar-fill-muted" x="95" y="80" width="60" height="14" rx="2"/><text class="bar-value" x="160" y="91">6</text>
-            <text class="bar-label" x="0" y="114">Tables</text><rect class="bar-fill-muted" x="95" y="104" width="60" height="14" rx="2"/><text class="bar-value" x="160" y="115">6</text>
-            <text class="bar-label" x="0" y="138">Business tests</text><rect class="bar-fill-muted" x="95" y="128" width="75" height="14" rx="2"/><text class="bar-value" x="175" y="139">10</text>
-          </svg>
-        </div>
-      </div>
-    </article>
-
-    <!-- PROJECT 2 -->
-    <article class="project reveal">
-      <div class="project-ports">
-        <span class="in">IN: 159 scenarios, 6 business domains</span>
-        <span class="out">OUT: €27,625 of exposure traced and prioritised</span>
-      </div>
-      <div class="project-head">
-        <span class="num">[02]</span>
-        <h3><a href="projects/make-platform/">Business automation platform</a></h3>
-        <div class="tags"><span class="tag">Make</span><span class="tag">API</span><span class="tag">Reliability</span><span class="tag">Production</span></div>
-      </div>
-      <div class="project-body">
-        <div class="project-text">
-          <p>Administration of an estate of 159 automation scenarios across 6 business domains: commercial gestures, quality alerts, missing-items base, and other flows the teams rely on daily.</p>
-          <p>Full estate diagnosis after an API migration: systematic identification of failed executions (dead letter queue), tracing of the associated financial exposure and prioritisation of the replays.</p>
-          <div class="impact"><strong>Impact — </strong>5,376 failed executions identified and €27,625 of financial exposure traced and prioritised.</div>
-          <a class="project-more" href="projects/make-platform/">Full page + architecture diagram →</a>
-        </div>
-        <div class="project-viz">
-          <div class="minidag">
-            <div class="dag-in">159 scenarios, 6 domains</div>
-            <div class="arrow">→</div>
-            <div class="dag-proc">Post-migration DLQ diagnosis</div>
-            <div class="arrow">→</div>
-            <div class="dag-out">€27,625 of exposure prioritised</div>
-          </div>
-          <div class="viz-title">the estate in numbers</div>
-          <div class="mini-tiles">
-            <div class="mt"><div class="v"><span class="count" data-target="159">159</span></div><div class="l">scenarios in production</div></div>
-            <div class="mt"><div class="v"><span class="count" data-target="6">6</span></div><div class="l">business domains covered</div></div>
-            <div class="mt"><div class="v"><span class="count" data-target="5376" data-group="1">5,376</span></div><div class="l">failed executions (DLQ) identified</div></div>
-            <div class="mt"><div class="v"><span class="count" data-target="27625" data-group="1">27,625</span> <small>€</small></div><div class="l">of financial exposure traced</div></div>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <!-- PROJECT 3 -->
-    <article class="project reveal">
-      <div class="project-ports">
-        <span class="in">IN: 9 BI sources</span>
-        <span class="out">OUT: 50+ recipients, 15 min / issue</span>
-      </div>
-      <div class="project-head">
-        <span class="num">[03]</span>
-        <h3><a href="projects/kpi-newsletter/">Automated KPI newsletter</a></h3>
-        <div class="tags"><span class="tag">Python</span><span class="tag">MicroStrategy</span><span class="tag">Automation</span></div>
-      </div>
-      <div class="project-body">
-        <div class="project-text">
-          <p>Industrialisation of a weekly steering newsletter: automatic aggregation of 9 BI / MicroStrategy sources, formatting and distribution to 50+ recipients, with a companion script to inject editorial commentary.</p>
-          <p>The textbook case of immediate-ROI automation: a recurring, time-consuming task with no manual added value, turned into a reliable 15-minute process.</p>
-          <div class="impact"><strong>Impact — </strong>4 h → 15 min per issue, i.e. ~94% of production time saved, every week.</div>
-          <a class="project-more" href="projects/kpi-newsletter/">Full page + architecture diagram →</a>
-        </div>
-        <div class="project-viz">
-          <div class="minidag">
-            <div class="dag-in">9 BI sources</div>
-            <div class="arrow">→</div>
-            <div class="dag-proc">Python aggregation + formatting</div>
-            <div class="arrow">→</div>
-            <div class="dag-out">50+ recipients, 15 min / issue</div>
-          </div>
-          <div class="viz-title">production time per issue</div>
-          <svg class="svg-chart" viewBox="0 0 380 110" aria-label="Before/after production time">
-            <text class="bar-label" x="60" y="28" text-anchor="end">Before</text>
-            <rect class="bar-fill-muted" x="68" y="14" width="260" height="22" rx="2"/>
-            <text class="bar-value" x="335" y="30">240 min</text>
-            <text class="bar-label" x="60" y="68" text-anchor="end">After</text>
-            <rect class="bar-fill-light" x="68" y="54" width="16" height="22" rx="2"/>
-            <text class="bar-value" x="90" y="70">15 min</text>
-            <text class="bar-label" x="190" y="100" text-anchor="middle" style="font-size:10px;fill:var(--flux)">−94%</text>
-          </svg>
-        </div>
-      </div>
-    </article>
-
-    <!-- PROJECT 4 -->
-    <article class="project reveal">
-      <div class="project-ports">
-        <span class="in">IN: 3 unmapped databases</span>
-        <span class="out">OUT: Reference docs, source of truth</span>
-      </div>
-      <div class="project-head">
-        <span class="num">[04]</span>
-        <h3><a href="projects/datawarehouse-docs/">A data warehouse documented from scratch</a></h3>
-        <div class="tags"><span class="tag">Snowflake</span><span class="tag">SQL</span><span class="tag">Lineage</span><span class="tag">Documentation</span></div>
-      </div>
-      <div class="project-body">
-        <div class="project-text">
-          <p>Reverse-engineering and full documentation of a previously unmapped supply chain data warehouse: systematic exploration of the databases, reconstruction of the real view lineage, and a technical reference that became the data chain's source of truth.</p>
-          <p>The existing documentation mentioned only 4 schemas — exploration revealed 24, across 3 databases, with the lineage of ~65 views reconstructed.</p>
-          <div class="impact"><strong>Impact — </strong>A 314-line reference + 3 companion files. Durable reduction of key-person risk.</div>
-          <a class="project-more" href="projects/datawarehouse-docs/">Full page + architecture diagram →</a>
-        </div>
-        <div class="project-viz">
-          <div class="minidag">
-            <div class="dag-in">3 unmapped databases</div>
-            <div class="arrow">→</div>
-            <div class="dag-proc">Reverse-engineering + lineage parser</div>
-            <div class="arrow">→</div>
-            <div class="dag-out">Reference, source of truth</div>
-          </div>
-          <div class="viz-title">documented scope: before / after</div>
-          <svg class="svg-chart" viewBox="0 0 380 110" aria-label="Before/after documented schemas">
-            <text class="bar-label" x="90" y="28" text-anchor="end">Existing docs</text>
-            <rect class="bar-fill-muted" x="98" y="14" width="40" height="22" rx="2"/>
-            <text class="bar-value" x="144" y="30">4 schemas</text>
-            <text class="bar-label" x="90" y="68" text-anchor="end">Mapping</text>
-            <rect class="bar-fill" x="98" y="54" width="240" height="22" rx="2"/>
-            <text class="bar-value" x="344" y="70">24 schemas</text>
-            <text class="bar-label" x="190" y="100" text-anchor="middle" style="font-size:10px;fill:var(--flux)">×6</text>
-          </svg>
-        </div>
-      </div>
-    </article>
-
-    <!-- PROJECT 5 -->
-    <article class="project reveal">
-      <div class="project-ports">
-        <span class="in">IN: A distorted service-level KPI</span>
-        <span class="out">OUT: Table frozen since 2022, documented fix</span>
-      </div>
-      <div class="project-head">
-        <span class="num">[05]</span>
-        <h3><a href="projects/bug-investigation/">Root-cause investigation of a critical calculation bug</a></h3>
-        <div class="tags"><span class="tag">SQL</span><span class="tag">Root cause</span><span class="tag">Data quality</span></div>
-      </div>
-      <div class="project-body">
-        <div class="project-text">
-          <p>End-to-end diagnosis of a silent anomaly in an order simulation engine that distorted a service-level KPI published in reporting — without triggering a single alert.</p>
-          <p>Confirmed root cause: a fallback table frozen since July 2022 (~3.6M frozen historical rows). 83–85% of simulated lines were silently falling back to this stale source.</p>
-          <div class="impact"><strong>Impact — </strong>0.53% of the expected volume actually generated (54 parcels vs ~10,244). Impact quantified, fix proposed and documented.</div>
-          <a class="project-more" href="projects/bug-investigation/">Full page + architecture diagram →</a>
-        </div>
-        <div class="project-viz">
-          <div class="minidag">
-            <div class="dag-in">Distorted service KPI</div>
-            <div class="arrow">→</div>
-            <div class="dag-proc">Symptom → root cause walk-back</div>
-            <div class="arrow">→</div>
-            <div class="dag-out">Frozen 2022 table, documented fix</div>
-          </div>
-          <div class="viz-title">simulated volume: expected vs generated (parcels)</div>
-          <svg class="svg-chart" viewBox="0 0 380 80" aria-label="Expected vs generated volume">
-            <text class="bar-label" x="90" y="22" text-anchor="end">Expected</text>
-            <rect class="bar-fill-muted" x="98" y="8" width="220" height="20" rx="2"/>
-            <text class="bar-value" x="324" y="23">10,244</text>
-            <text class="bar-label" x="90" y="58" text-anchor="end">Generated</text>
-            <rect class="bar-fill" x="98" y="44" width="3" height="20" rx="2"/>
-            <text class="bar-value" x="108" y="59">54</text>
-          </svg>
-          <div class="viz-title">share of lines hitting the frozen fallback</div>
-          <div class="ratio-bar">
-            <div class="rb-head"><span>simulated lines</span><span class="mono" id="fallbackPct">83–85%</span></div>
-            <div class="track"><div class="fill" id="fallbackFill" data-width="84"></div></div>
-            <div class="rb-foot">fallback table frozen since 07/2022, ~3.6M historical rows</div>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <!-- PROJECT 6 -->
-    <article class="project reveal">
-      <div class="project-ports">
-        <span class="in">IN: Natural-language business question</span>
-        <span class="out">OUT: Sourced answer from the DWH</span>
-      </div>
-      <div class="project-head">
-        <span class="num">[06]</span>
-        <h3><a href="projects/mcp-poc/">MCP POC — querying the data warehouse in natural language</a></h3>
-        <div class="tags"><span class="tag">MCP</span><span class="tag">Claude API</span><span class="tag">Snowflake</span><span class="tag">LLM agents</span></div>
-      </div>
-      <div class="project-body">
-        <div class="project-text">
-          <p>Proof of concept of an MCP (Model Context Protocol) connector between an LLM and the Snowflake data warehouse: teams ask questions in natural language, the model explores the schema, generates the query and answers with its sources.</p>
-          <p>A direct extension of the data warehouse documentation (project 04): the hand-built technical reference becomes the structured context that makes the LLM reliable on a real warehouse — read-only access, controlled schema scope.</p>
-          <div class="impact"><strong>Impact — </strong>From reverse-engineering to self-service: yesterday's mapping is today's guardrail for AI.</div>
-          <a class="project-more" href="projects/mcp-poc/">Full page + architecture diagram →</a>
-        </div>
-        <div class="project-viz">
-          <div class="minidag">
-            <div class="dag-in">NL business question</div>
-            <div class="arrow">→</div>
-            <div class="dag-proc">Claude API × read-only MCP server</div>
-            <div class="arrow">→</div>
-            <div class="dag-out">Sourced answer from the DWH</div>
-          </div>
-          <div class="viz-title">what the MCP exposes to the LLM</div>
-          <div class="mini-tiles">
-            <div class="mt"><div class="v"><span class="count" data-target="24">24</span></div><div class="l">schemas mapped as context</div></div>
-            <div class="mt"><div class="v">~<span class="count" data-target="65">65</span></div><div class="l">views with documented lineage</div></div>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <!-- PROJECT 7 — dashboards -->
-    <article class="project reveal">
-      <div class="project-ports">
-        <span class="in">IN: 1 supply dataset (6 warehouses, 25 suppliers, 12 months)</span>
-        <span class="out">OUT: 2 dashboards, 2 audiences</span>
-      </div>
-      <div class="project-head">
-        <span class="num">[07]</span>
-        <h3><a href="projects/dataviz/">Dataviz — two readings of the same data</a></h3>
-        <div class="tags"><span class="tag">Dataviz</span><span class="tag">Plotly</span><span class="tag">Vanilla JS</span><span class="tag">Live demo</span></div>
-      </div>
-      <div class="project-body">
-        <div class="project-text">
-          <p>Two interactive dashboards built on the same supply chain data: a C-level view — 5 seconds to understand, 5 KPIs, zero filters — and an operations view — dense, filterable, with today's alerts and a sortable stockout table.</p>
-          <p>A switch flips between the two to make the contrast obvious: the one-size-fits-all dashboard is the classic reporting mistake.</p>
-          <div class="impact"><strong>Impact — </strong>Dashboard design is an audience decision before it is a chart decision.</div>
-          <a class="project-more" href="projects/dataviz/">Explore both views →</a>
-        </div>
-        <div class="project-viz">
-          <div class="minidag">
-            <div class="dag-in">1 supply dataset, 12 months</div>
-            <div class="arrow">→</div>
-            <div class="dag-proc">2 designs, 2 audiences</div>
-            <div class="arrow">→</div>
-            <div class="dag-out">C-level ↔ operations</div>
-          </div>
-          <div class="viz-title">two philosophies</div>
-          <div class="mini-tiles">
-            <div class="mt"><div class="v">A</div><div class="l">C-level — 5 KPIs, 1 trend, 0 filters</div></div>
-            <div class="mt"><div class="v">B</div><div class="l">operations — cross filters, alerts, sorting</div></div>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <!-- PROJECT 8 — forecast tool -->
-    <article class="project reveal">
-      <div class="project-ports">
-        <span class="in">IN: A preset scenario or your CSV (local)</span>
-        <span class="out">OUT: Forecast + interval + export</span>
-      </div>
-      <div class="project-head">
-        <span class="num">[08]</span>
-        <h3><a href="projects/sales-forecast/">Sales forecasting — one click, one forecast</a></h3>
-        <div class="tags"><span class="tag">Vanilla JS</span><span class="tag">Holt-Winters</span><span class="tag">Auto-tuning</span><span class="tag">Live tool</span></div>
-      </div>
-      <div class="project-body">
-        <div class="project-text">
-          <p>The experience of a finished internal tool: pick a product profile — seasonal, stable, growing — or upload your own CSV, click "Forecast", get the prediction, its interval and the export.</p>
-          <p>No exposed parameters: triple exponential smoothing self-calibrates through a grid search on MAPE, silently. The file is parsed locally; nothing leaves the browser.</p>
-          <div class="impact"><strong>Impact — </strong>The difference between a demo and a tool: the model disappears behind the use.</div>
-          <a class="project-more" href="projects/sales-forecast/">Launch the tool →</a>
-        </div>
-        <div class="project-viz">
-          <div class="minidag">
-            <div class="dag-in">Sales history</div>
-            <div class="arrow">→</div>
-            <div class="dag-proc">Silent auto-tuning (grid search)</div>
-            <div class="arrow">→</div>
-            <div class="dag-out">Forecast + interval + CSV</div>
-          </div>
-          <div class="viz-title">the tool at a glance</div>
-          <div class="mini-tiles">
-            <div class="mt"><div class="v">1</div><div class="l">button — no exposed parameters</div></div>
-            <div class="mt"><div class="v">3</div><div class="l">key figures: total, MAPE, trend</div></div>
-            <div class="mt"><div class="v">🔒</div><div class="l">CSV parsed locally, nothing uploaded</div></div>
-            <div class="mt"><div class="v">±σ</div><div class="l">confidence interval displayed</div></div>
-          </div>
-        </div>
-      </div>
-    </article>
+    <div class="evidence reveal">
+      <div class="cell"><div class="n"><span class="count" data-target="37.8" data-decimals="1">37.8</span><span class="u"> M€</span></div><div class="l">of inventory analysed, SLOB method</div></div>
+      <div class="cell"><div class="n"><span class="count" data-target="5376" data-group="1">5,376</span></div><div class="l">failed executions traced to cause</div></div>
+      <div class="cell"><div class="n"><span class="count" data-target="24">24</span></div><div class="l">Snowflake schemas mapped, 4 documented at first</div></div>
+      <div class="cell"><div class="n">−<span class="count" data-target="94">94</span><span class="u"> %</span></div><div class="l">time on a weekly report, 4 h down to 15 min</div></div>
+      <div class="cell"><div class="n"><span class="count" data-target="15">15</span><span class="u"> M€</span></div><div class="l">of weekly flows piloted at Samsung</div></div>
+      <div class="cell"><div class="n">−<span class="count" data-target="20">20</span><span class="u"> %</span></div><div class="l">stock discrepancies, supply KPIs hardened</div></div>
+      <div class="cell"><div class="n"><span class="count" data-target="250">250</span></div><div class="l">staff managed in healthcare logistics</div></div>
+      <div class="cell"><div class="n"><span class="count" data-target="905">905</span><span class="u">/990</span></div><div class="l">TOEIC, fluent English in international settings</div></div>
+    </div>
+    <div class="prose reveal" style="margin-top:var(--s-8)">
+      <p class="big">A standard BA has not traced 27,625 € of risk line by line. A pure data profile has not managed 250 people or piloted 15 M€ of flows a week. A junior Product Manager has not traced a calculation chain to a table frozen in July 2022.</p>
+      <p>What follows is not a list of projects. It is a way of working, applied to real systems.</p>
+    </div>
   </div>
 </section>
 
-<!-- ═══════════ SIDE MISSIONS ═══════════ -->
-<section id="missions" style="padding-top:0">
+<section class="chapter" id="system">
   <div class="wrap">
-    <div class="node-head reveal">
-      <div class="node-label">SIDE MISSIONS</div>
-      <h2>The rest of the playing field</h2>
+    <div class="chapter-head reveal">
+      <div class="row"><span class="chapter-id">02</span><span class="node-label sig">System</span></div>
+      <h2 class="chapter-title">The projects are not independent</h2>
+      <p class="sub">Six domains, one thread. A warehouse's documentation becomes the guardrail of an AI agent. A failure diagnosis becomes a monitoring system. Hover a node to see what it connects.</p>
     </div>
-    <div class="missions-grid">
-      <div class="mission reveal">
-        <div class="m-head"><h3>Cross-system product master data audit</h3><span class="m-ctx">data quality</span></div>
-        <p>Systematic cross-checking of three systems (PIM, sales management, e-commerce platform) to measure product master data consistency and prioritise the fixes.</p>
-        <div class="m-stats">
-          <div><b>29,413</b><span>lines audited</span></div>
-          <div><b>49%</b><span>anomalies detected</span></div>
-          <div><b>88</b><span>mismatches</span></div>
-        </div>
+    <div class="systemmap reveal" role="group" aria-label="System map: six connected domains">
+      <div class="canvas">
+        <svg viewBox="0 0 600 460" role="img" aria-label="Map linking Supply Chain, Data, Automation, AI, Product and Operations">
+          <g stroke-linecap="round">
+            <path class="sm-edge" data-link="ai product"   d="M300 62 L470 158"/>
+            <path class="sm-edge" data-link="product ops"  d="M478 172 L478 288"/>
+            <path class="sm-edge" data-link="ops supply"   d="M470 302 L318 392"/>
+            <path class="sm-edge" data-link="supply auto"  d="M282 392 L130 302"/>
+            <path class="sm-edge" data-link="auto data"    d="M122 288 L122 172"/>
+            <path class="sm-edge" data-link="data ai"      d="M130 158 L282 62"/>
+            <path class="sm-edge" data-link="ai supply"    d="M300 74 L300 378"/>
+            <path class="sm-edge" data-link="product auto" d="M466 168 L134 292"/>
+            <path class="sm-edge" data-link="ops data"     d="M466 292 L134 168"/>
+          </g>
+          <g class="sm-node" data-node="AI" data-title="Applied AI" data-desc="LLM, RAG, MCP, agents. Prototyping, evaluation, guardrails. AI wired to real systems, not demos." data-href="projects/mcp-poc/" data-cta="See the MCP PoC →">
+            <circle cx="300" cy="45" r="44"/><text x="300" y="49">AI</text>
+          </g>
+          <g class="sm-node" data-node="PRODUCT" data-title="Data product" data-desc="Discovery, scoping, prioritisation, adoption. A dashboard is not a product; audience is a design decision." data-href="projects/dataviz/" data-cta="See the dataviz →">
+            <circle cx="478" cy="150" r="44"/><text x="478" y="154">PRODUCT</text>
+          </g>
+          <g class="sm-node" data-node="OPERATIONS" data-title="Operations" data-desc="Planning, steering, KPIs, industrial reporting. The field I saw run before modelling it." data-href="#capabilities" data-cta="See the career →">
+            <circle cx="478" cy="310" r="44"/><text x="478" y="314">OPERATIONS</text>
+          </g>
+          <g class="sm-node" data-node="SUPPLY" data-title="Supply Chain" data-desc="Planning, MRP, DDMRP, stock, performance. The home domain, the native vocabulary." data-href="projects/make-platform/" data-cta="See the automation →">
+            <circle cx="300" cy="415" r="44"/><text x="300" y="411">SUPPLY</text><text x="300" y="425">CHAIN</text>
+          </g>
+          <g class="sm-node" data-node="AUTOMATION" data-title="Automation" data-desc="Python, Make, APIs. Production, integrations, monitoring. 159 scenarios, and the question of their reliability." data-href="projects/make-platform/" data-cta="See the Make fleet →">
+            <circle cx="122" cy="310" r="44"/><text x="122" y="307">AUTO-</text><text x="122" y="321">MATION</text>
+          </g>
+          <g class="sm-node" data-node="DATA" data-title="Data" data-desc="SQL, Snowflake, lineage, quality. Anomaly investigation and mapping of what actually exists." data-href="projects/datawarehouse-docs/" data-cta="See the warehouse →">
+            <circle cx="122" cy="150" r="44"/><text x="122" y="154">DATA</text>
+          </g>
+        </svg>
       </div>
-      <div class="mission reveal">
-        <div class="m-head"><h3>Service-level investigation — key accounts</h3><span class="m-ctx">exec steering</span></div>
-        <p>Adversarial analysis of major international suppliers' service levels, under executive scrutiny: cross-validation of upstream/downstream data and resolution of measurement anomalies on the supplier side.</p>
-        <div class="m-stats">
-          <div><b>2</b><span>strategic accounts</span></div>
-          <div><b>upstream / downstream</b><span>cross-validation</span></div>
-        </div>
-      </div>
-      <div class="mission reveal">
-        <div class="m-head"><h3>Dashboards &amp; sales forecasting</h3><span class="m-ctx">samsung</span></div>
-        <p>Industrialisation of supply reporting in Python / VBA and improvement of sales forecasts, coordinating between European teams and HQ.</p>
-        <div class="m-stats">
-          <div><b>−50%</b><span>reporting time</span></div>
-          <div><b>€15M</b><span>weekly flows tracked</span></div>
-        </div>
-      </div>
-      <div class="mission reveal">
-        <div class="m-head"><h3>ISO certifications in healthcare logistics</h3><span class="m-ctx">arvato</span></div>
-        <p>Operational lead for ISO 9001 &amp; 13485 certification of a healthcare site, in parallel with managing 250 people.</p>
-        <div class="m-stats">
-          <div><b>6 months</b><span>to double certification</span></div>
-          <div><b>−18%</b><span>operating costs</span></div>
-        </div>
+      <div class="panel">
+        <div class="pnode">DATA</div>
+        <h3>Data</h3>
+        <p>SQL, Snowflake, lineage, quality. Anomaly investigation and mapping of what actually exists.</p>
+        <a class="plink" href="projects/datawarehouse-docs/">See the warehouse →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ STACK ═══════════ -->
-<section id="stack" style="padding-top:0">
+<section class="chapter" id="cases">
   <div class="wrap">
-    <div class="node-head reveal">
-      <div class="node-label">STACK</div>
-      <h2>Tools, by playing field</h2>
-      <p class="sub">Each bar shows the real usage context — not an abstract self-rating, but where the tool has been used in production.</p>
+    <div class="chapter-head reveal">
+      <div class="row"><span class="chapter-id">03</span><span class="node-label">Cases</span></div>
+      <h2 class="chapter-title">Eight case files, three levels of stakes</h2>
+      <p class="sub">Not all carry the same weight. The first four are the flagship cases: a full investigation, a root cause, a deliverable. The rest prove the range.</p>
     </div>
-    <div class="stack-grid">
-      <div class="stack-panel reveal">
-        <h3>Data &amp; BI</h3>
-        <div class="skill"><div class="s-head"><span>SQL</span><span class="ctx">daily, 5 years</span></div><div class="s-track"><div class="s-fill" data-width="96"></div></div></div>
-        <div class="skill"><div class="s-head"><span>Snowflake</span><span class="ctx">DWH, lineage, docs</span></div><div class="s-track"><div class="s-fill" data-width="84"></div></div></div>
-        <div class="skill"><div class="s-head"><span>MicroStrategy</span><span class="ctx">production reporting</span></div><div class="s-track"><div class="s-fill" data-width="85"></div></div></div>
-        <div class="skill"><div class="s-head"><span>Tableau / Power BI</span><span class="ctx">dashboards</span></div><div class="s-track"><div class="s-fill" data-width="68"></div></div></div>
-        <div class="skill"><div class="s-head"><span>Excel / VBA</span><span class="ctx">legacy takeover</span></div><div class="s-track"><div class="s-fill" data-width="72"></div></div></div>
+    <div class="dossier-index reveal">
+      <div class="dossier-row">
+        <div class="rid">CASE 01</div>
+        <div class="rmain"><h3><a href="projects/bug-investigation/">The KPI had been lying for months</a></h3>
+          <div class="rdesc">A false service KPI, published every week, with no alert firing. The trail leads to a backup table frozen in July 2022, where 83 to 85 % of rows silently fell back.</div>
+          <div class="tags"><span class="tag">SQL</span><span class="tag">Root cause</span><span class="tag">Data quality</span></div></div>
+        <div class="rtier"><span class="rk">Tier 1</span>Flagship</div>
       </div>
-      <div class="stack-panel reveal">
-        <h3>AI &amp; LLM</h3>
-        <div class="skill"><div class="s-head"><span>Claude API</span><span class="ctx">text-to-SQL, MCP POC</span></div><div class="s-track"><div class="s-fill" data-width="82"></div></div></div>
-        <div class="skill"><div class="s-head"><span>MCP / LLM agents</span><span class="ctx">DWH connector</span></div><div class="s-track"><div class="s-fill" data-width="74"></div></div></div>
-        <div class="skill"><div class="s-head"><span>Prompt engineering</span><span class="ctx">French business vocabulary</span></div><div class="s-track"><div class="s-fill" data-width="80"></div></div></div>
+      <div class="dossier-row">
+        <div class="rid">CASE 02</div>
+        <div class="rmain"><h3><a href="projects/make-platform/">159 flows. But how many reliable ones?</a></h3>
+          <div class="rdesc">An API migration silently broke thousands of executions. The work: turn an opaque failure queue into 27,625 € of quantified risk and a prioritised recovery plan.</div>
+          <div class="tags"><span class="tag">Make</span><span class="tag">API</span><span class="tag">Production</span></div></div>
+        <div class="rtier"><span class="rk">Tier 1</span>Flagship</div>
       </div>
-      <div class="stack-panel reveal">
-        <h3>Automation &amp; integration</h3>
-        <div class="skill"><div class="s-head"><span>Python / pandas</span><span class="ctx">pipelines, analyses</span></div><div class="s-track"><div class="s-fill" data-width="80"></div></div></div>
-        <div class="skill"><div class="s-head"><span>Make</span><span class="ctx">159 scenarios in production</span></div><div class="s-track"><div class="s-fill" data-width="92"></div></div></div>
-        <div class="skill"><div class="s-head"><span>REST APIs / webhooks</span><span class="ctx">cross-system integrations</span></div><div class="s-track"><div class="s-fill" data-width="78"></div></div></div>
-        <div class="skill"><div class="s-head"><span>Notion API</span><span class="ctx">internal tooling</span></div><div class="s-track"><div class="s-fill" data-width="62"></div></div></div>
+      <div class="dossier-row">
+        <div class="rid">CASE 03</div>
+        <div class="rmain"><h3><a href="projects/datawarehouse-docs/">Before the agent, the warehouse</a></h3>
+          <div class="rdesc">The docs listed 4 schemas; exploration found 24. The lineage of 65 views, rebuilt by hand, becomes the context that stops an LLM from hallucinating tables. Two projects, one story.</div>
+          <div class="tags"><span class="tag">Snowflake</span><span class="tag">Lineage</span><span class="tag">MCP</span></div></div>
+        <div class="rtier"><span class="rk">Tier 1</span>Flagship</div>
       </div>
-      <div class="stack-panel reveal">
-        <h3>ERP, master data &amp; languages</h3>
-        <div class="skill"><div class="s-head"><span>SAP ERP</span><span class="ctx">flows, inventory</span></div><div class="s-track"><div class="s-fill" data-width="70"></div></div></div>
-        <div class="skill"><div class="s-head"><span>PIM / MDM / data hub</span><span class="ctx">master data audit</span></div><div class="s-track"><div class="s-fill" data-width="66"></div></div></div>
-        <div class="skill"><div class="s-head"><span>English</span><span class="ctx">C1, TOEIC 905/990</span></div><div class="s-track"><div class="s-fill" data-width="90"></div></div></div>
-        <div class="skill"><div class="s-head"><span>Spanish</span><span class="ctx">C1</span></div><div class="s-track"><div class="s-fill" data-width="85"></div></div></div>
+      <div class="dossier-row">
+        <div class="rid">CASE 04</div>
+        <div class="rmain"><h3><a href="projects/supplychaingpt/">From plain English to SQL, with guardrails</a></h3>
+          <div class="rdesc">An assistant that turns a business question into a validated query, runs it read-only and always shows the SQL. Not a chatbot: a product, with validation, regression tests and defence in depth.</div>
+          <div class="tags"><span class="tag">Claude API</span><span class="tag">text-to-SQL</span><span class="tag">Guardrails</span></div></div>
+        <div class="rtier"><span class="rk">Tier 1</span>Flagship</div>
+      </div>
+    </div>
+
+    <div class="convert reveal">
+      <p>These four cases answer one question: real problem, or demo?</p>
+      <a class="btn ghost" href="projects/">See the full index →</a>
+    </div>
+
+    <div class="chapter-head reveal" style="margin-top:var(--s-9)">
+      <div class="row"><span class="node-label">Supporting cases</span></div>
+      <p class="sub">Two tools you can run in the browser, one automation with immediate ROI, and the index of missions.</p>
+    </div>
+    <div class="dossier-index reveal">
+      <div class="dossier-row">
+        <div class="rid">CASE 05</div>
+        <div class="rmain"><h3><a href="projects/dataviz/">Two readings of the same data</a></h3>
+          <div class="rdesc">A C-level view and an operations view on the same numbers. A switch makes the contrast obvious. Interactive demo in the browser.</div>
+          <div class="tags"><span class="tag">Dataviz</span><span class="tag">Live demo</span></div></div>
+        <div class="rtier"><span class="rk">Tier 2</span>Live demo</div>
+      </div>
+      <div class="dossier-row">
+        <div class="rid">CASE 06</div>
+        <div class="rmain"><h3><a href="projects/sales-forecast/">One click, one forecast</a></h3>
+          <div class="rdesc">Triple exponential smoothing, auto-tuned, no exposed parameters. Load a CSV, it is parsed locally, nothing leaves the browser. The difference between a demo and a tool.</div>
+          <div class="tags"><span class="tag">Holt-Winters</span><span class="tag">Live tool</span></div></div>
+        <div class="rtier"><span class="rk">Tier 2</span>Live tool</div>
+      </div>
+      <div class="dossier-row">
+        <div class="rid">CASE 07</div>
+        <div class="rmain"><h3><a href="projects/kpi-newsletter/">The weekly chore, cut to 15 minutes</a></h3>
+          <div class="rdesc">9 BI sources aggregated, formatted and sent to 50+ recipients. 4 h of production down to 15 min. The textbook case of automation with immediate ROI.</div>
+          <div class="tags"><span class="tag">Python</span><span class="tag">MicroStrategy</span></div></div>
+        <div class="rtier"><span class="rk">Tier 3</span>Automation</div>
+      </div>
+      <div class="dossier-row">
+        <div class="rid">IDX</div>
+        <div class="rmain"><h3><a href="projects/">Additional missions</a></h3>
+          <div class="rdesc">Cross-audit of the product master data (29,413 rows, 88 desyncs), service-level investigation on key accounts, ISO certifications in healthcare logistics. The index holds the rest of the field.</div></div>
+        <div class="rtier"><span class="rk">Index</span>The rest</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════ FOOTER ═══════════ -->
-<footer id="contact">
+<section class="chapter" id="method">
   <div class="wrap">
-    <div class="foot-row reveal">
-      <div>
-        <div class="node-label">CONTACT</div>
-        <div style="font-family:var(--mono); margin-top:8px; font-size:.85rem; color:var(--graphite)">Supply Chain &amp; Data Business Analyst</div>
+    <div class="chapter-head reveal">
+      <div class="row"><span class="chapter-id">04</span><span class="node-label">Method</span></div>
+      <h2 class="chapter-title">Seven steps, always in this order</h2>
+      <p class="sub">I do not start with the technology. I start with the problem, then with the data that contradicts it. This sequence links every case above.</p>
+    </div>
+    <div class="method reveal">
+      <div class="step"><div class="sn">01</div><h3>Observe</h3><p>See the flow run. The floor before the dashboard.</p></div>
+      <div class="step"><div class="sn">02</div><h3>Question</h3><p>A number that contradicts the field deserves an inquiry.</p></div>
+      <div class="step"><div class="sn">03</div><h3>Trace</h3><p>Walk the calculation chain, node by node.</p></div>
+      <div class="step"><div class="sn">04</div><h3>Model</h3><p>Understand the system before trying to change it.</p></div>
+      <div class="step"><div class="sn">05</div><h3>Build</h3><p>The most sober fix that actually solves the problem.</p></div>
+      <div class="step"><div class="sn">06</div><h3>Measure</h3><p>Quantify the impact, even when it is uncomfortable.</p></div>
+      <div class="step"><div class="sn">07</div><h3>Adopt</h3><p>Document so the system outlives me.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="beliefs">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="chapter-id">05</span><span class="node-label">Beliefs</span></div>
+      <h2 class="chapter-title">Five things I hold to be true</h2>
+    </div>
+    <div class="beliefs">
+      <div class="belief reveal"><div class="bn">01</div><div class="btext">Bad data is not a technical detail.
+        <span class="gloss">A false, reassuring metric costs more than a true, uncomfortable one. A system's silence is often the real bug.</span></div></div>
+      <div class="belief reveal"><div class="bn">02</div><div class="btext">Automating a bad process only speeds up the problem.
+        <span class="gloss">159 automations does not mean 159 reliable ones. The question is not how many, but which ones hold in production.</span></div></div>
+      <div class="belief reveal"><div class="bn">03</div><div class="btext">A dashboard is not a product.
+        <span class="gloss">Designing a dashboard is an audience decision before it is a chart decision. The single dashboard "for everyone" is the classic mistake.</span></div></div>
+      <div class="belief reveal"><div class="bn">04</div><div class="btext">Documentation is infrastructure.
+        <span class="gloss">A system only I understand is a failure, not an achievement. Written once, a good map serves humans and models alike.</span></div></div>
+      <div class="belief reveal"><div class="bn">05</div><div class="btext">A useful prototype beats a perfect backlog never shipped.
+        <span class="gloss">AI does not replace business judgment; it augments it, provided you set guardrails, evaluate, and keep a human in the loop.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter" id="capabilities">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="chapter-id">06</span><span class="node-label">Capabilities & career</span></div>
+      <h2 class="chapter-title">Five grounds, one trajectory</h2>
+      <p class="sub">No percentage bars. What matters is where the tool served in production.</p>
+    </div>
+    <div class="capabilities reveal">
+      <div class="cap"><h3>Data</h3><ul>
+        <li><b>SQL, Snowflake</b>daily, 5 years</li>
+        <li><b>Lineage, quality</b>investigation, reverse-engineering</li>
+        <li><b>MicroStrategy, Tableau, Power BI</b>reporting in production</li></ul></div>
+      <div class="cap"><h3>Automation</h3><ul>
+        <li><b>Python, pandas</b>pipelines, analysis</li>
+        <li><b>Make</b>159 scenarios in prod</li>
+        <li><b>REST APIs, webhooks</b>cross-system integration, monitoring</li></ul></div>
+      <div class="cap"><h3>Product</h3><ul>
+        <li><b>Discovery, scoping</b>from need to deliverable</li>
+        <li><b>Prioritisation</b>by business impact</li>
+        <li><b>Adoption</b>documentation, handover</li></ul></div>
+      <div class="cap"><h3>AI</h3><ul>
+        <li><b>LLM, RAG, MCP</b>text-to-SQL, agent over a DWH</li>
+        <li><b>Prototyping</b>Claude API</li>
+        <li><b>Evaluation, guardrails</b>tests, read-only, human-in-the-loop</li></ul></div>
+      <div class="cap"><h3>Supply Chain</h3><ul>
+        <li><b>Planning, MRP, DDMRP</b>home ground</li>
+        <li><b>Stock, performance</b>SLOB, service level</li>
+        <li><b>SAP ERP</b>flows, master data</li></ul></div>
+    </div>
+    <div class="timeline reveal">
+      <div class="xp">
+        <div class="when">Oct 2025 — present<span class="org">Franprix, Casino Group</span></div>
+        <div class="body"><div class="role">Senior Business Analyst, Supply Chain Performance</div>
+          <p>Hardening and tooling of the supply data chain: reporting automation, Make fleet administration, Snowflake warehouse documentation, LLM integration (MCP PoC, text-to-SQL) and critical anomaly investigations.</p>
+          <div class="deltas"><span><b>−94 %</b> weekly report</span><span><b>37.8 M€</b> inventory analysed</span><span><b>159</b> scenarios</span></div></div>
       </div>
-      <div class="foot-links">
-        <a href="projects/">Projects</a>
-        <a href="news/">News</a>
-        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <div class="xp">
+        <div class="when">Oct 2024 — Oct 2025<span class="org">Samsung Electronics</span></div>
+        <div class="body"><div class="role">Supply Chain Analyst</div>
+          <p>Steering roughly 15 M€ of weekly flows, coordinating European teams and the Korean HQ. Python and VBA dashboards, supply KPI optimisation on SAP ERP.</p>
+          <div class="deltas"><span><b>−20 %</b> stock gaps</span><span><b>−50 %</b> reporting time</span></div></div>
+      </div>
+      <div class="xp">
+        <div class="when">Sep 2023 — Sep 2024<span class="org">Oplit, SaaS vendor</span></div>
+        <div class="body"><div class="role">MOA Project Manager, production planning rollout</div>
+          <p>Deployment of a production planning solution at 12 strategic clients (aerospace, defence, luxury, steel), with cross-company API integrations.</p>
+          <div class="deltas"><span><b>12</b> clients</span><span><b>−15 %</b> process cost</span><span><b>−25 %</b> lead time</span></div></div>
+      </div>
+      <div class="xp">
+        <div class="when">2020 — 2023<span class="org">Arvato, Healthcare BU</span></div>
+        <div class="body"><div class="role">Deputy COO, healthcare logistics</div>
+          <p>Managed 250 staff, ISO 9001 and 13485 certifications obtained in 6 months, Power BI reporting industrialised, inventory drones, conveyor flow optimisation.</p>
+          <div class="deltas"><span><b>250</b> staff</span><span><b>−18 %</b> costs</span><span><b>+12 %</b> conveyor throughput</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="position" id="position">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="node-label">07 / Position</span>
+      <h2>Something broken?<br><span class="sig">Let's find out why.</span></h2>
+      <p class="prose big" style="max-width:56ch">I respond to a concrete problem faster than to a job description. If yours looks like a system that says all is well while the data says otherwise, we should talk.</p>
+      <div class="avail">
+        <span class="a">Data Product</span><span class="a">AI Product</span><span class="a">Supply Chain Transformation</span><span class="a">Business Analysis</span><span class="a">Data & Operations</span>
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="btn ghost" href="mailto:adrien.tripon@gmail.com">Email</a>
+        <a class="btn ghost" href="../assets/CV-Adrien-Tripon.pdf" target="_blank" rel="noopener noreferrer">Download CV</a>
+        <a class="btn ghost" href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="row">
+      <div><a class="brand" href="./">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks">
+        <a href="#cases">Cases</a><a href="projects/">Index</a><a href="news/">News</a>
         <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
       </div>
     </div>
-    <div class="foot-note">static site, no tracking, figures aggregated and anonymised, 2026</div>
+    <div class="note">Static site, no tracking. Figures aggregated and anonymised. Paris, 2026.</div>
   </div>
 </footer>
 

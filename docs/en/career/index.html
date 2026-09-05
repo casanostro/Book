@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career | Adrien Tripon, from the warehouse floor to applied AI</title>
+<meta name="description" content="Adrien Tripon's career, told mission by mission: Franprix, Samsung, Oplit, Arvato. What a CV cannot say: the context, what was found, what was done, the result.">
+<link rel="canonical" href="https://casanostro.github.io/Book/en/career/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/parcours/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/career/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/parcours/">
+<link rel="stylesheet" href="../../assets/site.css">
+<script src="../../assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#intro">Skip to content</a>
+<div class="readbar" aria-hidden="true"></div>
+
+<header class="site">
+  <div class="wrap">
+    <nav aria-label="Primary">
+      <a class="brand" href="../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../#cases">Cases</a>
+        <a href="../projects/">Index</a>
+        <a href="./" aria-current="page">Career</a>
+        <a href="../#method">Method</a>
+        <a href="../#position">Contact</a>
+      </div>
+      <a class="lang-toggle" data-lang="fr" href="../../parcours/" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Contents">
+  <a href="#franprix"><span class="toc-label">Franprix</span></a>
+  <a href="#samsung"><span class="toc-label">Samsung</span></a>
+  <a href="#oplit"><span class="toc-label">Oplit</span></a>
+  <a href="#arvato"><span class="toc-label">Arvato</span></a>
+  <a href="#education"><span class="toc-label">Education</span></a>
+</nav>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../">home</a><span class="sep">/</span>career</div>
+  <div class="page-head reveal" id="intro">
+    <div class="toprow" style="margin-bottom:16px"><span class="chapter-id sig">CAREER</span></div>
+    <h1>What a CV doesn't tell</h1>
+    <p class="lead">A CV lists roles; it doesn't say what happened inside them. I started on a warehouse floor, not behind a dashboard. Each role added a layer, operations, ERP, BI, automation, data, AI, but the logic never changed: understand the field first, tool it second. Here are the four missions that count, told in full.</p>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══════════ FRANPRIX ═══════════ -->
+<section class="chapter" id="franprix" style="padding-top:var(--s-7)">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="mission-head"><span class="yr">Oct 2025 → present</span><span class="org">Franprix · Casino Group · food retail</span></div>
+      <h2 class="chapter-title">The system said everything was fine</h2>
+    </div>
+    <div class="meta reveal">
+      <div>Role<b>Senior Business Analyst, Supply Chain Performance</b></div>
+      <div>Field<b>Supply data chain</b></div>
+      <div>Stack<b>Snowflake, Make, Python, LLM</b></div>
+    </div>
+    <div class="prose read reveal">
+      <p class="big">I joined a data chain that was already running. Reporting in place, a Snowflake warehouse, a fleet of automations in production. My role fit in two words: harden and tool. The real work started when I looked under the hood.</p>
+
+      <h3 class="beat">What I found</h3>
+      <p>The warehouse documentation listed 4 schemas. There were 24. The fleet held 159 automations, but nobody measured how many actually held in production. And indicators went out in weekly reporting with nothing verifying they were correct. The common thread across all three: a system that displays calm while the data says otherwise.</p>
+
+      <h3 class="beat">What I did</h3>
+      <p>I mapped the warehouse from scratch, 24 schemas and the lineage of about 65 views rebuilt by hand, into a reference that became the source of truth for the chain. I diagnosed the automation fleet after an API migration: 5,376 failed executions listed one by one, then 27,625 € of financial risk traced line by line and prioritised. I traced a false service indicator to its root cause, a backup table frozen since July 2022 where 83 to 85 % of rows silently fell back. I industrialised a steering newsletter, cut from 4 hours to 15 minutes per edition. And I analysed 37.8 M€ of inventory through the SLOB method.</p>
+      <p>Only once that base was hardened did I wire AI onto it: an MCP PoC and a text-to-SQL assistant, with read-only access, validation and guardrails. The hand-built reference became the context that stops the model from inventing tables.</p>
+
+      <div class="fieldnote">Before wiring an LLM to the warehouse, I had to know what the warehouse actually held. AI didn't fix the system; it came after.
+        <cite>What I take from it</cite>
+      </div>
+
+      <h3 class="beat">The result</h3>
+      <div class="deltas"><span><b>−94 %</b> weekly reporting time</span><span><b>37.8 M€</b> inventory analysed</span><span><b>159</b> scenarios administered</span><span><b>27,625 €</b> of risk traced</span></div>
+      <p style="margin-top:var(--s-5)">Each investigation is detailed in the case files. <a href="../#cases">See the cases →</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SAMSUNG ═══════════ -->
+<section class="chapter" id="samsung" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="mission-head"><span class="yr">Oct 2024 → Oct 2025</span><span class="org">Samsung Electronics · consumer electronics</span></div>
+      <h2 class="chapter-title">15 million euros a week, reporting by hand</h2>
+    </div>
+    <div class="meta reveal">
+      <div>Role<b>Supply Chain Analyst</b></div>
+      <div>Scope<b>~15 M€ weekly flows</b></div>
+      <div>Stack<b>SAP ERP, Python, VBA</b></div>
+    </div>
+    <div class="prose read reveal">
+      <p class="big">Steering roughly 15 million euros of flows a week, between the European teams and the Korean HQ. At that scale, a measurement error is not recovered; it propagates.</p>
+
+      <h3 class="beat">What I found</h3>
+      <p>A time-consuming supply report, produced largely by hand, and KPIs whose reliability depended on whoever compiled them. Stock discrepancies that cost money without a clear source.</p>
+
+      <h3 class="beat">What I did</h3>
+      <p>I replaced manual work with Python and VBA dashboards, and hardened the supply KPIs on SAP ERP. The work was not only technical: coordinating Europe and Korea means making data a common language when the context is not.</p>
+
+      <div class="fieldnote">A number shared across two continents must mean the same thing on both sides. That is as much a definition problem as a calculation one.
+        <cite>What I take from it</cite>
+      </div>
+
+      <h3 class="beat">The result</h3>
+      <div class="deltas"><span><b>−20 %</b> stock discrepancies</span><span><b>−50 %</b> reporting time</span><span><b>~15 M€</b> weekly flows piloted</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ OPLIT ═══════════ -->
+<section class="chapter" id="oplit" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="mission-head"><span class="yr">Sep 2023 → Sep 2024</span><span class="org">Oplit · SaaS vendor · industry</span></div>
+      <h2 class="chapter-title">Twelve clients, four industries, one product</h2>
+    </div>
+    <div class="meta reveal">
+      <div>Role<b>MOA Project Manager, production planning</b></div>
+      <div>Scope<b>12 strategic clients</b></div>
+      <div>Sectors<b>Aerospace, defence, luxury, steel</b></div>
+    </div>
+    <div class="prose read reveal">
+      <p class="big">Deploying a production planning solution at twelve clients that share nothing: aerospace, defence, luxury, steel. The product was the same. The constraints, never.</p>
+
+      <h3 class="beat">What I did</h3>
+      <p>My MOA role was a translation role: turn a business need into product configuration without betraying either. I wrote the specifications per industry, ran the cross-company API integrations, and made sure each deployment matched the client's reality rather than the product brochure.</p>
+      <p>This is where my work started shifting towards product: understanding that the same tool does not deploy the same way depending on the ground, and that value lives in that gap. That product dimension is one I am still building; this role was its concrete starting point.</p>
+
+      <div class="fieldnote">The same product does not solve the same problem across industries. The MOA job is holding both ends without lying to anyone.
+        <cite>What I take from it</cite>
+      </div>
+
+      <h3 class="beat">The result</h3>
+      <div class="deltas"><span><b>12</b> clients deployed</span><span><b>−15 %</b> process cost</span><span><b>−25 %</b> lead time</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ARVATO ═══════════ -->
+<section class="chapter" id="arvato" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="mission-head"><span class="yr">2020 → 2023</span><span class="org">Arvato · Healthcare BU · health logistics</span></div>
+      <h2 class="chapter-title">The field before the dashboards</h2>
+    </div>
+    <div class="meta reveal">
+      <div>Role<b>Deputy COO</b></div>
+      <div>Team<b>250 staff</b></div>
+      <div>Stakes<b>ISO, reporting, flows</b></div>
+    </div>
+    <div class="prose read reveal">
+      <p class="big">250 staff, a healthcare logistics site, and the warehouse floor underfoot. This is where my way of working was forged: I don't model a flow I haven't seen run.</p>
+
+      <h3 class="beat">What I did</h3>
+      <p>I steered the ISO 9001 and 13485 certifications in 6 months, under strong time pressure. I industrialised reporting on Power BI, my first large automation of a manual report, and optimised conveyor flows. I also led an autonomous inventory-drone project, my first concrete contact with AI applied to operations, well before LLMs.</p>
+
+      <div class="fieldnote">Everything I do in data today comes from here: the conviction that technology is worthless if it doesn't fit a real flow that someone lives every day.
+        <cite>What I take from it</cite>
+      </div>
+
+      <h3 class="beat">The result</h3>
+      <div class="deltas"><span><b>6 months</b> for the dual ISO certification</span><span><b>−70 %</b> reporting time</span><span><b>−18 %</b> operational costs</span><span><b>+12 %</b> conveyor throughput</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ EDUCATION ═══════════ -->
+<section class="chapter" id="education" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label sig">Education & languages</span></div>
+      <h2 class="chapter-title">The foundation</h2>
+    </div>
+    <div class="prose read reveal">
+      <p><b>Master's in Supply Chain, PPA Paris (2022-2024).</b> Specialised in logistics process optimisation, complemented by Data Analytics training (Power BI, SQL) that served as a bridge into data. Thesis: "Towards an industrial renaissance: challenges and solutions for French industry in a multipolar world".</p>
+      <p><b>Languages.</b> French, native. English, fluent, C1 level, TOEIC 905/990, used daily in international settings. Spanish, C1 level.</p>
+    </div>
+    <div class="convert reveal">
+      <p>A concrete problem rather than a job description; that's the best place to start.</p>
+      <a class="btn primary" href="../#position">Get in touch →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="row">
+      <div><a class="brand" href="../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks">
+        <a href="../">Home</a><a href="../projects/">Cases</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+    <div class="note">Static site, no tracking. Figures aggregated and anonymised. Paris, 2026.</div>
+  </div>
+</footer>
+
+</body>
+</html>

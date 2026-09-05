@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parcours | Adrien Tripon, du terrain logistique à l'IA appliquée</title>
+<meta name="description" content="Le parcours d'Adrien Tripon, raconté mission par mission : Franprix, Samsung, Oplit, Arvato. Ce qu'un CV ne dit pas : le contexte, ce qui a été trouvé, ce qui a été fait, le résultat.">
+<link rel="canonical" href="https://casanostro.github.io/Book/parcours/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/parcours/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/career/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/parcours/">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#intro">Aller au contenu</a>
+<div class="readbar" aria-hidden="true"></div>
+
+<header class="site">
+  <div class="wrap">
+    <nav aria-label="Navigation principale">
+      <a class="brand" href="../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../#dossiers">Dossiers</a>
+        <a href="../projets/">Index</a>
+        <a href="./" aria-current="page">Parcours</a>
+        <a href="../#méthode">Méthode</a>
+        <a href="../#position">Contact</a>
+      </div>
+      <a class="lang-toggle" data-lang="en" href="../en/career/" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
+    </nav>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sommaire">
+  <a href="#franprix"><span class="toc-label">Franprix</span></a>
+  <a href="#samsung"><span class="toc-label">Samsung</span></a>
+  <a href="#oplit"><span class="toc-label">Oplit</span></a>
+  <a href="#arvato"><span class="toc-label">Arvato</span></a>
+  <a href="#formation"><span class="toc-label">Formation</span></a>
+</nav>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../">accueil</a><span class="sep">/</span>parcours</div>
+  <div class="page-head reveal" id="intro">
+    <div class="toprow" style="margin-bottom:16px"><span class="chapter-id sig">PARCOURS</span></div>
+    <h1>Ce qu'un CV ne raconte pas</h1>
+    <p class="lead">Un CV liste des postes ; il ne dit pas ce qui s'est passé à l'intérieur. J'ai commencé sur un quai d'entrepôt, pas derrière un dashboard. Chaque poste a ajouté une couche, les opérations, l'ERP, la BI, l'automatisation, la donnée, l'IA, mais la logique n'a pas changé : comprendre le terrain d'abord, outiller ensuite. Voici les quatre missions qui comptent, racontées.</p>
+  </div>
+</div>
+
+<main>
+
+<!-- ═══════════ FRANPRIX ═══════════ -->
+<section class="chapter" id="franprix" style="padding-top:var(--s-7)">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="mission-head"><span class="yr">oct. 2025 → présent</span><span class="org">Franprix · Groupe Casino · retail alimentaire</span></div>
+      <h2 class="chapter-title">Le système disait que tout allait bien</h2>
+    </div>
+    <div class="meta reveal">
+      <div>Poste<b>Senior Business Analyst, Supply Chain Performance</b></div>
+      <div>Terrain<b>Chaîne data supply</b></div>
+      <div>Stack<b>Snowflake, Make, Python, LLM</b></div>
+    </div>
+    <div class="prose read reveal">
+      <p class="big">Je suis arrivé dans une chaîne data qui tournait. Reporting en place, entrepôt Snowflake, un parc d'automatisations en production. Mon poste tenait en deux mots : fiabiliser et outiller. Le vrai travail a commencé quand j'ai regardé sous le capot.</p>
+
+      <h3 class="beat">Ce que j'ai trouvé</h3>
+      <p>La documentation de l'entrepôt mentionnait 4 schémas. Il y en avait 24. Le parc comptait 159 automatisations, mais personne ne mesurait combien tenaient réellement en production. Et des indicateurs partaient chaque semaine en reporting sans que rien ne vérifie qu'ils étaient justes. Le point commun de ces trois constats : un système qui affiche la sérénité pendant que la donnée dit autre chose.</p>
+
+      <h3 class="beat">Ce que j'ai fait</h3>
+      <p>J'ai cartographié l'entrepôt de zéro, 24 schémas et le lineage d'environ 65 vues reconstruit à la main, jusqu'à en faire un référentiel qui est devenu la source de vérité de la chaîne. J'ai diagnostiqué le parc d'automatisations après une migration d'API : 5 376 exécutions en échec recensées une par une, puis 27 625 € de risque financier tracés ligne à ligne et priorisés. J'ai remonté un indicateur de service faux jusqu'à sa cause racine, une table de secours gelée depuis juillet 2022 sur laquelle 83 à 85 % des lignes basculaient en silence. J'ai industrialisé une newsletter de pilotage passée de 4 heures à 15 minutes par édition. Et j'ai analysé 37,8 M€ de stock au prisme de la méthode SLOB.</p>
+      <p>Une fois ce socle fiabilisé, seulement à ce moment, j'ai branché l'IA dessus : un POC MCP et un assistant text-to-SQL, avec accès en lecture seule, validation et garde-fous. Le référentiel construit à la main est devenu le contexte qui empêche le modèle d'inventer des tables.</p>
+
+      <div class="fieldnote">Avant de brancher un LLM sur l'entrepôt, il fallait savoir ce que l'entrepôt contenait vraiment. L'IA n'a pas réparé le système ; elle est arrivée après.
+        <cite>Ce que j'en retiens</cite>
+      </div>
+
+      <h3 class="beat">Le résultat</h3>
+      <div class="deltas"><span><b>−94 %</b> temps de reporting hebdo</span><span><b>37,8 M€</b> stock analysé</span><span><b>159</b> scénarios administrés</span><span><b>27 625 €</b> de risque tracé</span></div>
+      <p style="margin-top:var(--s-5)">Le détail de chaque enquête est dans les dossiers. <a href="../#dossiers">Voir les dossiers →</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SAMSUNG ═══════════ -->
+<section class="chapter" id="samsung" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="mission-head"><span class="yr">oct. 2024 → oct. 2025</span><span class="org">Samsung Electronics · électronique grand public</span></div>
+      <h2 class="chapter-title">15 millions d'euros par semaine, un reporting à la main</h2>
+    </div>
+    <div class="meta reveal">
+      <div>Poste<b>Supply Chain Analyst</b></div>
+      <div>Périmètre<b>~15 M€ de flux hebdomadaires</b></div>
+      <div>Stack<b>SAP ERP, Python, VBA</b></div>
+    </div>
+    <div class="prose read reveal">
+      <p class="big">Piloter environ 15 millions d'euros de flux par semaine, entre les équipes européennes et le siège coréen. À cette échelle, une erreur de mesure ne se rattrape pas ; elle se propage.</p>
+
+      <h3 class="beat">Ce que j'ai trouvé</h3>
+      <p>Un reporting supply chronophage, produit en grande partie à la main, et des KPIs dont la fiabilité dépendait de la personne qui les compilait. Des écarts de stock qui coûtaient sans qu'on sache toujours d'où ils venaient.</p>
+
+      <h3 class="beat">Ce que j'ai fait</h3>
+      <p>J'ai remplacé les manipulations manuelles par des dashboards Python et VBA, et j'ai fiabilisé les KPIs supply sur SAP ERP. Le travail n'était pas que technique : coordonner l'Europe et la Corée, c'est faire de la donnée une langue commune quand le contexte, lui, ne l'est pas.</p>
+
+      <div class="fieldnote">Un chiffre partagé entre deux continents doit vouloir dire la même chose des deux côtés. C'est autant un travail de définition que de calcul.
+        <cite>Ce que j'en retiens</cite>
+      </div>
+
+      <h3 class="beat">Le résultat</h3>
+      <div class="deltas"><span><b>−20 %</b> d'écarts de stock</span><span><b>−50 %</b> temps de reporting</span><span><b>~15 M€</b> flux hebdo pilotés</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ OPLIT ═══════════ -->
+<section class="chapter" id="oplit" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="mission-head"><span class="yr">sept. 2023 → sept. 2024</span><span class="org">Oplit · éditeur SaaS · industrie</span></div>
+      <h2 class="chapter-title">Douze clients, quatre industries, un même produit</h2>
+    </div>
+    <div class="meta reveal">
+      <div>Poste<b>Chef de projet MOA, déploiement GPAO</b></div>
+      <div>Périmètre<b>12 clients stratégiques</b></div>
+      <div>Secteurs<b>Aéronautique, défense, luxe, sidérurgie</b></div>
+    </div>
+    <div class="prose read reveal">
+      <p class="big">Déployer une solution de planification de production chez douze clients qui ne se ressemblent pas : l'aéronautique, la défense, le luxe, la sidérurgie. Le produit était le même. Les contraintes, jamais.</p>
+
+      <h3 class="beat">Ce que j'ai fait</h3>
+      <p>Mon rôle de MOA était un rôle de traduction : transformer un besoin métier en paramétrage produit, sans trahir ni l'un ni l'autre. J'ai rédigé les cahiers des charges par industrie, mené les intégrations API inter-entreprises, et fait en sorte que chaque déploiement colle à la réalité du client plutôt qu'à la brochure du produit.</p>
+      <p>C'est là que mon travail a commencé à basculer vers le produit : comprendre qu'un même outil ne se déploie pas de la même façon selon le terrain, et que la valeur se joue dans cet écart. Cette dimension produit, je continue de la construire ; ce poste en a été le point de départ concret.</p>
+
+      <div class="fieldnote">Le même produit ne règle pas le même problème selon l'industrie. Le travail de MOA, c'est de tenir les deux bouts sans mentir à personne.
+        <cite>Ce que j'en retiens</cite>
+      </div>
+
+      <h3 class="beat">Le résultat</h3>
+      <div class="deltas"><span><b>12</b> clients déployés</span><span><b>−15 %</b> coûts process</span><span><b>−25 %</b> délais de traitement</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ARVATO ═══════════ -->
+<section class="chapter" id="arvato" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="mission-head"><span class="yr">2020 → 2023</span><span class="org">Arvato · BU Healthcare · logistique santé</span></div>
+      <h2 class="chapter-title">Le terrain avant les dashboards</h2>
+    </div>
+    <div class="meta reveal">
+      <div>Poste<b>COO adjoint</b></div>
+      <div>Équipe<b>250 collaborateurs</b></div>
+      <div>Enjeux<b>ISO, reporting, flux</b></div>
+    </div>
+    <div class="prose read reveal">
+      <p class="big">250 collaborateurs, un site de logistique santé, et le sol de l'entrepôt sous les pieds. C'est ici que s'est forgée ma manière de travailler : je ne modélise pas un flux que je n'ai pas vu fonctionner.</p>
+
+      <h3 class="beat">Ce que j'ai fait</h3>
+      <p>J'ai piloté l'obtention des certifications ISO 9001 et 13485 en 6 mois, sous contrainte de temps forte. J'ai industrialisé le reporting sous Power BI, ma première grande automatisation d'un reporting manuel, et optimisé les flux convoyeurs. J'ai aussi encadré un projet de drone d'inventaire autonome, mon premier contact concret avec l'IA appliquée aux opérations, bien avant les LLM.</p>
+
+      <div class="fieldnote">Tout ce que je fais aujourd'hui dans la donnée vient de là : la conviction que la technologie ne vaut rien si elle ne colle pas à un flux réel que quelqu'un vit au quotidien.
+        <cite>Ce que j'en retiens</cite>
+      </div>
+
+      <h3 class="beat">Le résultat</h3>
+      <div class="deltas"><span><b>6 mois</b> pour la double certification ISO</span><span><b>−70 %</b> temps de reporting</span><span><b>−18 %</b> coûts opérationnels</span><span><b>+12 %</b> débit convoyeurs</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FORMATION ═══════════ -->
+<section class="chapter" id="formation" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label sig">Formation & langues</span></div>
+      <h2 class="chapter-title">Le socle</h2>
+    </div>
+    <div class="prose read reveal">
+      <p><b>Master Supply Chain, PPA Paris (2022-2024).</b> Spécialisation en optimisation des processus logistiques, complétée par une formation en Data Analytics (Power BI, SQL) qui a servi de pont vers la donnée. Mémoire : « Vers une renaissance industrielle : enjeux et solutions pour l'industrie française dans un monde multipolaire ».</p>
+      <p><b>Langues.</b> Français, langue maternelle. Anglais courant, niveau C1, TOEIC 905/990, pratiqué au quotidien en environnement international. Espagnol, niveau C1.</p>
+    </div>
+    <div class="convert reveal">
+      <p>Un problème concret plutôt qu'une fiche de poste ; c'est le meilleur point de départ.</p>
+      <a class="btn primary" href="../#position">Me contacter →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="row">
+      <div><a class="brand" href="../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks">
+        <a href="../">Accueil</a><a href="../projets/">Dossiers</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+    <div class="note">Site statique, aucun tracking. Chiffres agrégés et anonymisés. Paris, 2026.</div>
+  </div>
+</footer>
+
+</body>
+</html>

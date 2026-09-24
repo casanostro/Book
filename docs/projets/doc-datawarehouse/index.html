@@ -49,7 +49,7 @@
     <div class="meta reveal">
       <div>Domaine<b>Data, IA appliquée</b></div>
       <div>Rôle<b>Reverse-engineering, doc</b></div>
-      <div>Stack<b>Snowflake, SQL, MCP</b></div>
+      <div>Stack<b>Snowflake, SQL, MCP, RAG</b></div>
       <div>Statut<b>Consommé par les équipes et le LLM</b></div>
     </div>
     <p class="lead reveal">La documentation existante mentionnait 4 schémas. L'exploration en a révélé 24. Avant de construire l'agent, il a fallu comprendre l'entrepôt. Deux projets, une seule histoire.</p>
@@ -106,7 +106,7 @@
         <div class="inv-step reveal" data-status="Source de vérité" data-metric="314" data-metric-label="lignes de référentiel technique, 3 fichiers de référence">
           <div class="st-id">04 · Le référentiel</div>
           <h3>Un actif, pas une corvée</h3>
-          <p>Un référentiel technique de 314 lignes, devenu la source de vérité de la chaîne data. Il casse la dépendance aux savoirs individuels : la carte survit à celui qui l'a dessinée.</p>
+          <p>Un référentiel technique de 314 lignes, devenu la source de vérité de la chaîne data. Il casse la dépendance aux savoirs individuels : la carte survit à celui qui l'a dessinée. Les anomalies de nommage et les écarts de gouvernance relevés en chemin (produits détruits entre l'ODS de gestion commerciale et le DWH) sont remontés à l'équipe DWH.</p>
           <p class="deep">Écrit d'abord pour les humains, il s'est révélé être exactement ce dont un modèle a besoin pour interroger l'entrepôt sans inventer de tables.</p>
         </div>
       </div>
@@ -180,6 +180,7 @@
     </div>
     <div class="prose reveal">
       <p>Le prolongement direct : un connecteur MCP entre un LLM et Snowflake. Les équipes posent leurs questions en langage naturel, le modèle explore le schéma, génère la requête et répond avec ses sources. Accès en lecture seule, périmètre de schémas contrôlé.</p>
+      <p>La même documentation, packagée en base de connaissance LLM, est déployée sur la plateforme IA interne (Claude) pour les requêtes en langage naturel. Un prototype RAG (sentence-transformers, ChromaDB) l'étend au corpus documentaire Snowflake et Notion du pôle.</p>
       <p class="deep">Le référentiel construit en partie 1 n'est pas un document annexe : c'est le contexte structuré qui empêche le modèle d'halluciner des tables. Les 24 schémas et le lineage des vues sont exactement ce dont un LLM a besoin pour rester fiable sur un entrepôt réel. Du reverse-engineering au self-service, sans jamais donner au modèle plus que la lecture.</p>
       <div class="fieldnote">Un LLM branché sur un entrepôt qu'on n'a pas cartographié invente des réponses avec aplomb. Le garde-fou n'est pas dans le modèle ; il est dans le contexte qu'on lui donne.
         <cite>Leçon du dossier</cite>

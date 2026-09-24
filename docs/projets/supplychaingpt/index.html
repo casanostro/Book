@@ -49,7 +49,7 @@
     <div class="meta reveal">
       <div>Domaine<b>IA appliquée, produit</b></div>
       <div>Rôle<b>Conception, développement</b></div>
-      <div>Stack<b>Claude API, SQLite, Streamlit</b></div>
+      <div>Stack<b>Python, Claude API, SQLite, Streamlit</b></div>
       <div>Statut<b>Démonstrateur public</b></div>
     </div>
     <p class="lead reveal">Un assistant qui transforme une question métier en requête validée, l'exécute sur une base réaliste et restitue le résultat, le SQL généré et une visualisation. Ce n'est pas un chatbot. C'est un produit, avec ses garde-fous.</p>
@@ -73,7 +73,7 @@
         <div class="inv-step reveal" data-status="Question métier" data-metric="FR" data-metric-label="langage naturel, dans l'interface, sans SQL">
           <div class="st-id">01 · Entrée</div>
           <h3>Une question, en français</h3>
-          <p>« Quels fournisseurs ont le plus de ruptures ce mois ? » L'utilisateur métier n'écrit pas de SQL. Le contexte de schéma (6 tables, exemples de requêtes) est injecté dans le prompt.</p>
+          <p>« Quels fournisseurs ont le plus de ruptures ce mois ? » L'utilisateur métier n'écrit pas de SQL. Le contexte de schéma (6 tables) et des exemples few-shot en vocabulaire retail sont injectés dans le prompt.</p>
         </div>
         <div class="inv-step reveal" data-status="SQL généré" data-metric="1" data-metric-label="requête candidate produite par le modèle">
           <div class="st-id">02 · Génération</div>

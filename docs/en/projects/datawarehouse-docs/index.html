@@ -43,7 +43,7 @@
     <div class="meta reveal">
       <div>Domain<b>Data, applied AI</b></div>
       <div>Role<b>Reverse-engineering, docs</b></div>
-      <div>Stack<b>Snowflake, SQL, MCP</b></div>
+      <div>Stack<b>Snowflake, SQL, MCP, RAG</b></div>
       <div>Status<b>Used by teams and the LLM</b></div>
     </div>
     <p class="lead reveal">The existing docs listed 4 schemas. Exploration found 24. Before building the agent, I had to understand the warehouse. Two projects, one story.</p>
@@ -84,7 +84,7 @@
         </div>
         <div class="inv-step reveal" data-status="Source of truth" data-metric="314" data-metric-label="lines of technical reference, 3 reference files">
           <div class="st-id">04 · The reference</div><h3>An asset, not a chore</h3>
-          <p>A 314-line technical reference, now the source of truth of the data chain. It breaks the dependency on individual knowledge: the map outlives whoever drew it.</p>
+          <p>A 314-line technical reference, now the source of truth of the data chain. It breaks the dependency on individual knowledge: the map outlives whoever drew it. Naming anomalies and governance gaps found along the way (destroyed products between the commercial management ODS and the DWH) are escalated to the DWH team.</p>
           <p class="deep">Written first for humans, it turned out to be exactly what a model needs to query the warehouse without inventing tables.</p>
         </div>
       </div>
@@ -141,6 +141,7 @@
     <div class="chapter-head reveal"><div class="row"><span class="node-label sig">Part 2 · The agent</span></div><h2 class="chapter-title">Yesterday's map, today's AI guardrail</h2></div>
     <div class="prose reveal">
       <p>The direct extension: an MCP connector between an LLM and Snowflake. Teams ask questions in plain language, the model explores the schema, generates the query and answers with its sources. Read-only access, controlled schema scope.</p>
+      <p>The same documentation, packaged as an LLM knowledge base, is deployed on the internal AI platform (Claude) for plain-language queries. A RAG prototype (sentence-transformers, ChromaDB) extends it to the team's Snowflake and Notion document corpus.</p>
       <p class="deep">The reference built in part 1 is not a side document: it is the structured context that stops the model from hallucinating tables. The 24 schemas and the views' lineage are exactly what an LLM needs to stay reliable on a real warehouse. From reverse-engineering to self-service, never giving the model more than read access.</p>
       <div class="fieldnote">An LLM wired to a warehouse you haven't mapped invents answers with confidence. The guardrail is not in the model; it is in the context you give it.
         <cite>Lesson from the case</cite></div>

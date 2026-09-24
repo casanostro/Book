@@ -43,7 +43,7 @@
     <div class="meta reveal">
       <div>Domain<b>Applied AI, product</b></div>
       <div>Role<b>Design, development</b></div>
-      <div>Stack<b>Claude API, SQLite, Streamlit</b></div>
+      <div>Stack<b>Python, Claude API, SQLite, Streamlit</b></div>
       <div>Status<b>Public demonstrator</b></div>
     </div>
     <p class="lead reveal">An assistant that turns a business question into a validated query, runs it on a realistic database and returns the result, the generated SQL and a visualisation. This is not a chatbot. It is a product, with its guardrails.</p>
@@ -61,7 +61,7 @@
       <div class="steps">
         <div class="inv-step reveal" data-status="Business question" data-metric="EN" data-metric-label="natural language, in the interface, no SQL">
           <div class="st-id">01 · Input</div><h3>A question, in plain language</h3>
-          <p>"Which suppliers have the most stockouts this month?" The business user writes no SQL. The schema context (6 tables, sample queries) is injected into the prompt.</p>
+          <p>"Which suppliers have the most stockouts this month?" The business user writes no SQL. The schema context (6 tables) and few-shot examples in retail vocabulary are injected into the prompt.</p>
         </div>
         <div class="inv-step reveal" data-status="SQL generated" data-metric="1" data-metric-label="candidate query produced by the model">
           <div class="st-id">02 · Generation</div><h3>The LLM proposes, it does not dispose</h3>

@@ -190,12 +190,12 @@
 
     <div class="evidence reveal">
       <div class="cell">
-        <div class="n"><span class="count" data-target="37.8" data-decimals="1">37,8</span><span class="u"> M€</span></div>
-        <div class="l">de stock analysé, 14,3 % identifiés à risque SLOB</div>
+        <div class="n"><span class="count" data-target="30.8" data-decimals="1">30,8</span><span class="u"> M€</span></div>
+        <div class="l">de stock analysé ; risque SLOB ramené de 14,3 % à ~4 % après contre-épreuve comptable</div>
       </div>
       <div class="cell">
         <div class="n"><span class="count" data-target="128">128</span><span class="u"> k€</span></div>
-        <div class="l">de gestes commerciaux récupérés par réconciliation multi-systèmes</div>
+        <div class="l">de gestes commerciaux réconciliés sur quatre systèmes, dont 91 k€ jamais intégrés</div>
       </div>
       <div class="cell">
         <div class="n"><span class="count" data-target="246000" data-group="1">246 000</span></div>
@@ -290,7 +290,7 @@
     <!-- TIER 2 & 3 -->
     <div class="chapter-head reveal" style="margin-top:var(--s-9)">
       <div class="row"><span class="node-label">Dossiers d'appui</span></div>
-      <p class="sub">Deux outils jouables dans le navigateur, un cas d'automatisation à ROI immédiat, et l'index des missions.</p>
+      <p class="sub">Deux outils jouables dans le navigateur, un cas d'automatisation à ROI immédiat, quatre dossiers terrain (stock, avoirs, KPI, shadow IT) et l'index des missions.</p>
     </div>
     <div class="dossier-index reveal">
       <div class="dossier-row">
@@ -321,10 +321,46 @@
         <div class="rtier"><span class="rk">Tier 3</span>Automatisation</div>
       </div>
       <div class="dossier-row">
+        <div class="rid">CASE 08</div>
+        <div class="rmain">
+          <h3><a href="projets/stock-a-risque/">14 %, puis 4 % : le chiffre qui a survécu</a></h3>
+          <div class="rdesc">Stock à risque SLOB sur ~30 M€. La première mesure, confrontée à la comptabilité puis corrigée de l'inventaire, tombe de 14,3 % à environ 4 %. Le dossier explique pourquoi le second chiffre est le bon.</div>
+          <div class="tags"><span class="tag">SLOB</span><span class="tag">ABC</span><span class="tag">Finance</span></div>
+        </div>
+        <div class="rtier"><span class="rk">Tier 2</span>Stock</div>
+      </div>
+      <div class="dossier-row">
+        <div class="rid">CASE 09</div>
+        <div class="rmain">
+          <h3><a href="projets/reconciliation-avoirs/">Le flux tournait, les avoirs n'arrivaient pas</a></h3>
+          <div class="rdesc">Une migration coupe la transmission des avoirs validés, sans alerte. Quatre systèmes réconciliés : 128 k€ remis sous contrôle, dont 91 k€ jamais intégrés, et un statut « Pending » pour que ça ne se reproduise pas en silence.</div>
+          <div class="tags"><span class="tag">Réconciliation</span><span class="tag">Rattrapage</span></div>
+        </div>
+        <div class="rtier"><span class="rk">Tier 2</span>Finance</div>
+      </div>
+      <div class="dossier-row">
+        <div class="rid">CASE 10</div>
+        <div class="rmain">
+          <h3><a href="projets/fournisseur-invisible/">Le fournisseur qui avait disparu du rapport</a></h3>
+          <div class="rdesc">Le calcul du taux de service était juste ; sa définition rendait invisible un fournisseur qui ne livrait plus du tout. Angle mort remonté à la direction, anomalies de source mesurées avant d'être corrigées.</div>
+          <div class="tags"><span class="tag">KPI</span><span class="tag">SQL</span></div>
+        </div>
+        <div class="rtier"><span class="rk">Tier 2</span>Audit</div>
+      </div>
+      <div class="dossier-row">
+        <div class="rid">CASE 11</div>
+        <div class="rmain">
+          <h3><a href="projets/sortie-shadow-it/">Le processus critique tournait sur un POC</a></h3>
+          <div class="rdesc">Audit d'un suivi des ruptures monté en no-code, puis cahier des charges d'une plateforme groupe dont les commentaires historisés deviennent une donnée exploitable, jusqu'à l'IA.</div>
+          <div class="tags"><span class="tag">Produit</span><span class="tag">Gouvernance</span></div>
+        </div>
+        <div class="rtier"><span class="rk">Tier 3</span>Cadrage</div>
+      </div>
+      <div class="dossier-row">
         <div class="rid">IDX</div>
         <div class="rmain">
           <h3><a href="projets/">Missions complémentaires</a></h3>
-          <div class="rdesc">Biais de référentiel sur 246 000 produits, stock à risque SLOB, 128 k€ de gestes commerciaux récupérés, audit croisé du référentiel produit (29 413 lignes, 88 désynchronisations), formation de 35 personnes, certifications ISO en logistique santé. L'index rassemble le reste du terrain et les projets personnels.</div>
+          <div class="rdesc">Biais de référentiel sur 246 000 produits, audit croisé du référentiel produit (29 413 lignes, 88 désynchronisations), formation de 35 personnes, certifications ISO en logistique santé. L'index rassemble le reste du terrain et les projets personnels.</div>
         </div>
         <div class="rtier"><span class="rk">Index</span>Le reste</div>
       </div>
@@ -461,7 +497,7 @@
         <div class="body">
           <div class="role">Senior Business Analyst, Supply Chain Performance</div>
           <p>Fiabilisation et outillage de la chaîne data supply : modélisation du stock à risque SLOB validée par la DAF et l'Offre, détection d'un biais de référentiel sur 246 000 produits, réconciliation multi-systèmes, administration du parc Make, automatisation du reporting, documentation de l'entrepôt Snowflake devenue base de connaissance LLM (POC MCP, RAG), formation des équipes approvisionnement.</p>
-          <div class="deltas"><span><b>37,8 M€</b> stock analysé</span><span><b>128 k€</b> récupérés</span><span><b>−94 %</b> reporting hebdo</span><span><b>159</b> scénarios</span></div>
+          <div class="deltas"><span><b>30,8 M€</b> stock analysé</span><span><b>128 k€</b> récupérés</span><span><b>−94 %</b> reporting hebdo</span><span><b>159</b> scénarios</span></div>
         </div>
       </div>
       <div class="xp">

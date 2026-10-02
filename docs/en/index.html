@@ -170,8 +170,8 @@
       <p class="sub">Six years from the warehouse floor to the data warehouse. Food retail, consumer electronics, industrial SaaS, healthcare logistics. The figures below are raw, dated, reproducible.</p>
     </div>
     <div class="evidence reveal">
-      <div class="cell"><div class="n"><span class="count" data-target="37.8" data-decimals="1">37.8</span><span class="u"> M€</span></div><div class="l">of inventory analysed, 14.3 % flagged as SLOB risk</div></div>
-      <div class="cell"><div class="n"><span class="count" data-target="128">128</span><span class="u"> k€</span></div><div class="l">of commercial gestures recovered through multi-system reconciliation</div></div>
+      <div class="cell"><div class="n"><span class="count" data-target="30.8" data-decimals="1">30.8</span><span class="u"> M€</span></div><div class="l">of inventory analysed; SLOB risk brought from 14.3 % to ~4 % after an accounting cross-check</div></div>
+      <div class="cell"><div class="n"><span class="count" data-target="128">128</span><span class="u"> k€</span></div><div class="l">of commercial gestures reconciled across four systems, 91 k€ of which had never been posted</div></div>
       <div class="cell"><div class="n"><span class="count" data-target="246000" data-group="1">246,000</span></div><div class="l">products misclassified, service level overstated by 2.9 pts</div></div>
       <div class="cell"><div class="n">−<span class="count" data-target="94">94</span><span class="u"> %</span></div><div class="l">time on a weekly report, 4 h down to 15 min</div></div>
       <div class="cell"><div class="n"><span class="count" data-target="12">12</span></div><div class="l">industrial clients deployed on an MPS and scheduling SaaS</div></div>
@@ -231,7 +231,7 @@
 
     <div class="chapter-head reveal" style="margin-top:var(--s-9)">
       <div class="row"><span class="node-label">Supporting cases</span></div>
-      <p class="sub">Two tools you can run in the browser, one automation with immediate ROI, and the index of missions.</p>
+      <p class="sub">Two tools you can run in the browser, one automation with immediate ROI, four field cases (inventory, credit notes, KPI, shadow IT) and the index of missions.</p>
     </div>
     <div class="dossier-index reveal">
       <div class="dossier-row">
@@ -256,9 +256,37 @@
         <div class="rtier"><span class="rk">Tier 3</span>Automation</div>
       </div>
       <div class="dossier-row">
+        <div class="rid">CASE 08</div>
+        <div class="rmain"><h3><a href="projects/inventory-at-risk/">14 %, then 4 %: the number that survived</a></h3>
+          <div class="rdesc">SLOB inventory at risk on ~30 M€. The first measure, tested against accounting then corrected for inventory adjustments, falls from 14.3 % to about 4 %. The case explains why the second number is the right one.</div>
+          <div class="tags"><span class="tag">SLOB</span><span class="tag">ABC</span><span class="tag">Finance</span></div></div>
+        <div class="rtier"><span class="rk">Tier 2</span>Inventory</div>
+      </div>
+      <div class="dossier-row">
+        <div class="rid">CASE 09</div>
+        <div class="rmain"><h3><a href="projects/credit-note-reconciliation/">The flow was running, the credit notes never arrived</a></h3>
+          <div class="rdesc">A migration silently cuts the transmission of approved credit notes. Four systems reconciled: 128 k€ back under control, 91 k€ of which never posted, and a "Pending" status so it cannot happen silently again.</div>
+          <div class="tags"><span class="tag">Reconciliation</span><span class="tag">Recovery</span></div></div>
+        <div class="rtier"><span class="rk">Tier 2</span>Finance</div>
+      </div>
+      <div class="dossier-row">
+        <div class="rid">CASE 10</div>
+        <div class="rmain"><h3><a href="projects/invisible-supplier/">The supplier that vanished from the report</a></h3>
+          <div class="rdesc">The service-level calculation was right; its definition made a supplier that stopped delivering invisible. Blind spot escalated to management, source anomalies measured before being fixed.</div>
+          <div class="tags"><span class="tag">KPI</span><span class="tag">SQL</span></div></div>
+        <div class="rtier"><span class="rk">Tier 2</span>Audit</div>
+      </div>
+      <div class="dossier-row">
+        <div class="rid">CASE 11</div>
+        <div class="rmain"><h3><a href="projects/shadow-it-exit/">The critical process was running on a POC</a></h3>
+          <div class="rdesc">Audit of a no-code stock-out tracking stack, then the specification of a group platform whose stored comments become usable data, all the way to AI.</div>
+          <div class="tags"><span class="tag">Product</span><span class="tag">Governance</span></div></div>
+        <div class="rtier"><span class="rk">Tier 3</span>Scoping</div>
+      </div>
+      <div class="dossier-row">
         <div class="rid">IDX</div>
         <div class="rmain"><h3><a href="projects/">Additional missions</a></h3>
-          <div class="rdesc">Master-data bias on 246,000 products, SLOB inventory at risk, 128 k€ of commercial gestures recovered, cross-audit of the product master data (29,413 rows, 88 desyncs), 35 people trained, ISO certifications in healthcare logistics. The index holds the rest of the field and the personal projects.</div></div>
+          <div class="rdesc">Master-data bias on 246,000 products, cross-audit of the product master data (29,413 rows, 88 desyncs), 35 people trained, ISO certifications in healthcare logistics. The index holds the rest of the field and the personal projects.</div></div>
         <div class="rtier"><span class="rk">Index</span>The rest</div>
       </div>
     </div>
@@ -339,7 +367,7 @@
         <div class="when">Oct 2025 to Sep 2026<span class="org">Franprix, Casino Group</span></div>
         <div class="body"><div class="role">Senior Business Analyst, Supply Chain Performance</div>
           <p>Hardening and tooling of the supply data chain: SLOB inventory-at-risk model validated by Finance and Merchandising, detection of a master-data bias on 246,000 products, multi-system reconciliation, Make fleet administration, reporting automation, Snowflake warehouse documentation turned into an LLM knowledge base (MCP PoC, RAG), training of procurement teams.</p>
-          <div class="deltas"><span><b>37.8 M€</b> inventory analysed</span><span><b>128 k€</b> recovered</span><span><b>−94 %</b> weekly report</span><span><b>159</b> scenarios</span></div></div>
+          <div class="deltas"><span><b>30.8 M€</b> inventory analysed</span><span><b>128 k€</b> recovered</span><span><b>−94 %</b> weekly report</span><span><b>159</b> scenarios</span></div></div>
       </div>
       <div class="xp">
         <div class="when">Oct 2024 to Sep 2025<span class="org">Samsung Electronics</span></div>

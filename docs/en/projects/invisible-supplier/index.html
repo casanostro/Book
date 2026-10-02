@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CASE 10 | The supplier that vanished from the report | Adrien Tripon</title>
+<meta name="description" content="Audit of the upstream service-level calculation after a major supplier disappeared from reporting. A structural blind spot in the KPI definition, and three families of source anomalies, measured before being fixed.">
+<link rel="canonical" href="https://casanostro.github.io/Book/en/projects/invisible-supplier/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/projets/fournisseur-invisible/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/projects/invisible-supplier/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/projets/fournisseur-invisible/">
+<link rel="stylesheet" href="../../../assets/site.css">
+<script src="../../../assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#dossier">Skip to content</a>
+<div class="readbar" aria-hidden="true"></div>
+
+<header class="site">
+  <div class="wrap">
+    <nav aria-label="Primary">
+      <a class="brand" href="../../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../../#cases">Cases</a>
+        <a href="../">Index</a>
+        <a href="../../#method">Method</a>
+        <a href="../../#position">Contact</a>
+      </div>
+      <a class="lang-toggle" data-lang="fr" href="../../../projets/fournisseur-invisible/" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">cases</a><span class="sep">/</span>case 10</div>
+
+  <div class="dossier-head" id="dossier">
+    <div class="toprow reveal">
+      <span class="chapter-id sig">CASE 10</span>
+      <span class="stamp">Rule clarified</span>
+      <span class="stamp warn">Structural blind spot</span>
+    </div>
+    <h1 class="reveal">The supplier that vanished from the report</h1>
+    <div class="meta reveal">
+      <div>Domain<b>KPI, data quality</b></div>
+      <div>Role<b>Calculation-rule audit</b></div>
+      <div>Stack<b>SQL, Snowflake, MicroStrategy</b></div>
+      <div>Status<b>Change decided by management</b></div>
+    </div>
+    <p class="lead reveal">A major supplier vanished from the service-level report for two weeks. No number, no alert. The calculation was right. The definition had a hole.</p>
+    <div class="depth reveal" data-default="full" role="group" aria-label="Reading depth">
+      <button data-mode="synth" aria-pressed="false">Summary</button>
+      <button data-mode="full" aria-pressed="true">Full case</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CONTRADICTION ═══════════ -->
+<section class="chapter" style="padding-top:var(--s-6)">
+  <div class="wrap">
+    <div class="contradiction reveal">
+      <div class="side expected">
+        <div class="cl">Weeks with orders placed</div>
+        <div class="cn"><span class="count" data-target="2">2</span></div>
+      </div>
+      <div class="vs">major supplier · vs</div>
+      <div class="side actual">
+        <div class="cl">Weeks with a rate shown</div>
+        <div class="cn"><span class="count" data-target="0">0</span></div>
+      </div>
+    </div>
+    <p class="prose reveal" style="margin-top:var(--s-5)">A supplier that stops delivering entirely does not drag the indicator down: it drops out of it. The worst possible case was, by design, the only invisible one.</p>
+  </div>
+</section>
+
+<!-- ═══════════ INVESTIGATION + PANNEAU D'ÉTAT ═══════════ -->
+<section class="chapter" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label sig">Investigation</span></div>
+      <h2 class="chapter-title">From an absence to a hole in the definition</h2>
+    </div>
+
+    <div class="investigation">
+      <div class="steps">
+        <div class="inv-step reveal" data-status="Signal received" data-metric="2" data-metric-label="weeks with no row at all in the report for a major supplier">
+          <div class="st-id">01 · Symptom</div>
+          <h3>An absence, not a drop</h3>
+          <p>The upstream service-level report no longer shows a major supplier. The first reflex would have been to suspect a display bug. The second, more useful one: go back to the source and redo the calculation row by row, outside the BI tool.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Investigation" data-metric="RE · PR" data-metric-label="only received or pre-invoiced rows enter the calculation">
+          <div class="st-id">02 · Rule</div>
+          <h3>Reread the definition, not just the code</h3>
+          <p>Service level = quantity delivered / quantity ordered, computed only on received or pre-invoiced rows. Unreceived or destroyed rows leave both numerator and denominator. The rule matches the business definition, confirmed by supply management.</p>
+          <p class="deep">The calculation had no error. Fixing the code would have changed nothing. The question had to be raised at the definition level, so to management, not to the data team.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Blind spot located" data-metric="0" data-metric-label="rows left in the calculation when every order stays unreceived">
+          <div class="st-id">03 · Blind spot</div>
+          <h3>The worst case falls out of scope</h3>
+          <p>If all of a supplier's orders stay unreceived over a period, it has no eligible row left. It disappears from the report: no rate, no alert. Option chosen by management: include late orders in the denominator with zero delivered, to show 0 % rather than nothing.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Anomalies measured" data-metric="233" data-unit="%" data-metric-label="rate on a single row: 168 cases ordered, 504 delivered">
+          <div class="st-id">04 · Source</div>
+          <h3>Three families of source anomalies</h3>
+          <p>In parallel, three defects in the ERP → data warehouse chain: over-deliveries posted on the wrong row (29 rows in the week studied), orphan receipts with no order, duplicated rows with swapped quantities.</p>
+          <p class="deep">Flagging an anomaly without measuring its weight is raising an alert without knowing if it matters.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Impact quantified" data-metric="1.2" data-unit="pt" data-metric-label="maximum gap after capping, under 0.1 pt on the large warehouses">
+          <div class="st-id">05 · Impact</div>
+          <h3>Measure before fixing</h3>
+          <p>Recomputed with row-level capping, min(delivered, ordered), and orphan receipts excluded. Maximum gap of 1.2 points on a small flow, under 0.1 point on high-volume warehouses. The bugs exist but do not distort the aggregate; the blind spot, on the other hand, was hiding an entire supplier.</p>
+        </div>
+      </div>
+
+      <aside class="statuspanel" aria-hidden="true">
+        <div class="sp-head">Case status</div>
+        <div class="sp-body">
+          <div class="sp-status">Signal received</div>
+          <div class="sp-metric"><div class="n">2</div><div class="l">weeks with no row at all in the report for a major supplier</div></div>
+          <div class="sp-track"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TABLE DE CONSTAT ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap read">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Findings</span></div>
+      <h2 class="chapter-title">What skews the rate, and by how much</h2>
+      <p class="sub">Week studied, aggregated by warehouse. Supplier and warehouse names removed.</p>
+    </div>
+    <table class="ledger reveal">
+      <thead><tr><th>Anomaly</th><th>Mechanism</th><th>Effect</th><th>Measured weight</th></tr></thead>
+      <tbody>
+        <tr><td><b>Blind spot</b></td><td>unreceived orders excluded</td><td><span class="sig">invisible supplier</span></td><td>whole supplier</td></tr>
+        <tr><td>Over-delivery</td><td>receipt posted on another row</td><td>rate > 100 %</td><td>29 rows</td></tr>
+        <tr><td>Orphan receipt</td><td>delivered without order</td><td>inflated numerator</td><td>present</td></tr>
+        <tr><td>Duplicated row</td><td>swapped quantities</td><td>contradictory rows</td><td>present</td></tr>
+        <tr><td><b>Aggregate effect</b></td><td>after min(delivered, ordered)</td><td>—</td><td><b>≤ 1.2 pt</b></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ SCHÉMA ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Architecture</span></div>
+      <h2 class="chapter-title">From an empty report to the definition</h2>
+    </div>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 760 440" role="img" aria-label="Diagram: service-level report, order view, filter on received rows, supplier excluded from the calculation, source anomalies, revised definition">
+        <defs>
+          <marker id="s101" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#6a6357"/></marker>
+          <marker id="s102" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#a8641b"/></marker>
+        </defs>
+        <text class="d-tag" x="290" y="16">SYMPTOM</text>
+        <rect class="d-in" x="290" y="24" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="48">Service-level report</text>
+        <text class="d-sub" x="304" y="64">supplier missing 2 wks</text>
+        <path class="d-edge" d="M400 80 V136" marker-end="url(#s101)"/>
+        <path class="d-flow draw" d="M400 82 V130"/>
+        <text class="d-edge-label" x="410" y="112">recompute outside BI</text>
+        <rect class="d-box" x="290" y="136" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="160">Order view</text>
+        <text class="d-sub" x="304" y="176">1 row per order</text>
+        <path class="d-edge" d="M400 192 V248" marker-end="url(#s101)"/>
+        <path class="d-flow draw" d="M400 194 V242"/>
+        <text class="d-edge-label" x="410" y="224">calculation rule</text>
+        <rect class="d-box" x="290" y="248" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="272">Received filter</text>
+        <text class="d-sub" x="304" y="288">RE and PR only</text>
+        <path class="d-edge" d="M400 304 V360" marker-end="url(#s102)" style="stroke:#a8641b;stroke-opacity:.55"/>
+        <path class="d-flow draw" d="M400 306 V354" style="stroke:#a8641b"/>
+        <text class="d-edge-label" x="410" y="336" style="fill:#a8641b">all unreceived</text>
+        <text class="d-tag" x="290" y="352" style="fill:#a8641b">BLIND SPOT</text>
+        <rect class="d-guard" x="290" y="360" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="384">Supplier excluded</text>
+        <text class="d-sub" x="304" y="400">0 rows, 0 alerts</text>
+        <rect class="d-store" x="560" y="360" width="180" height="56" rx="2"/>
+        <text class="d-title" x="574" y="384">Source anomalies</text>
+        <text class="d-sub" x="574" y="400">over-delivery, orphan, dup</text>
+        <path class="d-edge" d="M560 388 H512" marker-end="url(#s101)" style="stroke-dasharray:3 4"/>
+        <text class="d-tag" x="20" y="352">DELIVERABLE</text>
+        <rect class="d-out" x="20" y="360" width="200" height="56" rx="2"/>
+        <text class="d-title-inv" x="34" y="384">Definition revised</text>
+        <text class="d-sub-inv" x="34" y="400">0 % rather than nothing</text>
+        <path class="d-edge" d="M290 388 H222" marker-end="url(#s101)"/>
+        <path class="d-flow draw" d="M288 388 H226"/>
+      </svg>
+      <div class="legend">
+        <span><span class="sw in"></span>input</span>
+        <span><span class="sw proc"></span>processing</span>
+        <span><span class="sw guard"></span>risk zone</span>
+        <span><span class="sw out"></span>deliverable</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LEÇON + LIEN ═══════════ -->
+<section class="chapter" style="padding-top:0">
+  <div class="wrap">
+    <div class="prose reveal">
+      <div class="fieldnote">An indicator that excludes what goes wrong cannot alert on what goes wrong. Before trusting a KPI, look at what it leaves out.
+        <cite>Lesson from the case</cite>
+      </div>
+    </div>
+    <div class="convert reveal">
+      <p>Same family of defect on the downstream service level: a fallback calculation that became the main road.</p>
+      <a class="btn ghost" href="../bug-investigation/">CASE 01 · The KPI was lying →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="row">
+      <div><a class="brand" href="../../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks">
+        <a href="../../">Home</a><a href="../">Cases</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+    <div class="note">Static site, no tracking. Figures aggregated and anonymised. Paris, 2026.</div>
+  </div>
+</footer>
+
+</body>
+</html>

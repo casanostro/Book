@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CASE 08 | 14 %, puis 4 % : le chiffre qui a survécu | Adrien Tripon</title>
+<meta name="description" content="Modélisation du stock à risque SLOB sur ~30 M€ de stock entrepôt. Une première mesure à 14,3 %, confrontée à la valorisation comptable et corrigée des régularisations d&#x27;inventaire, ramenée à environ 4 %. Le dossier raconte pourquoi le second chiffre est le bon.">
+<link rel="canonical" href="https://casanostro.github.io/Book/projets/stock-a-risque/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/projets/stock-a-risque/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/projects/inventory-at-risk/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/projets/stock-a-risque/">
+<link rel="stylesheet" href="../../assets/site.css">
+<script src="../../assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#dossier">Aller au contenu</a>
+<div class="readbar" aria-hidden="true"></div>
+
+<header class="site">
+  <div class="wrap">
+    <nav aria-label="Navigation principale">
+      <a class="brand" href="../../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../../#dossiers">Dossiers</a>
+        <a href="../">Index</a>
+        <a href="../../#méthode">Méthode</a>
+        <a href="../../#position">Contact</a>
+      </div>
+      <a class="lang-toggle" data-lang="en" href="../../en/projects/inventory-at-risk/" hreflang="en" lang="en" aria-label="Switch to English">EN</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../../">accueil</a><span class="sep">/</span><a href="../">dossiers</a><span class="sep">/</span>case 08</div>
+
+  <div class="dossier-head" id="dossier">
+    <div class="toprow reveal">
+      <span class="chapter-id sig">CASE 08</span>
+      <span class="stamp">Méthode documentée</span>
+      <span class="stamp warn">Chiffre corrigé par l'auteur</span>
+    </div>
+    <h1 class="reveal">14 %, puis 4 % : le chiffre qui a survécu</h1>
+    <div class="meta reveal">
+      <div>Domaine<b>Stock, finance</b></div>
+      <div>Rôle<b>Modélisation, contrôle</b></div>
+      <div>Stack<b>SQL, Snowflake, Python, Excel</b></div>
+      <div>Statut<b>Deux règles livrées</b></div>
+    </div>
+    <p class="lead reveal">Combien de stock dort dans nos entrepôts ? La première réponse était spectaculaire. Avant de la défendre devant la finance, je l'ai attaquée moi-même.</p>
+    <div class="depth reveal" data-default="full" role="group" aria-label="Profondeur de lecture">
+      <button data-mode="synth" aria-pressed="false">Synthèse</button>
+      <button data-mode="full" aria-pressed="true">Dossier complet</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CONTRADICTION ═══════════ -->
+<section class="chapter" style="padding-top:var(--s-6)">
+  <div class="wrap">
+    <div class="contradiction reveal">
+      <div class="side expected">
+        <div class="cl">Première mesure (V1)</div>
+        <div class="cn"><span class="count" data-target="14.3" data-decimals="1">14,3</span><span class="u"> %</span></div>
+      </div>
+      <div class="vs">stock à risque · vs</div>
+      <div class="side actual">
+        <div class="cl">Après fiabilisation (V16)</div>
+        <div class="cn"><span class="count" data-target="4">4</span><span class="u"> %</span></div>
+      </div>
+    </div>
+    <p class="prose reveal" style="margin-top:var(--s-5)">Même stock, même période, trois fois moins de risque. La méthode n'avait pas changé de principe ; elle avait arrêté de confondre ce qui sort avec ce qui disparaît d'un fichier.</p>
+  </div>
+</section>
+
+<!-- ═══════════ INVESTIGATION + PANNEAU D'ÉTAT ═══════════ -->
+<section class="chapter" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label sig">Investigation</span></div>
+      <h2 class="chapter-title">De la photo du stock au chiffre défendable</h2>
+    </div>
+
+    <div class="investigation">
+      <div class="steps">
+        <div class="inv-step reveal" data-status="Question posée" data-metric="~30" data-unit="M€" data-metric-label="de stock entrepôt, jamais mesuré sous l'angle du dormant">
+          <div class="st-id">01 · Question</div>
+          <h3>Combien dort ?</h3>
+          <p>Une question simple que personne n'avait instruite avec des données : sur environ 30 M€ de stock entrepôt, quelle part ne s'écoule plus ? Sans réponse, pas de provision, pas d'arbitrage achats, pas de cible.</p>
+        </div>
+        <div class="inv-step reveal" data-status="V1 livrée" data-metric="14,3" data-unit="%" data-metric-label="du stock classé à risque en première lecture (4,3 M€, 944 articles critiques)">
+          <div class="st-id">02 · Méthode</div>
+          <h3>Un taux d'écoulement, pas une boîte noire</h3>
+          <p>Photo du stock en début de période, sorties mesurées par les baisses quotidiennes de stock sur 12 mois glissants, rapportées au stock initial. Seuils : critique sous 10 % par mois, élevé jusqu'à 20 %, modéré jusqu'à 30 %. Puis croisement ABC sur la valorisation pour savoir où agir d'abord.</p>
+          <p class="deep">Le benchmark sectoriel situe le stock dormant world-class autour de 10 % et l'alerte à 15 %. À 14,3 %, le chiffre était plausible : c'est précisément ce qui le rendait dangereux.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Écart détecté" data-metric="4,6" data-unit="M€" data-metric-label="d'écart entre ma valorisation et la valorisation comptable, sur 4 729 articles appariés">
+          <div class="st-id">03 · Contre-épreuve</div>
+          <h3>Confronter le modèle à la comptabilité</h3>
+          <p>Avant de présenter, rapprochement article par article avec la valorisation comptable. 4,6 M€ d'écart. Les baisses de stock ne mesuraient pas que des ventes : elles absorbaient aussi les régularisations d'inventaire et la casse, et le périmètre comptait des articles réapprovisionnés dans l'année.</p>
+          <p class="deep">Un modèle qui n'a jamais été confronté à une source indépendante n'est pas validé. Il est seulement cohérent avec lui-même.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Modèle corrigé" data-metric="1,25" data-unit="M€" data-metric-label="de stock critique après correction (170 à 180 articles, ~4 % du stock)">
+          <div class="st-id">04 · Correction</div>
+          <h3>Deux règles, côte à côte</h3>
+          <p>Règle A : le taux d'écoulement d'origine sur le périmètre resserré. Règle B : la même, avec un stock initial corrigé des régularisations d'inventaire. Les références sorties de l'analyse entre deux versions sont tracées une à une avec leur motif, plutôt que perdues en silence.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Livré à la finance" data-metric="2" data-metric-label="règles présentées ensemble, pour que la finance arbitre en connaissance de cause">
+          <div class="st-id">05 · Livrable</div>
+          <h3>Laisser l'arbitrage à qui provisionne</h3>
+          <p>Une liste priorisée par classe ABC, les deux règles présentées ensemble avec leur écart, et une méthode rejouable chaque mois. Le choix de la règle de provision revient à la finance ; mon travail était de rendre l'écart visible et expliqué.</p>
+        </div>
+      </div>
+
+      <aside class="statuspanel" aria-hidden="true">
+        <div class="sp-head">État du dossier</div>
+        <div class="sp-body">
+          <div class="sp-status">Question posée</div>
+          <div class="sp-metric"><div class="n">~30</div><div class="l">de stock entrepôt, jamais mesuré sous l'angle du dormant</div></div>
+          <div class="sp-track"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TABLE DE CONSTAT ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap read">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Constat</span></div>
+      <h2 class="chapter-title">Trois versions, un seul chiffre défendable</h2>
+      <p class="sub">Valeurs agrégées. Le total de stock varie avec la date de photo et le périmètre retenu.</p>
+    </div>
+    <table class="ledger reveal">
+      <thead><tr><th>Version</th><th>Stock analysé</th><th>Stock à risque</th><th>Part</th><th>Ce qui a changé</th></tr></thead>
+      <tbody>
+        <tr><td><b>V1</b> · février</td><td>29,9 M€</td><td>4,3 M€</td><td>14,3 %</td><td>écoulement ≤ 30 %, tous articles</td></tr>
+        <tr><td><b>V14</b> · mars</td><td>34,6 M€</td><td>0,93 M€</td><td>2,7 %</td><td>SLOB strict, rapprochement compta : 4,6 M€ d'écart</td></tr>
+        <tr><td><b>V16</b> · avril</td><td>30,8 M€</td><td>1,24 à 1,27 M€</td><td><span class="sig">~4 %</span></td><td>règle A / règle B corrigée de l'inventaire</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ SCHÉMA ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Architecture</span></div>
+      <h2 class="chapter-title">Du mouvement de stock à la provision</h2>
+    </div>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 760 440" role="img" aria-label="Schéma : photo du stock et mouvements, taux d&#x27;écoulement, première mesure à 14,3 %, contre-épreuve comptable avec 4,6 M€ d&#x27;écart, corrections d&#x27;inventaire, livrable à deux règles">
+        <defs>
+          <marker id="s81" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#6a6357"/></marker>
+          <marker id="s82" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#a8641b"/></marker>
+        </defs>
+        <text class="d-tag" x="290" y="16">ENTRÉE</text>
+        <rect class="d-in" x="290" y="24" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="48">Stock et mouvements</text>
+        <text class="d-sub" x="304" y="64">photo + 12 mois glissants</text>
+        <path class="d-edge" d="M400 80 V136" marker-end="url(#s81)"/>
+        <path class="d-flow draw" d="M400 82 V130"/>
+        <text class="d-edge-label" x="410" y="112">sorties mensuelles</text>
+        <rect class="d-box" x="290" y="136" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="160">Taux d'écoulement</text>
+        <text class="d-sub" x="304" y="176">seuils 10 / 20 / 30 %, ABC</text>
+        <path class="d-edge" d="M400 192 V248" marker-end="url(#s81)"/>
+        <path class="d-flow draw" d="M400 194 V242"/>
+        <text class="d-edge-label" x="410" y="224">classification</text>
+        <rect class="d-box" x="290" y="248" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="272">Première mesure</text>
+        <text class="d-sub" x="304" y="288">14,3 %, 4,3 M€</text>
+        <path class="d-edge" d="M400 304 V360" marker-end="url(#s82)" style="stroke:#a8641b;stroke-opacity:.55"/>
+        <path class="d-flow draw" d="M400 306 V354" style="stroke:#a8641b"/>
+        <text class="d-edge-label" x="410" y="336" style="fill:#a8641b">avant de publier</text>
+        <text class="d-tag" x="290" y="352" style="fill:#a8641b">CONTRE-ÉPREUVE</text>
+        <rect class="d-guard" x="290" y="360" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="384">Rapprochement compta</text>
+        <text class="d-sub" x="304" y="400">4,6 M€ d'écart</text>
+        <rect class="d-store" x="560" y="360" width="180" height="56" rx="2"/>
+        <text class="d-title" x="574" y="384">Régularisations</text>
+        <text class="d-sub" x="574" y="400">inventaire, casse, réappro</text>
+        <path class="d-edge" d="M560 388 H512" marker-end="url(#s81)" style="stroke-dasharray:3 4"/>
+        <text class="d-tag" x="20" y="352">LIVRABLE</text>
+        <rect class="d-out" x="20" y="360" width="200" height="56" rx="2"/>
+        <text class="d-title-inv" x="34" y="384">Deux règles, ~4 %</text>
+        <text class="d-sub-inv" x="34" y="400">liste ABC, rejouable</text>
+        <path class="d-edge" d="M290 388 H222" marker-end="url(#s81)"/>
+        <path class="d-flow draw" d="M288 388 H226"/>
+      </svg>
+      <div class="legend">
+        <span><span class="sw in"></span>entrée</span>
+        <span><span class="sw proc"></span>traitement</span>
+        <span><span class="sw guard"></span>zone de risque</span>
+        <span><span class="sw out"></span>livrable</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LEÇON + LIEN ═══════════ -->
+<section class="chapter" style="padding-top:0">
+  <div class="wrap">
+    <div class="prose reveal">
+      <div class="fieldnote">Un chiffre qui fait peur n'est pas encore un chiffre fiable. Le confronter à une source indépendante avant de le publier, c'est ce qui le rend défendable.
+        <cite>Leçon du dossier</cite>
+      </div>
+    </div>
+    <div class="convert reveal">
+      <p>Même réflexe, autre flux : des gestes commerciaux validés qui n'arrivaient jamais en facturation.</p>
+      <a class="btn ghost" href="../reconciliation-avoirs/">CASE 09 · Réconciliation des avoirs →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="row">
+      <div><a class="brand" href="../../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks">
+        <a href="../../">Accueil</a><a href="../">Dossiers</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+    <div class="note">Site statique, aucun tracking. Chiffres agrégés et anonymisés. Paris, 2026.</div>
+  </div>
+</footer>
+
+</body>
+</html>

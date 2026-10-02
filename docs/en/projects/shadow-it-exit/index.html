@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CASE 11 | The critical process was running on a POC | Adrien Tripon</title>
+<meta name="description" content="Scoping the exit from shadow IT for stock-out tracking: audit of the no-code POC running in production (incidents, overwritten fields, data risks), then the specification of a group collaborative platform with history kept in the data warehouse.">
+<link rel="canonical" href="https://casanostro.github.io/Book/en/projects/shadow-it-exit/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/projets/sortie-shadow-it/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/projects/shadow-it-exit/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/projets/sortie-shadow-it/">
+<link rel="stylesheet" href="../../../assets/site.css">
+<script src="../../../assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#dossier">Skip to content</a>
+<div class="readbar" aria-hidden="true"></div>
+
+<header class="site">
+  <div class="wrap">
+    <nav aria-label="Primary">
+      <a class="brand" href="../../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../../#cases">Cases</a>
+        <a href="../">Index</a>
+        <a href="../../#method">Method</a>
+        <a href="../../#position">Contact</a>
+      </div>
+      <a class="lang-toggle" data-lang="fr" href="../../../projets/sortie-shadow-it/" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">cases</a><span class="sep">/</span>case 11</div>
+
+  <div class="dossier-head" id="dossier">
+    <div class="toprow reveal">
+      <span class="chapter-id sig">CASE 11</span>
+      <span class="stamp">Specification written</span>
+      <span class="stamp warn">IT costing pending</span>
+    </div>
+    <h1 class="reveal">The critical process was running on a POC</h1>
+    <div class="meta reveal">
+      <div>Domain<b>Product, governance</b></div>
+      <div>Role<b>Scoping, technical annexes</b></div>
+      <div>Stack<b>Make, Notion, Snowflake</b></div>
+      <div>Status<b>Specification</b></div>
+    </div>
+    <p class="lead reveal">Daily stock-out tracking relied on a stack of no-code tools built as a proof of concept. It had become critical without anyone deciding so.</p>
+    <div class="depth reveal" data-default="full" role="group" aria-label="Reading depth">
+      <button data-mode="synth" aria-pressed="false">Summary</button>
+      <button data-mode="full" aria-pressed="true">Full case</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CONTRADICTION ═══════════ -->
+<section class="chapter" style="padding-top:var(--s-6)">
+  <div class="wrap">
+    <div class="contradiction reveal">
+      <div class="side expected">
+        <div class="cl">Rows loaded every morning</div>
+        <div class="cn"><span class="count" data-target="10000" data-group="1">10,000</span></div>
+      </div>
+      <div class="vs">critical process · vs</div>
+      <div class="side actual">
+        <div class="cl">Flows monitored by IT</div>
+        <div class="cn"><span class="count" data-target="0">0</span></div>
+      </div>
+    </div>
+    <p class="prose reveal" style="margin-top:var(--s-5)">Three teams make weekly stock-out decisions on this base. Not a single component is under IT operations monitoring. The day it breaks, nobody else sees it.</p>
+  </div>
+</section>
+
+<!-- ═══════════ INVESTIGATION + PANNEAU D'ÉTAT ═══════════ -->
+<section class="chapter" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label sig">Investigation</span></div>
+      <h2 class="chapter-title">From a fragile POC to a specification</h2>
+    </div>
+
+    <div class="investigation">
+      <div class="steps">
+        <div class="inv-step reveal" data-status="Signal received" data-metric="8" data-unit="d" data-metric-label="of repair after an API change on the database tool">
+          <div class="st-id">01 · Incident</div>
+          <h3>Fragility, revealed by an update</h3>
+          <p>An API change at the tracking-base vendor takes down every connected flow. Eight days of repair, while learning the tool at the same time. The symptom of a critical process with no safety net.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Audit delivered" data-metric="13" data-metric-label="date fields wiped on every run by the update modules">
+          <div class="st-id">02 · Audit</div>
+          <h3>Read the scenarios field by field</h3>
+          <p>Audit of the missing-items scenarios: 13 date fields sent empty, erasing the existing value on every run, and update modules omitting 5 to 19 fields depending on the route. An archiving scenario failed on 99.97 % of its runs.</p>
+          <p class="deep">The defect was not in the database but in the mapping. Fixing it takes an hour; finding it meant reading every module.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Risks qualified" data-metric="6" data-metric-label="POC risks not to carry over into the target">
+          <div class="st-id">03 · Risks</div>
+          <h3>What the target must not inherit</h3>
+          <p>A dedicated annex on the POC's limits: supplier attachments exposed through a public link, personal data in file names, evidence overwritten by each new email, no alert on an unmatched message, dependence on a named mailbox and an external converter under quota.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Target specified" data-metric="3" data-metric-label="teams on one tool, each with its own comment column">
+          <div class="st-id">04 · Target</div>
+          <h3>One shared tool, a locked structure</h3>
+          <p>Web platform with SSO, one tab per product family, structure locked by administrators, free columns per team (Merchandising, Purchasing, Replenishment), owner and reason as drop-downs, supplier evidence one click away, autosave with author and timestamp.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Awaiting costing" data-metric="23:59" data-metric-label="daily history in the data warehouse, 3 months minimum">
+          <div class="st-id">05 · History</div>
+          <h3>Turn comments into data</h3>
+          <p>Every evening, the full state is written to the data warehouse. Reasons and comments become usable: in time, they pre-fill the comments of the weekly service-level newsletter instead of being rewritten.</p>
+          <p class="deep">This is the bridge to AI: a structured history of stock-out reasons is exactly what a model needs to propose a first comment that a human validates.</p>
+        </div>
+      </div>
+
+      <aside class="statuspanel" aria-hidden="true">
+        <div class="sp-head">Case status</div>
+        <div class="sp-body">
+          <div class="sp-status">Signal received</div>
+          <div class="sp-metric"><div class="n">8</div><div class="l">of repair after an API change on the database tool</div></div>
+          <div class="sp-track"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TABLE DE CONSTAT ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap read">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Findings</span></div>
+      <h2 class="chapter-title">From POC to target, requirement by requirement</h2>
+    </div>
+    <table class="ledger reveal">
+      <thead><tr><th>Topic</th><th>Current POC</th><th>Specified target</th></tr></thead>
+      <tbody>
+        <tr><td><b>Monitoring</b></td><td><span class="sig">none on IT side</span></td><td>group IT operations</td></tr>
+        <tr><td>Access</td><td>individual SaaS accounts</td><td>SSO, admin / user roles</td></tr>
+        <tr><td>Structure</td><td>editable by anyone</td><td>locked, free cells only</td></tr>
+        <tr><td>Supplier evidence</td><td>public link, overwritten</td><td>internal attachments, kept</td></tr>
+        <tr><td>Traceability</td><td>partial</td><td>author and timestamp per row</td></tr>
+        <tr><td>History</td><td>none</td><td>daily, 3 months in the warehouse</td></tr>
+        <tr><td>Performance</td><td>not measured</td><td>15,000 rows, load &lt; 1 min</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ SCHÉMA ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Architecture</span></div>
+      <h2 class="chapter-title">The stock-out data path, before and after</h2>
+    </div>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 760 440" role="img" aria-label="Diagram: daily ERP export, no-code flows, collaborative tracking base, business decisions weakened by lack of monitoring, target group platform with history">
+        <defs>
+          <marker id="s111" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#6a6357"/></marker>
+          <marker id="s112" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#a8641b"/></marker>
+        </defs>
+        <text class="d-tag" x="290" y="16">SOURCE</text>
+        <rect class="d-in" x="290" y="24" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="48">Daily ERP export</text>
+        <text class="d-sub" x="304" y="64">~10,000 rows</text>
+        <path class="d-edge" d="M400 80 V136" marker-end="url(#s111)"/>
+        <path class="d-flow draw" d="M400 82 V130"/>
+        <text class="d-edge-label" x="410" y="112">every morning</text>
+        <rect class="d-box" x="290" y="136" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="160">No-code flows</text>
+        <text class="d-sub" x="304" y="176">file, drive, scenarios</text>
+        <path class="d-edge" d="M400 192 V248" marker-end="url(#s111)"/>
+        <path class="d-flow draw" d="M400 194 V242"/>
+        <text class="d-edge-label" x="410" y="224">create / update</text>
+        <rect class="d-box" x="290" y="248" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="272">Tracking base</text>
+        <text class="d-sub" x="304" y="288">3 teams, 2 reviews/wk</text>
+        <path class="d-edge" d="M400 304 V360" marker-end="url(#s112)" style="stroke:#a8641b;stroke-opacity:.55"/>
+        <path class="d-flow draw" d="M400 306 V354" style="stroke:#a8641b"/>
+        <text class="d-edge-label" x="410" y="336" style="fill:#a8641b">SaaS dependencies</text>
+        <text class="d-tag" x="290" y="352" style="fill:#a8641b">RISK</text>
+        <rect class="d-guard" x="290" y="360" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="384">Unmonitored</text>
+        <text class="d-sub" x="304" y="400">APIs, quotas, public links</text>
+        <rect class="d-store" x="560" y="360" width="180" height="56" rx="2"/>
+        <text class="d-title" x="574" y="384">API change</text>
+        <text class="d-sub" x="574" y="400">8 days partial outage</text>
+        <path class="d-edge" d="M560 388 H512" marker-end="url(#s111)" style="stroke-dasharray:3 4"/>
+        <text class="d-tag" x="20" y="352">TARGET</text>
+        <rect class="d-out" x="20" y="360" width="200" height="56" rx="2"/>
+        <text class="d-title-inv" x="34" y="384">Group platform</text>
+        <text class="d-sub-inv" x="34" y="400">SSO, history at 23:59</text>
+        <path class="d-edge" d="M290 388 H222" marker-end="url(#s111)"/>
+        <path class="d-flow draw" d="M288 388 H226"/>
+      </svg>
+      <div class="legend">
+        <span><span class="sw in"></span>input</span>
+        <span><span class="sw proc"></span>processing</span>
+        <span><span class="sw guard"></span>risk zone</span>
+        <span><span class="sw out"></span>deliverable</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LEÇON + LIEN ═══════════ -->
+<section class="chapter" style="padding-top:0">
+  <div class="wrap">
+    <div class="prose reveal">
+      <div class="fieldnote">A POC that works becomes a critical process without warning. The right time to take it out of shadow IT is before the next incident, not after.
+        <cite>Lesson from the case</cite>
+      </div>
+    </div>
+    <div class="convert reveal">
+      <p>The stored comments have a destination: weekly reporting.</p>
+      <a class="btn ghost" href="../kpi-newsletter/">CASE 07 · KPI newsletter →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="row">
+      <div><a class="brand" href="../../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks">
+        <a href="../../">Home</a><a href="../">Cases</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+    <div class="note">Static site, no tracking. Figures aggregated and anonymised. Paris, 2026.</div>
+  </div>
+</footer>
+
+</body>
+</html>

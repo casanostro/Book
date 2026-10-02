@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CASE 09 | The flow was running, the credit notes never arrived | Adrien Tripon</title>
+<meta name="description" content="Reconciliation of four systems (form, tracking base, entry files, BI) after a silent automation break. 128 k€ of commercial gestures reconciled, of which 91 k€ approved but never posted to invoicing.">
+<link rel="canonical" href="https://casanostro.github.io/Book/en/projects/credit-note-reconciliation/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/projets/reconciliation-avoirs/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/projects/credit-note-reconciliation/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/projets/reconciliation-avoirs/">
+<link rel="stylesheet" href="../../../assets/site.css">
+<script src="../../../assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#dossier">Skip to content</a>
+<div class="readbar" aria-hidden="true"></div>
+
+<header class="site">
+  <div class="wrap">
+    <nav aria-label="Primary">
+      <a class="brand" href="../../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../../#cases">Cases</a>
+        <a href="../">Index</a>
+        <a href="../../#method">Method</a>
+        <a href="../../#position">Contact</a>
+      </div>
+      <a class="lang-toggle" data-lang="fr" href="../../../projets/reconciliation-avoirs/" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">cases</a><span class="sep">/</span>case 09</div>
+
+  <div class="dossier-head" id="dossier">
+    <div class="toprow reveal">
+      <span class="chapter-id sig">CASE 09</span>
+      <span class="stamp">Recovery delivered</span>
+      <span class="stamp warn">Silent blockage</span>
+    </div>
+    <h1 class="reveal">The flow was running, the credit notes never arrived</h1>
+    <div class="meta reveal">
+      <div>Domain<b>Reconciliation</b></div>
+      <div>Role<b>Investigation, recovery</b></div>
+      <div>Stack<b>Excel, SQL, Make, MicroStrategy</b></div>
+      <div>Status<b>Fix + report</b></div>
+    </div>
+    <p class="lead reveal">Stores requested, advisers approved, the automation ran. Nobody saw an error. And yet part of the credit notes never reached invoicing.</p>
+    <div class="depth reveal" data-default="full" role="group" aria-label="Reading depth">
+      <button data-mode="synth" aria-pressed="false">Summary</button>
+      <button data-mode="full" aria-pressed="true">Full case</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CONTRADICTION ═══════════ -->
+<section class="chapter" style="padding-top:var(--s-6)">
+  <div class="wrap">
+    <div class="contradiction reveal">
+      <div class="side expected">
+        <div class="cl">Approved requests</div>
+        <div class="cn"><span class="count" data-target="112">112</span></div>
+      </div>
+      <div class="vs">over 6 months · vs</div>
+      <div class="side actual">
+        <div class="cl">Found automatically in invoicing</div>
+        <div class="cn"><span class="count" data-target="37">37</span></div>
+      </div>
+    </div>
+    <p class="prose reveal" style="margin-top:var(--s-5)">Only a third matched on their own. For the other 75, the question was not where the error was, but whether any trace of the credit note existed at all.</p>
+  </div>
+</section>
+
+<!-- ═══════════ INVESTIGATION + PANNEAU D'ÉTAT ═══════════ -->
+<section class="chapter" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label sig">Investigation</span></div>
+      <h2 class="chapter-title">Four systems, one truth to rebuild</h2>
+    </div>
+
+    <div class="investigation">
+      <div class="steps">
+        <div class="inv-step reveal" data-status="Signal received" data-metric="140" data-metric-label="commercial-gesture requests submitted over 6 months">
+          <div class="st-id">01 · Signal</div>
+          <h3>Stores chasing their credit notes</h3>
+          <p>Franchisees chase approved credit notes they never see. The automation flow reports no error. Starting point: take all 140 requests of the period, without assuming where they get lost.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Investigation" data-metric="4" data-metric-label="sources cross-checked: form, tracking base, entry files, BI">
+          <div class="st-id">02 · Cascade</div>
+          <h3>Follow each request step by step</h3>
+          <p>Form → tracking base: 127 of 140, the 13 gaps explained (refusals, manual duplicates). Approved: 112. Automatic match with invoicing on the label: 37. Left: 75 rows for which entry files were missing over the period.</p>
+          <p class="deep">Every step of the cascade has its own identifier and its own holes. The join key had to be rebuilt from the store code and the submission ID.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Cause identified" data-metric="01/2026" data-metric-label="flow broken during a technical migration, no alert">
+          <div class="st-id">03 · Cause</div>
+          <h3>One migration, one cut transmission</h3>
+          <p>During a technical migration in January, the step that generates entry files for the team posting credit notes stopped working properly. No alert: requests stayed "approved", they simply stopped being sent.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Recovery quantified" data-metric="91" data-unit="k€" data-metric-label="of approved gestures never posted, identified with certainty (48 rows)">
+          <div class="st-id">04 · Recovery</div>
+          <h3>Check by hand what will not match</h3>
+          <p>The 75 remaining rows checked one by one, with a folder of supporting documents linked directly for the posting team. Result: 21 already invoiced (30 k€), 48 never posted (91 k€), 6 "similar" confirmed posted (7.4 k€). Duplicate check before any re-entry.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Fix delivered" data-metric="1" data-metric-label=""Pending" status proposed to surface any future blockage">
+          <div class="st-id">05 · Prevention</div>
+          <h3>Make the blockage loud</h3>
+          <p>Flow restored and stabilised. Proposed an intermediate "Pending" status: a request approved but not sent becomes visible instead of silently staying "approved". The BI credit-note report that followed exposes approved-but-unsent notes, which removes a monthly manual chase.</p>
+        </div>
+      </div>
+
+      <aside class="statuspanel" aria-hidden="true">
+        <div class="sp-head">Case status</div>
+        <div class="sp-body">
+          <div class="sp-status">Signal received</div>
+          <div class="sp-metric"><div class="n">140</div><div class="l">commercial-gesture requests submitted over 6 months</div></div>
+          <div class="sp-track"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TABLE DE CONSTAT ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap read">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Findings</span></div>
+      <h2 class="chapter-title">The cascade, step by step</h2>
+      <p class="sub">December to May. Amounts excluding VAT, aggregated.</p>
+    </div>
+    <table class="ledger reveal">
+      <thead><tr><th>Step</th><th>Rows</th><th>Reading</th></tr></thead>
+      <tbody>
+        <tr><td>Requests submitted</td><td>140</td><td>starting point</td></tr>
+        <tr><td>Present in the tracking base</td><td>127</td><td>13 gaps explained</td></tr>
+        <tr><td>Approved</td><td>112</td><td>5 refused, 10 pending</td></tr>
+        <tr><td>Matched automatically</td><td>37</td><td>posted, no action</td></tr>
+        <tr><td>Checked by hand</td><td>75</td><td>entry files missing</td></tr>
+        <tr><td><b>of which never posted</b></td><td><b>48</b></td><td><span class="sig"><b>91 k€</b></span> to re-enter</td></tr>
+        <tr><td><b>Total reconciled</b></td><td><b>75</b></td><td><b>128 k€</b> back under control</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ SCHÉMA ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Architecture</span></div>
+      <h2 class="chapter-title">A credit note's path, and where it got lost</h2>
+    </div>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 760 440" role="img" aria-label="Diagram: store form, tracking base, approval, transmission to entry files cut by a migration, recovery through reconciliation">
+        <defs>
+          <marker id="s91" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#6a6357"/></marker>
+          <marker id="s92" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#a8641b"/></marker>
+        </defs>
+        <text class="d-tag" x="290" y="16">REQUEST</text>
+        <rect class="d-in" x="290" y="24" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="48">Store form</text>
+        <text class="d-sub" x="304" y="64">140 requests</text>
+        <path class="d-edge" d="M400 80 V136" marker-end="url(#s91)"/>
+        <path class="d-flow draw" d="M400 82 V130"/>
+        <text class="d-edge-label" x="410" y="112">automation</text>
+        <rect class="d-box" x="290" y="136" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="160">Tracking base</text>
+        <text class="d-sub" x="304" y="176">127 rows</text>
+        <path class="d-edge" d="M400 192 V248" marker-end="url(#s91)"/>
+        <path class="d-flow draw" d="M400 194 V242"/>
+        <text class="d-edge-label" x="410" y="224">business call</text>
+        <rect class="d-box" x="290" y="248" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="272">Adviser approval</text>
+        <text class="d-sub" x="304" y="288">112 approved</text>
+        <path class="d-edge" d="M400 304 V360" marker-end="url(#s92)" style="stroke:#a8641b;stroke-opacity:.55"/>
+        <path class="d-flow draw" d="M400 306 V354" style="stroke:#a8641b"/>
+        <text class="d-edge-label" x="410" y="336" style="fill:#a8641b">entry files</text>
+        <text class="d-tag" x="290" y="352" style="fill:#a8641b">BLIND SPOT</text>
+        <rect class="d-guard" x="290" y="360" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="384">Transmission to entry</text>
+        <text class="d-sub" x="304" y="400">cut, no alert</text>
+        <rect class="d-store" x="560" y="360" width="180" height="56" rx="2"/>
+        <text class="d-title" x="574" y="384">Technical migration</text>
+        <text class="d-sub" x="574" y="400">January, flow broken</text>
+        <path class="d-edge" d="M560 388 H512" marker-end="url(#s91)" style="stroke-dasharray:3 4"/>
+        <text class="d-tag" x="20" y="352">DELIVERABLE</text>
+        <rect class="d-out" x="20" y="360" width="200" height="56" rx="2"/>
+        <text class="d-title-inv" x="34" y="384">91 k€ recovered</text>
+        <text class="d-sub-inv" x="34" y="400">+ "Pending" status</text>
+        <path class="d-edge" d="M290 388 H222" marker-end="url(#s91)"/>
+        <path class="d-flow draw" d="M288 388 H226"/>
+      </svg>
+      <div class="legend">
+        <span><span class="sw in"></span>input</span>
+        <span><span class="sw proc"></span>processing</span>
+        <span><span class="sw guard"></span>risk zone</span>
+        <span><span class="sw out"></span>deliverable</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LEÇON + LIEN ═══════════ -->
+<section class="chapter" style="padding-top:0">
+  <div class="wrap">
+    <div class="prose reveal">
+      <div class="fieldnote">An "approved" status does not say an action happened. It only says someone clicked. The proof lives in the next system.
+        <cite>Lesson from the case</cite>
+      </div>
+    </div>
+    <div class="convert reveal">
+      <p>The same silent break, seen across the whole automation fleet.</p>
+      <a class="btn ghost" href="../make-platform/">CASE 02 · Make platform →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="row">
+      <div><a class="brand" href="../../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks">
+        <a href="../../">Home</a><a href="../">Cases</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+    <div class="note">Static site, no tracking. Figures aggregated and anonymised. Paris, 2026.</div>
+  </div>
+</footer>
+
+</body>
+</html>

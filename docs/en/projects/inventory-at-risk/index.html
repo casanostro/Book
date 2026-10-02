@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CASE 08 | 14 %, then 4 %: the number that survived | Adrien Tripon</title>
+<meta name="description" content="SLOB inventory-at-risk model on ~30 M€ of warehouse stock. A first measure at 14.3 %, checked against the accounting valuation and corrected for inventory adjustments, brought down to about 4 %. The case explains why the second number is the right one.">
+<link rel="canonical" href="https://casanostro.github.io/Book/en/projects/inventory-at-risk/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe3'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23bf3626'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="fr" href="https://casanostro.github.io/Book/projets/stock-a-risque/">
+<link rel="alternate" hreflang="en" href="https://casanostro.github.io/Book/en/projects/inventory-at-risk/">
+<link rel="alternate" hreflang="x-default" href="https://casanostro.github.io/Book/projets/stock-a-risque/">
+<link rel="stylesheet" href="../../../assets/site.css">
+<script src="../../../assets/site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#dossier">Skip to content</a>
+<div class="readbar" aria-hidden="true"></div>
+
+<header class="site">
+  <div class="wrap">
+    <nav aria-label="Primary">
+      <a class="brand" href="../../">Adrien Tripon</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="navlinks">Menu</button>
+      <div class="nav-links" id="navlinks">
+        <a href="../../#cases">Cases</a>
+        <a href="../">Index</a>
+        <a href="../../#method">Method</a>
+        <a href="../../#position">Contact</a>
+      </div>
+      <a class="lang-toggle" data-lang="fr" href="../../../projets/stock-a-risque/" hreflang="fr" lang="fr" aria-label="Passer en français">FR</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="crumb reveal"><a href="../../">home</a><span class="sep">/</span><a href="../">cases</a><span class="sep">/</span>case 08</div>
+
+  <div class="dossier-head" id="dossier">
+    <div class="toprow reveal">
+      <span class="chapter-id sig">CASE 08</span>
+      <span class="stamp">Documented method</span>
+      <span class="stamp warn">Number corrected by its author</span>
+    </div>
+    <h1 class="reveal">14 %, then 4 %: the number that survived</h1>
+    <div class="meta reveal">
+      <div>Domain<b>Inventory, finance</b></div>
+      <div>Role<b>Modelling, control</b></div>
+      <div>Stack<b>SQL, Snowflake, Python, Excel</b></div>
+      <div>Status<b>Two rules delivered</b></div>
+    </div>
+    <p class="lead reveal">How much stock is sleeping in our warehouses? The first answer was spectacular. Before defending it to Finance, I attacked it myself.</p>
+    <div class="depth reveal" data-default="full" role="group" aria-label="Reading depth">
+      <button data-mode="synth" aria-pressed="false">Summary</button>
+      <button data-mode="full" aria-pressed="true">Full case</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ CONTRADICTION ═══════════ -->
+<section class="chapter" style="padding-top:var(--s-6)">
+  <div class="wrap">
+    <div class="contradiction reveal">
+      <div class="side expected">
+        <div class="cl">First measure (V1)</div>
+        <div class="cn"><span class="count" data-target="14.3" data-decimals="1">14.3</span><span class="u"> %</span></div>
+      </div>
+      <div class="vs">inventory at risk · vs</div>
+      <div class="side actual">
+        <div class="cl">After hardening (V16)</div>
+        <div class="cn"><span class="count" data-target="4">4</span><span class="u"> %</span></div>
+      </div>
+    </div>
+    <p class="prose reveal" style="margin-top:var(--s-5)">Same stock, same period, a third of the risk. The method had not changed in principle; it had stopped confusing what is sold with what drops out of a file.</p>
+  </div>
+</section>
+
+<!-- ═══════════ INVESTIGATION + PANNEAU D'ÉTAT ═══════════ -->
+<section class="chapter" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label sig">Investigation</span></div>
+      <h2 class="chapter-title">From a stock snapshot to a defensible number</h2>
+    </div>
+
+    <div class="investigation">
+      <div class="steps">
+        <div class="inv-step reveal" data-status="Question asked" data-metric="~30" data-unit="M€" data-metric-label="of warehouse stock, never measured from the dormant angle">
+          <div class="st-id">01 · Question</div>
+          <h3>How much is sleeping?</h3>
+          <p>A simple question nobody had worked through with data: out of about 30 M€ of warehouse stock, what share no longer moves? Without an answer, no provision, no purchasing trade-off, no target.</p>
+        </div>
+        <div class="inv-step reveal" data-status="V1 delivered" data-metric="14.3" data-unit="%" data-metric-label="of stock flagged at risk on first reading (4.3 M€, 944 critical items)">
+          <div class="st-id">02 · Method</div>
+          <h3>A sell-through rate, not a black box</h3>
+          <p>Stock snapshot at the start of the period, outflows measured from daily stock decreases over a rolling 12 months, divided by the opening stock. Thresholds: critical below 10 % a month, high up to 20 %, moderate up to 30 %. Then an ABC split on value to know where to act first.</p>
+          <p class="deep">Industry benchmarks put world-class dormant stock around 10 % and the alert level at 15 %. At 14.3 %, the number was plausible: that is exactly what made it dangerous.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Gap detected" data-metric="4.6" data-unit="M€" data-metric-label="gap between my valuation and the accounting valuation, on 4,729 matched items">
+          <div class="st-id">03 · Cross-check</div>
+          <h3>Test the model against accounting</h3>
+          <p>Before presenting, an item-by-item match with the accounting valuation. A 4.6 M€ gap. Stock decreases were not only sales: they also absorbed inventory adjustments and breakage, and the scope included items replenished during the year.</p>
+          <p class="deep">A model that has never been tested against an independent source is not validated. It is only consistent with itself.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Model corrected" data-metric="1.25" data-unit="M€" data-metric-label="of critical stock after correction (170 to 180 items, ~4 % of stock)">
+          <div class="st-id">04 · Correction</div>
+          <h3>Two rules, side by side</h3>
+          <p>Rule A: the original sell-through rate on the tightened scope. Rule B: the same, with opening stock corrected for inventory adjustments. Items that dropped out between two versions are traced one by one with their reason, instead of disappearing silently.</p>
+        </div>
+        <div class="inv-step reveal" data-status="Delivered to Finance" data-metric="2" data-metric-label="rules presented together, so Finance decides with full knowledge">
+          <div class="st-id">05 · Deliverable</div>
+          <h3>Leave the call to whoever books the provision</h3>
+          <p>A list prioritised by ABC class, both rules shown together with their gap, and a method that can be replayed every month. Choosing the provisioning rule belongs to Finance; my job was to make the gap visible and explained.</p>
+        </div>
+      </div>
+
+      <aside class="statuspanel" aria-hidden="true">
+        <div class="sp-head">Case status</div>
+        <div class="sp-body">
+          <div class="sp-status">Question asked</div>
+          <div class="sp-metric"><div class="n">~30</div><div class="l">of warehouse stock, never measured from the dormant angle</div></div>
+          <div class="sp-track"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TABLE DE CONSTAT ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap read">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Findings</span></div>
+      <h2 class="chapter-title">Three versions, one defensible number</h2>
+      <p class="sub">Aggregated values. Total stock varies with the snapshot date and the scope used.</p>
+    </div>
+    <table class="ledger reveal">
+      <thead><tr><th>Version</th><th>Stock analysed</th><th>Stock at risk</th><th>Share</th><th>What changed</th></tr></thead>
+      <tbody>
+        <tr><td><b>V1</b> · February</td><td>29.9 M€</td><td>4.3 M€</td><td>14.3 %</td><td>sell-through ≤ 30 %, all items</td></tr>
+        <tr><td><b>V14</b> · March</td><td>34.6 M€</td><td>0.93 M€</td><td>2.7 %</td><td>strict SLOB, accounting match: 4.6 M€ gap</td></tr>
+        <tr><td><b>V16</b> · April</td><td>30.8 M€</td><td>1.24 to 1.27 M€</td><td><span class="sig">~4 %</span></td><td>rule A / rule B corrected for inventory</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ SCHÉMA ═══════════ -->
+<section class="chapter deep" style="padding-top:0">
+  <div class="wrap">
+    <div class="chapter-head reveal">
+      <div class="row"><span class="node-label">Architecture</span></div>
+      <h2 class="chapter-title">From stock movement to provision</h2>
+    </div>
+    <div class="diagram reveal">
+      <svg viewBox="0 0 760 440" role="img" aria-label="Diagram: stock snapshot and movements, sell-through rate, first measure at 14.3 %, accounting cross-check with a 4.6 M€ gap, inventory adjustments, two-rule deliverable">
+        <defs>
+          <marker id="s81" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#6a6357"/></marker>
+          <marker id="s82" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L8 4 L0 8 z" fill="#a8641b"/></marker>
+        </defs>
+        <text class="d-tag" x="290" y="16">INPUT</text>
+        <rect class="d-in" x="290" y="24" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="48">Stock and movements</text>
+        <text class="d-sub" x="304" y="64">snapshot + rolling 12 months</text>
+        <path class="d-edge" d="M400 80 V136" marker-end="url(#s81)"/>
+        <path class="d-flow draw" d="M400 82 V130"/>
+        <text class="d-edge-label" x="410" y="112">monthly outflows</text>
+        <rect class="d-box" x="290" y="136" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="160">Sell-through rate</text>
+        <text class="d-sub" x="304" y="176">10 / 20 / 30 % thresholds, ABC</text>
+        <path class="d-edge" d="M400 192 V248" marker-end="url(#s81)"/>
+        <path class="d-flow draw" d="M400 194 V242"/>
+        <text class="d-edge-label" x="410" y="224">classification</text>
+        <rect class="d-box" x="290" y="248" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="272">First measure</text>
+        <text class="d-sub" x="304" y="288">14.3 %, 4.3 M€</text>
+        <path class="d-edge" d="M400 304 V360" marker-end="url(#s82)" style="stroke:#a8641b;stroke-opacity:.55"/>
+        <path class="d-flow draw" d="M400 306 V354" style="stroke:#a8641b"/>
+        <text class="d-edge-label" x="410" y="336" style="fill:#a8641b">before publishing</text>
+        <text class="d-tag" x="290" y="352" style="fill:#a8641b">CROSS-CHECK</text>
+        <rect class="d-guard" x="290" y="360" width="220" height="56" rx="2"/>
+        <text class="d-title" x="304" y="384">Accounting match</text>
+        <text class="d-sub" x="304" y="400">4.6 M€ gap</text>
+        <rect class="d-store" x="560" y="360" width="180" height="56" rx="2"/>
+        <text class="d-title" x="574" y="384">Adjustments</text>
+        <text class="d-sub" x="574" y="400">inventory, breakage, refills</text>
+        <path class="d-edge" d="M560 388 H512" marker-end="url(#s81)" style="stroke-dasharray:3 4"/>
+        <text class="d-tag" x="20" y="352">DELIVERABLE</text>
+        <rect class="d-out" x="20" y="360" width="200" height="56" rx="2"/>
+        <text class="d-title-inv" x="34" y="384">Two rules, ~4 %</text>
+        <text class="d-sub-inv" x="34" y="400">ABC list, replayable</text>
+        <path class="d-edge" d="M290 388 H222" marker-end="url(#s81)"/>
+        <path class="d-flow draw" d="M288 388 H226"/>
+      </svg>
+      <div class="legend">
+        <span><span class="sw in"></span>input</span>
+        <span><span class="sw proc"></span>processing</span>
+        <span><span class="sw guard"></span>risk zone</span>
+        <span><span class="sw out"></span>deliverable</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ LEÇON + LIEN ═══════════ -->
+<section class="chapter" style="padding-top:0">
+  <div class="wrap">
+    <div class="prose reveal">
+      <div class="fieldnote">A frightening number is not yet a reliable one. Testing it against an independent source before publishing is what makes it defensible.
+        <cite>Lesson from the case</cite>
+      </div>
+    </div>
+    <div class="convert reveal">
+      <p>Same reflex, another flow: approved commercial gestures that never reached invoicing.</p>
+      <a class="btn ghost" href="../credit-note-reconciliation/">CASE 09 · Credit-note reconciliation →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="row">
+      <div><a class="brand" href="../../">Adrien Tripon</a><div class="node-label">Senior Business Analyst, Supply Chain & Data</div></div>
+      <div class="flinks">
+        <a href="../../">Home</a><a href="../">Cases</a>
+        <a href="https://www.linkedin.com/in/adrien-tripon" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://github.com/casanostro" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+    <div class="note">Static site, no tracking. Figures aggregated and anonymised. Paris, 2026.</div>
+  </div>
+</footer>
+
+</body>
+</html>
